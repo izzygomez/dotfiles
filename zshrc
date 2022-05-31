@@ -74,9 +74,10 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
-
-# THIS is configuration from Yuzu corporate laptop
+# All-machines User Configuration
+#   These configuration settings should apply to all synchronized machines
+#   that make use of https://github.com/izzygomez/dotfiles &
+#   https://github.com/izzygomez/new-laptop-setup
 
 # Syntax highlighting in `less`
 # https://ole.michelsen.dk/blog/syntax-highlight-files-macos-terminal-less/
@@ -87,26 +88,27 @@ export LESS=' -R '
 # Add python3 to path --- TODO only doing this for trezorctl setup, determine if I should do this long-term
 export PATH=$PATH:$HOME/Library/Python/3.9/bin
 
+# Added these after running `brew install zsh-syntax-highlighting`
+# https://github.com/zsh-users/zsh-syntax-highlighting
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/opt/homebrew/share/zsh-syntax-highlighting/highlighters
+
+# add '~/bin' to path (note: $HOME = /Users/izzyg)
+PATH="$PATH:$HOME/bin"
+# set emacs as default editor
+export EDITOR=emacs
+# set prompt to have laptop emoji prefix to differentiate terminal GUI on this machine from any one that I ssh/mosh into.
+PROMPT='💻 '$PROMPT
+
+# Izzy's Personal Macbook Air User Configuration
+
 # Added per instruction after running `brew install chruby ruby-install`, which
 # was run per instructions in https://jekyllrb.com/docs/installation/macos/
 source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
 source /opt/homebrew/opt/chruby/share/chruby/auto.sh
 chruby ruby-3.1.2
 
-# https://github.com/zsh-users/zsh-syntax-highlighting
-# added these after running `brew install zsh-syntax-highlighting`
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/opt/homebrew/share/zsh-syntax-highlighting/highlighters
-
-# THIS is configuration from previous .zshrc file
-
-# add '~/bin' to path (note: $HOME = /Users/izzyg)
-PATH="$PATH:$HOME/bin"
 # add brew-installed ruby to path
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 # add gem (ruby) executable to path (per https://jekyllrb.com/docs/installation/macos/)
 export PATH="$PATH:$HOME/.gem/ruby/2.6.0/bin"
-# set emacs as default editor
-export EDITOR=emacs
-# set prompt to have "m" (for macbook) prefix, to differentiate terminal "GUI" on this laptop to that one on my workstation (which is prefixed with "w")
-PROMPT='💻 '$PROMPT
