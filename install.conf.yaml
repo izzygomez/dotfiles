@@ -9,6 +9,9 @@
     ~/.tmux.conf: tmux.conf
     ~/.zprofile: zprofile
     ~/.zshrc: zshrc
+    # TODO figure out how to synchronize tmux plugin dir across machines — or
+    # should I even be trying to do this?
+    # ~/.tmux: tmux
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]

@@ -100,6 +100,17 @@ export EDITOR=emacs
 # set prompt to have laptop emoji prefix to differentiate terminal GUI on this machine from any one that I ssh/mosh into.
 PROMPT='💻 '$PROMPT
 
+# Shortcuts to start/kill emacs as daemon and use emacsclient
+alias emacsd="emacs --daemon"
+alias ec="emacsclient"
+alias ek="emacsclient -e '(kill-emacs)'"
+
+# Added per install commands from https://github.com/nvbn/thefuck
+eval "$(thefuck --alias)"
+
+# makes ^R backward search support patterns (i.e. '*' characters)
+bindkey '^R' history-incremental-pattern-search-backward
+
 # Izzy's Personal Macbook Air User Configuration
 
 # Added per instruction after running `brew install chruby ruby-install`, which
