@@ -111,7 +111,7 @@ eval "$(thefuck --alias)"
 # makes ^R backward search support patterns (i.e. '*' characters)
 bindkey '^R' history-incremental-pattern-search-backward
 
-# Izzy's Personal Macbook Air User Configuration
+# Izzy's Personal MBA User Configuration
 
 # Added per instruction after running `brew install chruby ruby-install`, which
 # was run per instructions in https://jekyllrb.com/docs/installation/macos/
@@ -123,3 +123,10 @@ chruby ruby-3.1.2
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 # add gem (ruby) executable to path (per https://jekyllrb.com/docs/installation/macos/)
 export PATH="$PATH:$HOME/.gem/ruby/2.6.0/bin"
+
+# Izzy's Yuzu MBP User Configuration
+
+# Added automatically from install script: https://github.com/nvm-sh/nvm#installing-and-updating
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
