@@ -111,6 +111,10 @@ eval "$(thefuck --alias)"
 # makes ^R backward search support patterns (i.e. '*' characters)
 bindkey '^R' history-incremental-pattern-search-backward
 
+# Git commit graph alias
+# https://tech.serhatteker.com/post/2021-02/git-log-tree/
+alias gitgraph='git log --oneline --decorate --graph --all'
+
 # Izzy's Personal MBA User Configuration
 
 # Added per instruction after running `brew install chruby ruby-install`, which
