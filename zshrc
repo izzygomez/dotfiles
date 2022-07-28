@@ -69,6 +69,9 @@ bindkey '^R' history-incremental-pattern-search-backward
 # https://tech.serhatteker.com/post/2021-02/git-log-tree/
 alias gitgraph='git log --oneline --decorate --graph --all'
 
+# Shortcut for having a browsable history
+alias hl='history | less'
+
 ################################################################################
 # Izzy's Personal MBA User Configuration
 ################################################################################
@@ -85,9 +88,6 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 # add gem (ruby) executable to path, per
 # https://jekyllrb.com/docs/installation/macos/
 export PATH="$PATH:$HOME/.gem/ruby/2.6.0/bin"
-
-# Shortcut for having a browsable history
-alias hl='history | less'
 
 ################################################################################
 # Izzy's Yuzu MBP User Configuration
