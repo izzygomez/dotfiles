@@ -1,7 +1,10 @@
 # -*- mode: shell-script; -*-
+
 ################################################################################
-# Oh My Zsh configuration. I deleted most of the commented out template lines
-# that were not being used; see file in omz repo here:
+# Oh My Zsh configuration.
+
+# I deleted most of the commented out template lines that were not being used;
+# see file in omz repo here:
 # https://github.com/ohmyzsh/ohmyzsh/blob/master/templates/zshrc.zsh-template
 ################################################################################
 
@@ -22,9 +25,10 @@ source $ZSH/oh-my-zsh.sh
 
 ################################################################################
 # All-machines User Configuration
-#   These configuration settings should apply to all synchronized machines
-#   that make use of https://github.com/izzygomez/dotfiles &
-#   https://github.com/izzygomez/new-laptop-setup
+# 
+# These configuration settings should apply to all synchronized machines that
+# make use of https://github.com/izzygomez/dotfiles &
+# https://github.com/izzygomez/new-laptop-setup
 ################################################################################
 
 # Syntax highlighting in `less`
@@ -37,6 +41,8 @@ export LESS=' -R '
 # if I should do this long-term
 export PATH=$PATH:$HOME/Library/Python/3.9/bin
 
+# TODO per https://www.gnu.org/software/emacs/manual/html_node/emacs/Specifying-File-Variables.html
+# these linese might need to be at the bottom of the file
 # Added these after running `brew install zsh-syntax-highlighting`
 # https://github.com/zsh-users/zsh-syntax-highlighting
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
