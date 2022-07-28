@@ -15,13 +15,13 @@ For more instructions, check this [blog post](https://www.elliotdenolf.com/posts
 > mv ~/.dotfile ~/.dotfile-backup
 ```
 
-1. Add new dotfile into `install.conf.yaml`
+2. Add new dotfile into `install.conf.yaml`
 ```yaml
 link:
     ~/.dotfile: dotfile
 ```
 
-1. Run `install` script, & delete backup if successful.
+3. Run `install` script, & delete backup if successful.
 ```shell
 > ./install
 ...
@@ -38,7 +38,7 @@ link:
 > ./install
 ```
 
-1. Install new updates
+2. Install new updates
 ```shell
 > git pull
 > ./install
