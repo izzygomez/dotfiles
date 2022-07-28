@@ -1,3 +1,4 @@
+# -*- mode: shell-script; -*-
 ################################################################################
 # Oh My Zsh configuration. I deleted most of the commented out template lines
 # that were not being used; see file in omz repo here:
