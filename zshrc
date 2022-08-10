@@ -74,22 +74,23 @@ alias ggr='gitgraph'
 # Shortcut for having a browsable history
 alias hl='history | less'
 
-################################################################################
-# Izzy's Personal MBA User Configuration
-################################################################################
-
 # Added per instruction after running `brew install chruby ruby-install`, which
 # was run per instructions in https://jekyllrb.com/docs/installation/macos/
-# TODO this may no longer need to be specific to Personal MBA config
 source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
 source /opt/homebrew/opt/chruby/share/chruby/auto.sh
 chruby ruby-3.1.2
-
 # add brew-installed ruby to path
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 # add gem (ruby) executable to path, per
 # https://jekyllrb.com/docs/installation/macos/
 export PATH="$PATH:$HOME/.gem/ruby/2.6.0/bin"
+
+# Added after `brew install grep`
+PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
+
+################################################################################
+# Izzy's Personal MBA User Configuration
+################################################################################
 
 ################################################################################
 # Izzy's Yuzu MBP User Configuration
@@ -102,6 +103,3 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 # This loads nvm bash_completion
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-# TODO add `grep` to new-laptop-setup if this is something I decide to keep
-PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
