@@ -35,6 +35,10 @@
 ;; User configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;;;;;;;;;;;;;
+;; Packages ;;
+;;;;;;;;;;;;;;
+
 ;; Use diff-hl-mode in all buffers; this shows VC (e.g. Git) uncommitted changes
 ;; on left-side of emacs windows
 ;; https://github.com/dgutov/diff-hl
@@ -49,6 +53,17 @@
 ;; Enable xclip-mode by default
 ;; https://elpa.gnu.org/packages/xclip.html
 (xclip-mode 1)
+
+;;;;;;;;;;;;;;;;;
+;; Other stuff ;;
+;;;;;;;;;;;;;;;;;
+
+;; Display vertical line at column 80
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Displaying-Boundaries.html
+(global-display-fill-column-indicator-mode)
+(setq-default display-fill-column-indicator-column 80)
+;; note: this has to be HTML code of unicode character, see https://unicode-table.com/
+(setq-default display-fill-column-indicator-character 9474)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Stuff that was automatically added
