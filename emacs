@@ -65,6 +65,11 @@
 ;; note: this has to be HTML code of unicode character, see https://unicode-table.com/
 (setq-default display-fill-column-indicator-character 9474)
 
+;; Display current line & column number
+;; https://www.gnu.org/software/emacs/manual/html_node/efaq/Displaying-the-current-line-or-column.html
+(global-display-line-numbers-mode 1)
+(setq column-number-mode t)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Stuff that was automatically added
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
