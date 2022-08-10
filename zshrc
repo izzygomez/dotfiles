@@ -88,6 +88,10 @@ export PATH="$PATH:$HOME/.gem/ruby/2.6.0/bin"
 # Added after `brew install grep`
 PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
 
+# Remove hints about Homebrew behaviour with environment variables (this is
+# annoying to have around in `brew` command outputs). See: https://docs.brew.sh/Manpage
+export HOMEBREW_NO_ENV_HINTS=1
+
 ################################################################################
 # Izzy's Personal MBA User Configuration
 ################################################################################
