@@ -1,4 +1,18 @@
 ;; -*- mode: lisp; -*-
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Some usage notes (beyond obvious known navigation ones)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; `M-r` moves cursor to top, middle, & bottom of current window.
+;; (https://emacs.stackexchange.com/a/36849)
+;;
+;; `M-g g X` is equivalent to `M-x goto-line X`
+;;
+;; `M-x eval-buffer` while in emacs config file reloads config without restart
+;;
+;; Should probs check out https://www.masteringemacs.org/ for more.
+;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Set up MELPA (https://www.emacswiki.org/emacs/MELPA)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -69,6 +83,10 @@
 ;; https://www.gnu.org/software/emacs/manual/html_node/efaq/Displaying-the-current-line-or-column.html
 (global-display-line-numbers-mode 1)
 (setq column-number-mode t)
+
+;; Have C-v & M-v move cursor to top & bottom of buffer
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Scrolling.html
+(setq scroll-error-top-bottom 'true)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Stuff that was automatically added
