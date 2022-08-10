@@ -54,7 +54,8 @@ export EDITOR=emacs
 # machine from any one that I ssh/mosh into.
 PROMPT='💻 '$PROMPT
 
-# Shortcuts to start/kill emacs as daemon and use emacsclient
+# Shortcuts to start/kill emacs as daemon and use emacsclient, or just use emacs
+alias e="emacs"
 alias emacsd="emacs --daemon"
 alias ec="emacsclient"
 alias ek="emacsclient -e '(kill-emacs)'"
