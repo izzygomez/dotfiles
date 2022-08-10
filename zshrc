@@ -92,6 +92,9 @@ PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
 # annoying to have around in `brew` command outputs). See: https://docs.brew.sh/Manpage
 export HOMEBREW_NO_ENV_HINTS=1
 
+# Per `brew install zsh-autosuggestions` instructions
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 ################################################################################
 # Izzy's Personal MBA User Configuration
 ################################################################################
