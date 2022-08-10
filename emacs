@@ -22,7 +22,8 @@
 
 ;; Declare packages
 (setq my-packages
-      '(solarized-theme
+      '(diff-hl
+	solarized-theme
 	xclip))
 
 ;; Iterate on packages and install missing ones
@@ -33,6 +34,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; User configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Use diff-hl-mode in all buffers; this shows VC (e.g. Git) uncommitted changes
+;; on left-side of emacs windows
+;; https://github.com/dgutov/diff-hl
+(global-diff-hl-mode)
+(diff-hl-margin-mode 1)
+(diff-hl-flydiff-mode 1)
 
 ;; Set solarized dark color theme
 ;; https://github.com/bbatsov/solarized-emacs
