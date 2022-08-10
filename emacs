@@ -22,7 +22,8 @@
 
 ;; Declare packages
 (setq my-packages
-      '(solarized-theme))
+      '(solarized-theme
+	xclip))
 
 ;; Iterate on packages and install missing ones
 (dolist (pkg my-packages)
@@ -36,6 +37,10 @@
 ;; Set solarized dark color theme
 ;; https://github.com/bbatsov/solarized-emacs
 (load-theme 'solarized-dark t)
+
+;; Enable xclip-mode by default
+;; https://elpa.gnu.org/packages/xclip.html
+(xclip-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Stuff that was automatically added
