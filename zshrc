@@ -68,6 +68,7 @@ bindkey '^R' history-incremental-pattern-search-backward
 # Git commit graph alias
 # https://tech.serhatteker.com/post/2021-02/git-log-tree/
 alias gitgraph='git log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\'' --all'
+alias ggr='gitgraph'
 
 # Shortcut for having a browsable history
 alias hl='history | less'
