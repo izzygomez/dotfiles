@@ -88,6 +88,15 @@
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Scrolling.html
 (setq scroll-error-top-bottom 'true)
 
+;; Have Emacs create no backup files.
+;; https://stackoverflow.com/questions/151945/how-do-i-control-how-emacs-makes-backup-files
+;;
+;; TODO: should probably try to actually save stuff under something like
+;; ~/.emacs/backups or something, but I haven't been able to get this all
+;; working correctly. See above answer & https://www.gnu.org/software/emacs/manual/html_node/elisp/Backup-Files.html
+;; for more.
+(setq make-backup-files nil)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Stuff that was automatically added
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
