@@ -95,6 +95,21 @@ export HOMEBREW_NO_ENV_HINTS=1
 # Per `brew install zsh-autosuggestions` instructions
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+# Command line weather widget
+# Usage:
+# `weather`
+# or
+# `weather {location}`
+weather() {
+    if [ -n "$1" ]
+    then
+	eval "curl -s wttr.in/$1"
+    else
+	curl -s wttr.in
+    fi
+}
+alias wtr=weather
+
 ################################################################################
 # Izzy's Personal MBA User Configuration
 ################################################################################
