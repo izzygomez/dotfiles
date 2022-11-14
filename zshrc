@@ -71,8 +71,8 @@ bindkey '^R' history-incremental-pattern-search-backward
 alias gitgraph='git log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\'' --all'
 alias ggr='gitgraph'
 
-# Shortcut for having a browsable history
-alias hl='history | less'
+# Shortcut for having a browsable history, with date & time stamps
+alias hl='history -f | less'
 
 # Added per instruction after running `brew install chruby ruby-install`, which
 # was run per instructions in https://jekyllrb.com/docs/installation/macos/
