@@ -21,7 +21,7 @@ link:
     ~/.dotfile: dotfile
 ```
 
-3. Run `install` script, & delete backup if successful.
+3. Run `install` script, & delete backup if successful
 ```shell
 > ./install
 ...
@@ -31,14 +31,14 @@ link:
 
 ### Installing dotfiles on new machine
 
-1. Clone & install
+1. Clone & install dotfiles
 ```shell
 > git clone git@github.com:izzygomez/dotfiles.git --recursive
 > cd dotfiles
 > ./install
 ```
 
-2. Install new updates
+2. Install new dotfile updates
 ```shell
 > git pull
 > ./install
