@@ -97,6 +97,10 @@
 ;; for more.
 (setq make-backup-files nil)
 
+;; Auto-refresh all buffers when files have changed on disk
+;; https://stackoverflow.com/a/1481706
+(global-auto-revert-mode t)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Stuff that was automatically added
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
