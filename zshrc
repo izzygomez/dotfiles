@@ -110,6 +110,12 @@ weather() {
 }
 alias wtr=weather
 
+# Added as part of pyenv install instructions
+# https://github.com/pyenv/pyenv#set-up-your-shell-environment-for-pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
 ################################################################################
 # Izzy's Personal MBA User Configuration
 ################################################################################
