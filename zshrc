@@ -116,6 +116,12 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
+## Following lines added by gcloud install script: https://cloud.google.com/sdk/docs/install#mac
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/izzyg/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/izzyg/google-cloud-sdk/path.zsh.inc'; fi
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/izzyg/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/izzyg/google-cloud-sdk/completion.zsh.inc'; fi
+
 ################################################################################
 # Izzy's Personal MBA User Configuration
 ################################################################################
