@@ -122,6 +122,10 @@ if [ -f '/Users/izzyg/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/izzyg/goo
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/izzyg/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/izzyg/google-cloud-sdk/completion.zsh.inc'; fi
 
+# Added per instructions (7) while setting up GPG keys for git commits
+# https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key#telling-git-about-your-gpg-key
+export GPG_TTY=$(tty)
+
 ################################################################################
 # Izzy's Personal MBA User Configuration
 ################################################################################

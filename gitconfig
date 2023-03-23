@@ -2,7 +2,10 @@
 [user]
 	name = Izzy Gomez
 	email = izzygmit@gmail.com
+	signingkey = 328FBD3D37A45C47
 [core]
 	editor = emacs
 [push]
 	autoSetupRemote = true
+[commit]
+	gpgsign = true
