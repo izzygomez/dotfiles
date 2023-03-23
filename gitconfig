@@ -7,5 +7,7 @@
 	editor = emacs
 [push]
 	autoSetupRemote = true
+[pull]
+	ff = only
 [commit]
 	gpgsign = true
