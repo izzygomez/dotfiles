@@ -32,7 +32,7 @@
 (package-initialize)
 ;; (package-refresh-contents)
 ;; ^this line is commented since refreshing packages is time-consuming and
-;; should be done on demand
+;; should be done on demand, i.e. M-x package-refresh-contents
 
 ;; Declare packages
 (setq my-packages
@@ -59,6 +59,25 @@
 (global-diff-hl-mode)
 (diff-hl-margin-mode 1)
 (diff-hl-flydiff-mode 1)
+;; With ChatGPT help (!):
+;;   - buffer-list-update-hook runs every time the buffer list is updated (e.g.
+;;     when switching buffers), so diff-hl-update [1] will be run now too.
+;;   - I also defined my own timer fxn (runs every 2 sec) to continuously update
+;;     the diff-hl state based on potential changes to file's git status per
+;;     commands done outside of emacs (e.g. if I `git add` & `git commit` a
+;;     file, before this timer the diff on left side of file wouldn't update
+;;     until buffer was refreshed). Technically this is does what `(add-hook *)`
+;;     line does below, so `buffer-list-update-hook` is superfluous, but keeping
+;;     around just in case I need to comment out timer fxn for performance
+;;     reasons.
+;; [1] https://github.com/dgutov/diff-hl#integration
+(add-hook 'buffer-list-update-hook 'diff-hl-update)
+;; (setq counter 0)  ;; debug
+(defun run-diff-hl-continuously ()
+  ;; (message "ran %s time(s)" counter)  ;; debug
+  ;; (setq counter (+ counter 1))  ;; debug
+  (funcall 'diff-hl-update))
+(run-at-time nil 2 'run-diff-hl-continuously) ;; run every 2 seconds
 
 ;; Set solarized dark color theme
 ;; https://github.com/bbatsov/solarized-emacs
@@ -118,3 +137,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+;; Added after first time I ran M-x list-timers
+(put 'list-timers 'disabled nil)
