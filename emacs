@@ -69,15 +69,20 @@
 ;;     until buffer was refreshed). Technically this is does what `(add-hook *)`
 ;;     line does below, so `buffer-list-update-hook` is superfluous, but keeping
 ;;     around just in case I need to comment out timer fxn for performance
-;;     reasons.
+;;     reasons. Whole thing is wrapped in "start timer" fxn to ensure only one
+;;     of these timers is running at once (e.g. while debugging &
+;;     M-x eval-buffer'ing this file a bunch of times in a row, can spawn many
+;;     timers, which can be trickier to debug).
 ;; [1] https://github.com/dgutov/diff-hl#integration
 (add-hook 'buffer-list-update-hook 'diff-hl-update)
-;; (setq counter 0)  ;; debug
-(defun run-diff-hl-continuously ()
-  ;; (message "ran %s time(s)" counter)  ;; debug
-  ;; (setq counter (+ counter 1))  ;; debug
+(defun continuous-diff-hl ()
   (funcall 'diff-hl-update))
-(run-at-time nil 2 'run-diff-hl-continuously) ;; run every 2 seconds
+(defun start-running-timer ()
+  (when (boundp 'running-timer)
+    (cancel-timer running-timer))
+  (setq running-timer
+	(run-at-time nil 2 'continuous-diff-hl)))  ;; run every 2 seconds
+(start-running-timer)
 
 ;; Set solarized dark color theme
 ;; https://github.com/bbatsov/solarized-emacs
