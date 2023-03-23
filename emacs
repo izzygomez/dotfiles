@@ -98,6 +98,7 @@
 (setq make-backup-files nil)
 
 ;; Auto-refresh all buffers when files have changed on disk
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Auto-Revert.html
 ;; https://stackoverflow.com/a/1481706
 (global-auto-revert-mode t)
 
