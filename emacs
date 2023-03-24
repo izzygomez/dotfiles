@@ -127,6 +127,10 @@
 (setq auto-revert-interval 2)  ;; 2 seconds
 (global-auto-revert-mode t)
 
+;; Splitting window horizontal & vertically (similar bindings as in `.tmux`)
+(global-set-key (kbd "C-x -") 'split-window-below)
+(global-set-key (kbd "C-x |") 'split-window-right)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Stuff that was automatically added
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
