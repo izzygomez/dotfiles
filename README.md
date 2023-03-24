@@ -1,6 +1,6 @@
 # Izzy's Dotfiles
 
-Personal dotfiles setup ([why?](https://dotfiles.github.io/)) using [anishathalye/dotfiles](https://github.com/anishathalye/dotfiles).
+Personal dotfiles setup ([huh?](https://dotfiles.github.io/)) using [anishathalye/dotbot](https://github.com/anishathalye/dotbot).
 
 ## Usage
 
