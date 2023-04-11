@@ -92,6 +92,15 @@ PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
 # annoying to have around in `brew` command outputs). See: https://docs.brew.sh/Manpage
 export HOMEBREW_NO_ENV_HINTS=1
 
+# Setting env variable so that local formulae/cask changes (via `brew edit ...`)
+# are not ignored. See: https://docs.brew.sh/FAQ#can-i-edit-formulae-myself
+#
+# Context here is that as of writing this, I've run `brew edit expressvpn` &
+# added a `auto_updates true` line so that brew doesn't upgrade this cask —
+# prefer not having this behavior for this particular cask because upgrade
+# process is cumbersome & app seems to upgrade on its own.
+export HOMEBREW_NO_INSTALL_FROM_API=1
+
 # Per `brew install zsh-autosuggestions` instructions
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
