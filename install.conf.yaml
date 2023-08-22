@@ -8,6 +8,7 @@
     ~/.emacs: emacs
     ~/.gitconfig: gitconfig
     ~/.tmux.conf: tmux.conf
+    ~/.tmux-powerlinerc: tmux-powerlinerc
     ~/.zprofile: zprofile
     ~/.zshrc: zshrc
 
