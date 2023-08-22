@@ -3,3 +3,4 @@
 # [2] https://github.com/github-linguist/linguist/blob/master/lib/linguist/languages.yml
 tmux.conf linguist-language=Shell
 gitconfig linguist-language=Git-Config
+tmux-powerlinerc linguist-language=Shell
