@@ -46,7 +46,8 @@ link:
 
 ## TODOs
 
-* figure out how to synchronize `tmux` plugins across machines, i.e. automate the following currently-manual steps of having to install plugins the first time `tmux` is run:
+* Consider writing a script that can be run to enumerate dot files in `~` that need to be ported into this repo & output diff to console output. Can create some sort of "ignore" list to not print out, e.g. `.zsh_history`.
+* Figure out how to synchronize `tmux` plugins across machines, i.e. automate the following currently-manual steps of having to install plugins the first time `tmux` is run:
 ```shell
 > git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 > tmux source ~/.tmux.conf
