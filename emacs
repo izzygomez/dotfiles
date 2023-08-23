@@ -131,6 +131,9 @@
 (global-set-key (kbd "C-x -") 'split-window-below)
 (global-set-key (kbd "C-x |") 'split-window-right)
 
+;; Turn off menu-bar-mode
+(menu-bar-mode -1)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Stuff that was automatically added
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
