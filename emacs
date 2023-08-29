@@ -35,8 +35,12 @@
 ;; should be done on demand, i.e. M-x package-refresh-contents
 
 ;; Declare packages
+;; [1] https://github.com/zerolfx/copilot.el
 (setq my-packages
-      '(diff-hl
+      '(dash  ;; added per [1]
+	diff-hl
+	editorconfig  ;; added per [1]
+	s  ;; added per [1]
 	solarized-theme
 	xclip))
 
@@ -44,6 +48,12 @@
 (dolist (pkg my-packages)
   (unless (package-installed-p pkg)
     (package-install pkg)))
+
+;; Install copilot.el. Following instructions from:
+;;  - https://github.com/zerolfx/copilot.el
+;;  - https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/
+(add-to-list 'load-path (expand-file-name "copilot.el" (file-name-directory (or (file-truename load-file-name) (file-truename buffer-file-name)))))
+(require 'copilot)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; User configuration
@@ -91,6 +101,17 @@
 ;; Enable xclip-mode by default
 ;; https://elpa.gnu.org/packages/xclip.html
 (xclip-mode 1)
+
+;;;; GH Copilot
+;; Use copilot-mode in any programming mode (i.e. derived from prog-mode)
+(add-hook 'prog-mode-hook 'copilot-mode)
+
+;; tab key
+(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+
+;; TODO consider going through [1] & setting up more copilot stuff
+;; [1] https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/
 
 ;;;;;;;;;;;;;;;;;
 ;; Other stuff ;;
@@ -143,7 +164,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(solarized-theme)))
+ '(package-selected-packages '(s dash editorconfig solarized-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
