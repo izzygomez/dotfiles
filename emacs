@@ -11,7 +11,9 @@
 ;;
 ;; `M-x eval-buffer` while in emacs config file reloads config without restart
 ;;
-;; Should probs check out https://www.masteringemacs.org/ for more.
+;; `C-h` is the help prefix key. e.g. `C-h k` is used to describe a keybinding.
+;;
+;; TODO Should probs check out https://www.masteringemacs.org/ for more.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Set up MELPA (https://www.emacswiki.org/emacs/MELPA)
@@ -163,6 +165,10 @@
 ;; from https://stackoverflow.com/a/51966682, don't want this emacs warning
 ;; to show up.
 (setq python-indent-guess-indent-offset-verbose nil)
+
+;; Turn off startup message
+;; from: https://emacs.stackexchange.com/a/437
+(defun display-startup-echo-area-message () (message nil))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Stuff that was automatically added
