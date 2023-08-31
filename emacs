@@ -158,6 +158,12 @@
 ;; Turn off menu-bar-mode
 (menu-bar-mode -1)
 
+;; Set default python indent to 4 spaces
+(setq python-indent-offset 4)
+;; from https://stackoverflow.com/a/51966682, don't want this emacs warning
+;; to show up.
+(setq python-indent-guess-indent-offset-verbose nil)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Stuff that was automatically added
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
