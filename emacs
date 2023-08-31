@@ -52,7 +52,10 @@
 ;; Install copilot.el. Following instructions from:
 ;;  - https://github.com/zerolfx/copilot.el
 ;;  - https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/
-(add-to-list 'load-path (expand-file-name "copilot.el" (file-name-directory (or (file-truename load-file-name) (file-truename buffer-file-name)))))
+;;
+;; Note: this following line assumes that `~/.emacs` is a symlink to this file,
+;; & that `copilot.el/` is a sibling directory to this file.
+(add-to-list 'load-path (expand-file-name "copilot.el" (file-name-directory (file-truename "~/.emacs"))))
 (require 'copilot)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
