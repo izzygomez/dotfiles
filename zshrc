@@ -37,12 +37,6 @@ LESSPIPE=`which src-hilite-lesspipe.sh`
 export LESSOPEN="| ${LESSPIPE} %s"
 export LESS=' -R '
 
-# Add python3 to path --- TODO only doing this for trezorctl setup, determine
-# if I should do this long-term
-export PATH=$PATH:$HOME/Library/Python/3.9/bin
-
-# TODO per https://www.gnu.org/software/emacs/manual/html_node/emacs/Specifying-File-Variables.html
-# these linese might need to be at the bottom of the file
 # Added these after running `brew install zsh-syntax-highlighting`
 # https://github.com/zsh-users/zsh-syntax-highlighting
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
