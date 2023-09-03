@@ -33,7 +33,7 @@ link:
 
 1. Clone & install dotfiles
 ```shell
-> git clone git@github.com:izzygomez/dotfiles.git --recursive
+> git clone https://github.com/izzygomez/dotfiles --recursive
 > cd dotfiles
 > ./install
 ```
@@ -43,6 +43,25 @@ link:
 > git pull
 > ./install
 ```
+
+## Misc
+
+### Submodules
+
+Our submodule pointers can be updated by simply pulling new changes
+```shell
+cd submodule
+git checkout {main,master,...}
+git pull
+```
+
+& then returning to the `dotfiles` repo & commiting the updates
+```shell
+cd ..  # should be in dotfiles/
+git add submodule; git commit -m "update `submodule`"; git push
+```
+
+Note that `git restore submodule` does not discard working directory changes as expected. To revert the submodule pointer to what it was before, either do as above but instead `git checkout` the previous commit hash, or run `git submodule update --init`.
 
 ## TODOs
 
