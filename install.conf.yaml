@@ -9,8 +9,8 @@
     ~/.gitconfig: gitconfig
     ~/.tmux.conf: tmux.conf
     ~/.tmux-powerlinerc: tmux-powerlinerc
-    ~/.zprofile: zprofile
-    ~/.zshrc: zshrc
+    ~/.zprofile: zsh/zprofile
+    ~/.zshrc: zsh/zshrc
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
