@@ -46,6 +46,20 @@ link:
 
 ## Misc
 
+### Machine-specific configuration
+
+Ideally, this dotfiles setup should work out-of-the-box on any machine, regardless of OS & availability of packages. In order to accomplish this, config dotfiles should be split in such a way that certain settings apply for only certain machine specs.
+
+This effort is a 🚧 work in progress 🚧. See `zsh/checkers.sh` & its usage for examples on how this can be accomplished.
+
+### Shell script formatting
+
+Shell scripts in this repo should be formatted with the following command:
+```shell
+shfmt -i 4 -w FILE-NAME
+```
+The `-i 4` flag specifies to use 4 spaces for indentation, & the `-w` flag overwrites `FILE-NAME` in place. This is not automatically enforced yet (see TODOs below).
+
 ### Submodules
 
 Our submodule pointers can be updated by simply pulling new changes
@@ -72,5 +86,4 @@ Note that `git restore submodule` does not discard working directory changes as 
 > tmux source ~/.tmux.conf
 # in tmux, press C-a (prefix) + I (capital "i")
 ```
-
-
+* Auto-enforce formatting of shell-like files. See "Shell script formatting" section above.
