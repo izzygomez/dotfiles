@@ -7,8 +7,8 @@
 - link:
     ~/.emacs: emacs
     ~/.gitconfig: gitconfig
-    ~/.tmux.conf: tmux.conf
-    ~/.tmux-powerlinerc: tmux-powerlinerc
+    ~/.tmux.conf: tmux/tmux.conf
+    ~/.tmux-powerlinerc: tmux/tmux-powerlinerc
     ~/.zprofile: zsh/zprofile
     ~/.zshrc: zsh/zshrc
 
