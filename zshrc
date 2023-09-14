@@ -1,24 +1,22 @@
 #!/bin/zsh
 
 ################################################################################
-# Oh My Zsh configuration.
+# Source checkers.sh
+################################################################################
+dotfiles_dir=$(dirname $(realpath ~/.zshrc))
+source $dotfiles_dir/checkers.sh
 
+################################################################################
+# Oh My Zsh configuration.
+#
 # I deleted most of the commented out template lines that were not being used;
 # see file in omz repo here:
 # https://github.com/ohmyzsh/ohmyzsh/blob/master/templates/zshrc.zsh-template
 ################################################################################
 
-# Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
