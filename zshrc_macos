@@ -1,33 +1,10 @@
 #!/bin/zsh
 
-################################################################################
 # Source checkers.sh
-################################################################################
 dotfiles_dir=$(dirname $(realpath ~/.zshrc))
 source $dotfiles_dir/checkers.sh
 
-################################################################################
-# Oh My Zsh configuration.
-#
-# I deleted most of the commented out template lines that were not being used;
-# see file in omz repo here:
-# https://github.com/ohmyzsh/ohmyzsh/blob/master/templates/zshrc.zsh-template
-################################################################################
-
-export ZSH="$HOME/.oh-my-zsh"
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
-plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
-
-################################################################################
-# All-machines User Configuration
-# 
-# These configuration settings should apply to all synchronized machines that
-# make use of https://github.com/izzygomez/dotfiles &
-# https://github.com/izzygomez/new-laptop-setup
-################################################################################
+# TODO make use of checkers?
 
 # Syntax highlighting in `less`
 # https://ole.michelsen.dk/blog/syntax-highlight-files-macos-terminal-less/
@@ -40,31 +17,10 @@ export LESS=' -R '
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/opt/homebrew/share/zsh-syntax-highlighting/highlighters
 
-# set emacs as default editor
-export EDITOR=emacs
-# set prompt to have laptop emoji prefix to differentiate terminal GUI on this
-# machine from any one that I ssh/mosh into.
-PROMPT='💻 '$PROMPT
-
-# Shortcuts to start/kill emacs as daemon and use emacsclient, or just use emacs
-alias e="emacs"
-alias emacsd="emacs --daemon"
-alias ec="emacsclient"
-alias ek="emacsclient -e '(kill-emacs)'"
-
+# TODO this is technically available on other machines other than macOS, so
+# this config doesn't strictly need to live here. Consider moving elsewhere.
 # Added per install commands from https://github.com/nvbn/thefuck
 eval "$(thefuck --alias)"
-
-# makes ^R backward search support patterns (i.e. '*' characters)
-bindkey '^R' history-incremental-pattern-search-backward
-
-# Git commit graph alias
-# https://tech.serhatteker.com/post/2021-02/git-log-tree/
-alias gitgraph='git log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\'' --all'
-alias ggr='gitgraph'
-
-# Shortcut for having a browsable history, with date & time stamps
-alias hl='history -f | less'
 
 # Added per instruction after running `brew install chruby ruby-install`, which
 # was run per instructions in https://jekyllrb.com/docs/installation/macos/
@@ -96,49 +52,8 @@ export HOMEBREW_NO_INSTALL_FROM_API=1
 # Per `brew install zsh-autosuggestions` instructions
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# Command line weather widget
-# Usage:
-# `weather`
-# or
-# `weather {location}`
-weather() {
-    if [ -n "$1" ]
-    then
-	eval "curl -s wttr.in/$1"
-    else
-	curl -s wttr.in
-    fi
-}
-alias wtr=weather
-
-# Added as part of pyenv install instructions
-# https://github.com/pyenv/pyenv#set-up-your-shell-environment-for-pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
 ## Following lines added by gcloud install script: https://cloud.google.com/sdk/docs/install#mac
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/izzyg/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/izzyg/google-cloud-sdk/path.zsh.inc'; fi
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/izzyg/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/izzyg/google-cloud-sdk/completion.zsh.inc'; fi
-
-# Added per instructions (7) while setting up GPG keys for git commits
-# https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key#telling-git-about-your-gpg-key
-export GPG_TTY=$(tty)
-
-################################################################################
-# Izzy's Personal MBA User Configuration
-################################################################################
-
-################################################################################
-# Izzy's Yuzu MBP User Configuration
-################################################################################
-
-# Added automatically from install script:
-# https://github.com/nvm-sh/nvm#installing-and-updating
-export NVM_DIR="$HOME/.nvm"
-# This loads nvm
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-# This loads nvm bash_completion
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
