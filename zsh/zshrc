@@ -34,10 +34,16 @@ if isMacOS; then
     source $dotfiles_dir/zshrc_macos
 fi
 
-# TODO create different prompts for different machines
-# set prompt to have laptop emoji prefix to differentiate terminal GUI on this
-# machine from any one that I ssh/mosh into.
-PROMPT='💻 '$PROMPT
+# Set prompt emoji prefixes to differentiate different machines.
+if isIzzysMBA; then
+    PROMPT='☁️  '$PROMPT
+elif isIzzysMBP; then
+    PROMPT='🚀 '$PROMPT
+elif isIzzysRaspberryPi; then
+    PROMPT='🥧 '$PROMPT
+else
+    echo "~/.zshrc: not a recognized machine, not setting prompt prefix."
+fi
 
 # TODO add check to see if emacs is available & possibly move all emacs config
 # into separate file.

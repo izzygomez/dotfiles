@@ -19,13 +19,13 @@ isCommandAvailable() {
 }
 
 isIzzysMBA() {
-    [[ $(hostname) == "izzys-mba" ]]
+    isMacOS && [[ $(hostname) == "izzys-mba" ]]
 }
 
-isIzzyMBP() {
-    [[ $(hostname) == "izzys-mbp" ]]
+isIzzysMBP() {
+    isMacOS && [[ $(hostname) == "izzys-mbp" ]]
 }
 
 isIzzysRaspberryPi() {
-    [[ $(hostname) == "izzys-raspberrypi" ]]
+    isRaspberryPi && [[ $(hostname) == "izzys-raspberrypi" ]]
 }
