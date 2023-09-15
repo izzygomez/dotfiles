@@ -4,6 +4,23 @@
 #	 vi: foldmarker={,} foldmethod=marker foldlevel=0 tabstop=4 filetype=sh
 # }
 
+# Only tmux version >= 3.2 supports `absolute-centre` usage, as in
+# `tmux set-option -g status-justify absolute-centre`. It was implemented in [1]
+# & was first included in release 3.2 [2].
+# [1] https://github.com/tmux/tmux/commit/3eb91efba160eff0b077a5fee902edb632f7fdca
+# [2] https://github.com/tmux/tmux/releases
+tmux_version=$(tmux -V | awk '{print $2}')
+tmux_major_version=$(echo "$tmux_version" | cut -d. -f1)
+tmux_minor_version=$(echo "$tmux_version" | cut -d. -f2 | tr -d -c 0-9)
+major_required=3
+minor_required=2
+does_tmux_support_absolute_centre=0
+if [ "$tmux_major_version" -gt "$major_required" ] ||
+    [ "$tmux_major_version" -eq "$major_required" -a \
+        "$tmux_minor_version" -ge "$minor_required" ]; then
+    does_tmux_support_absolute_centre=1
+fi
+
 # General {
 	# Show which segment fails and its exit code.
 	export TMUX_POWERLINE_DEBUG_MODE_ENABLED="false"
@@ -24,7 +41,11 @@
 	# Note that events that force-refresh the status bar (such as window renaming) will ignore this.
 	export TMUX_POWERLINE_STATUS_INTERVAL="0"
 	# The location of the window list. Can be {"absolute-centre, centre, left, right"}.
-	export TMUX_POWERLINE_STATUS_JUSTIFICATION="absolute-centre"
+	if [ "$does_tmux_support_absolute_centre" -eq 1 ]; then
+		export TMUX_POWERLINE_STATUS_JUSTIFICATION="absolute-centre"
+	else
+		export TMUX_POWERLINE_STATUS_JUSTIFICATION="centre"
+	fi
 
 	# The maximum length of the left status bar.
 	export TMUX_POWERLINE_STATUS_LEFT_LENGTH="90"
