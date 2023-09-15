@@ -45,16 +45,11 @@ else
     echo "~/.zshrc: not a recognized machine, not setting prompt prefix."
 fi
 
-# TODO add check to see if emacs is available & possibly move all emacs config
-# into separate file.
-# set emacs as default editor
-export EDITOR=emacs
-
-# Shortcuts to start/kill emacs as daemon and use emacsclient, or just use emacs
-alias e="emacs"
-alias emacsd="emacs --daemon"
-alias ec="emacsclient"
-alias ek="emacsclient -e '(kill-emacs)'"
+if isCommandAvailable emacs; then
+    source $dotfiles_dir/zshrc_emacs
+else
+    echo "~/.zshrc: emacs is not available, can't set settings."
+fi
 
 # makes ^R backward search support patterns (i.e. '*' characters)
 bindkey '^R' history-incremental-pattern-search-backward

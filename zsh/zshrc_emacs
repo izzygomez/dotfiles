@@ -1,0 +1,42 @@
+#!/bin/zsh
+
+export EDITOR=emacs # set as default editor
+
+# Shortcuts to manually start/kill emacs daemon and use emacsclient.
+alias emacsd="emacs --daemon && echo 'Started emacs daemon.'"
+alias ec="emacsclient"
+alias ek="emacsclient -e '(kill-emacs)' && echo 'Killed emacs daemon.'"
+
+# Helper function to connect to emacs daemon with or without arguments.
+connect_to_emacs() {
+    if [ $# -eq 0 ]; then
+        ec -c -a ""
+    else
+        ec "$@"
+    fi
+}
+
+# `e` alias to automatically start/use daemon/emacsclient.
+#
+# Usage: `e` to connect to daemon with no arguments.
+#        `e <file>` to open <file> in daemon.
+e() {
+    # If emacs daemon is already running, connect to it.
+    if pgrep -x "emacs" | xargs ps -p | grep -q "\--daemon"; then
+	echo "Emacs daemon already running. Connecting..."
+        connect_to_emacs "$@"
+    else
+        echo "Emacs daemon not already running. Starting..."
+        emacs --daemon
+
+        # Wait until the daemon is ready
+        while ! emacsclient --eval \
+            "(progn (require 'server) (server-running-p))" \
+            >/dev/null 2>&1; do
+            sleep 1
+        done
+
+        echo "Emacs daemon started. Connecting..."
+        connect_to_emacs "$@" # Connect to new daemon with same arguments
+    fi
+}
