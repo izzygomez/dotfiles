@@ -40,7 +40,11 @@ if isIzzysMBA; then
 elif isIzzysMBP; then
     PROMPT='🚀 '$PROMPT
 elif isIzzysRaspberryPi; then
-    PROMPT='🥧 '$PROMPT
+    # Note: considering I mostly `mosh` into this machine & mosh has a long
+    # history of not supporting certain emois/characters [1], I'm limited in
+    # what I can use here.
+    # [1] https://github.com/mobile-shell/mosh/issues/234
+    PROMPT='🤖 '$PROMPT
 else
     echo "~/.zshrc: not a recognized machine, not setting prompt prefix."
 fi
