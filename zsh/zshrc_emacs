@@ -1,5 +1,8 @@
 #!/bin/zsh
 
+# This file is sourced by ~/.zshrc, & it may be written in such a way that it
+# can't run on its own (i.e. it's not a script).
+
 export EDITOR=emacs # set as default editor
 
 # Shortcuts to manually start/kill emacs daemon and use emacsclient.
@@ -23,7 +26,7 @@ connect_to_emacs() {
 e() {
     # If emacs daemon is already running, connect to it.
     if pgrep -x "emacs" | xargs ps -p | grep -q "\--daemon"; then
-	echo "Emacs daemon already running. Connecting..."
+        echo "Emacs daemon already running. Connecting..."
         connect_to_emacs "$@"
     else
         echo "Emacs daemon not already running. Starting..."

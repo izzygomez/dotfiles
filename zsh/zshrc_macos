@@ -1,40 +1,11 @@
 #!/bin/zsh
 
-# Source checkers.sh
-dotfiles_dir=$(dirname $(realpath ~/.zshrc))
-source $dotfiles_dir/checkers.sh
+# This file is sourced by ~/.zshrc, & it may be written in such a way that it
+# can't run on its own (i.e. it's not a script).
 
-# TODO make use of checkers?
-
-# Syntax highlighting in `less`
-# https://ole.michelsen.dk/blog/syntax-highlight-files-macos-terminal-less/
-LESSPIPE=$(which src-hilite-lesspipe.sh)
-export LESSOPEN="| ${LESSPIPE} %s"
-export LESS=' -R '
-
-# Added these after running `brew install zsh-syntax-highlighting`
-# https://github.com/zsh-users/zsh-syntax-highlighting
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/opt/homebrew/share/zsh-syntax-highlighting/highlighters
-
-# TODO this is technically available on other machines other than macOS, so
-# this config doesn't strictly need to live here. Consider moving elsewhere.
-# Added per install commands from https://github.com/nvbn/thefuck
-eval "$(thefuck --alias)"
-
-# Added per instruction after running `brew install chruby ruby-install`, which
-# was run per instructions in https://jekyllrb.com/docs/installation/macos/
-source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
-source /opt/homebrew/opt/chruby/share/chruby/auto.sh
-chruby ruby-3.1.2
-# add brew-installed ruby to path
-export PATH="/usr/local/opt/ruby/bin:$PATH"
-# add gem (ruby) executable to path, per
-# https://jekyllrb.com/docs/installation/macos/
-export PATH="$PATH:$HOME/.gem/ruby/2.6.0/bin"
-
-# Added after `brew install grep`
-PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
+################################################################################
+# Misc configuration
+################################################################################
 
 # Remove hints about Homebrew behaviour with environment variables (this is
 # annoying to have around in `brew` command outputs). See: https://docs.brew.sh/Manpage
@@ -49,11 +20,94 @@ export HOMEBREW_NO_ENV_HINTS=1
 # process is cumbersome & app seems to upgrade on its own.
 export HOMEBREW_NO_INSTALL_FROM_API=1
 
-# Per `brew install zsh-autosuggestions` instructions
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 ## Following lines added by gcloud install script: https://cloud.google.com/sdk/docs/install#mac
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/izzyg/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/izzyg/google-cloud-sdk/path.zsh.inc'; fi
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/izzyg/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/izzyg/google-cloud-sdk/completion.zsh.inc'; fi
+
+################################################################################
+# Homebrew package configurations
+################################################################################
+
+# Function to check if set of Homebrew packages are installed, & if so apply
+# custom config.
+#
+# Usage: `check_and_configure_packages packages... -- configure_block`
+# where `configure_block` is a function code block with config & `packages...`
+# is space separated list of packages.
+check_and_configure_packages() {
+    # Collect all package names into an array
+    local packages=()
+    while [[ "$#" -gt 0 && "$1" != "--" ]]; do
+        packages+=("$1")
+        shift
+    done
+
+    # Check if all packages are installed
+    local all_packages_installed=1
+    for package in "${packages[@]}"; do
+        if ! is_command_available "$package" && ! [[ -d "$(brew --cellar)/$package" ]]; then
+            echo "~/.zshrc_macos: $package not installed, can't set settings."
+            all_packages_installed=0
+            break
+        fi
+    done
+
+    # If all packages are installed, execute the function
+    if [[ "$all_packages_installed" -eq 1 ]]; then
+        if [[ "$1" == "--" ]]; then shift; fi
+        "$@"
+    fi
+}
+
+configure_source_highlight() {
+    # Syntax highlighting in `less` per instructions here:
+    # https://ole.michelsen.dk/blog/syntax-highlight-files-macos-terminal-less/
+    LESSPIPE=$(which src-hilite-lesspipe.sh)
+    export LESSOPEN="| ${LESSPIPE} %s"
+    export LESS=' -R '
+}
+check_and_configure_packages source-highlight -- configure_source_highlight
+
+configure_thefuck() {
+    # Added per install commands from https://github.com/nvbn/thefuck
+    eval "$(thefuck --alias)"
+}
+check_and_configure_packages thefuck -- configure_thefuck
+
+# Added per instruction after running `brew install chruby ruby-install`, which
+# was run per instructions in https://jekyllrb.com/docs/installation/macos/
+configure_ruby() {
+    source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+    source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+    chruby ruby-3.1.2
+    # add brew-installed ruby to path
+    export PATH="/usr/local/opt/ruby/bin:$PATH"
+    # add gem (ruby) executable to path, per
+    # https://jekyllrb.com/docs/installation/macos/
+    export PATH="$PATH:$HOME/.gem/ruby/2.6.0/bin"
+}
+check_and_configure_packages chruby ruby-install -- configure_ruby
+
+configure_grep() {
+    # Added after `brew install grep`
+    PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
+}
+check_and_configure_packages grep -- configure_grep
+
+configure_zsh_autosuggestions() {
+    # Per `brew install zsh-autosuggestions` instructions
+    source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+}
+check_and_configure_packages zsh-autosuggestions -- configure_zsh_autosuggestions
+
+# This should be sourced last:
+# https://github.com/zsh-users/zsh-syntax-highlighting#why-must-zsh-syntax-highlightingzsh-be-sourced-at-the-end-of-the-zshrc-file
+configure_zsh_syntax_highlighting() {
+    # Added these after running `brew install zsh-syntax-highlighting`
+    # https://github.com/zsh-users/zsh-syntax-highlighting
+    source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/opt/homebrew/share/zsh-syntax-highlighting/highlighters
+}
+check_and_configure_packages zsh-syntax-highlighting -- configure_zsh_syntax_highlighting

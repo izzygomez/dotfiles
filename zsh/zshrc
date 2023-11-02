@@ -3,8 +3,11 @@
 ################################################################################
 # Source checkers.sh
 ################################################################################
-dotfiles_dir=$(dirname $(realpath ~/.zshrc))
-source $dotfiles_dir/checkers.sh
+
+# Note: this should be updated if the location of this file changes within the
+# dotfiles repo.
+dotfiles_dir=$(dirname $(dirname $(realpath ~/.zshrc)))
+source $dotfiles_dir/zsh/checkers.sh
 
 ################################################################################
 # Oh My Zsh configuration.
@@ -22,35 +25,15 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 ################################################################################
-# All-machines User Configuration
+# All machines configuration
 #
-# These configuration settings should apply to all synchronized machines that
-# make use of https://github.com/izzygomez/dotfiles &
+# This configuration should apply to all synchronized machines that make use of
+# https://github.com/izzygomez/dotfiles or
 # https://github.com/izzygomez/new-laptop-setup
 ################################################################################
 
-# Mac OS specific configuration
-if isMacOS; then
-    source $dotfiles_dir/zshrc_macos
-fi
-
-# Set prompt emoji prefixes to differentiate different machines.
-if isIzzysMBA; then
-    PROMPT='☁️  '$PROMPT
-elif isIzzysMBP; then
-    PROMPT='🚀 '$PROMPT
-elif isIzzysRaspberryPi; then
-    # Note: considering I mostly `mosh` into this machine & mosh has a long
-    # history of not supporting certain emois/characters [1], I'm limited in
-    # what I can use here.
-    # [1] https://github.com/mobile-shell/mosh/issues/234
-    PROMPT='🤖 '$PROMPT
-else
-    echo "~/.zshrc: not a recognized machine, not setting prompt prefix."
-fi
-
-if isCommandAvailable emacs; then
-    source $dotfiles_dir/zshrc_emacs
+if is_command_available emacs; then
+    source $dotfiles_dir/zsh/zshrc_emacs
 else
     echo "~/.zshrc: emacs is not available, can't set settings."
 fi
@@ -58,7 +41,7 @@ fi
 # makes ^R backward search support patterns (i.e. '*' characters)
 bindkey '^R' history-incremental-pattern-search-backward
 
-if isCommandAvailable git; then
+if is_command_available git; then
     # Git commit graph alias
     # https://tech.serhatteker.com/post/2021-02/git-log-tree/
     alias gitgraph='git log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\'' --all'
@@ -82,9 +65,8 @@ weather() {
         curl -s wttr.in
     fi
 }
-alias wtr=weather
 
-if isCommandAvailable pyenv; then
+if is_command_available pyenv; then
     # Added as part of pyenv install instructions
     # https://github.com/pyenv/pyenv#set-up-your-shell-environment-for-pyenv
     export PYENV_ROOT="$HOME/.pyenv"
@@ -98,10 +80,39 @@ fi
 # https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key#telling-git-about-your-gpg-key
 export GPG_TTY=$(tty)
 
-# Added automatically from install script:
-# https://github.com/nvm-sh/nvm#installing-and-updating
-export NVM_DIR="$HOME/.nvm"
-# This loads nvm
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-# This loads nvm bash_completion
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+if is_command_available nvm; then
+    # Added automatically from install script:
+    # https://github.com/nvm-sh/nvm#installing-and-updating
+    export NVM_DIR="$HOME/.nvm"
+    # This loads nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    # This loads nvm bash_completion
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+else
+    echo "~/.zshrc: nvm is not available, can't set settings."
+fi
+
+################################################################################
+# Machine-specific configuration
+################################################################################
+
+# Set prompt emoji prefixes to differentiate different machines.
+if is_izzys_mba; then
+    PROMPT='☁️  '$PROMPT
+elif is_izzys_mbp; then
+    PROMPT='🚀 '$PROMPT
+elif is_izzys_raspberry_pi; then
+    # Note: considering I mostly `mosh` into this machine & mosh has a long
+    # history of not supporting certain emojis/characters [1], I'm limited in
+    # what I can use here.
+    # [1] https://github.com/mobile-shell/mosh/issues/234
+    PROMPT='🤖 '$PROMPT
+else
+    echo "~/.zshrc: not a recognized machine, not setting prompt prefix."
+fi
+
+# Mac OS specific configuration; see zshrc_macos for details, but this must be
+# sourced last.
+if is_mac_os; then
+    source $dotfiles_dir/zsh/zshrc_macos
+fi

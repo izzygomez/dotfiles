@@ -2,30 +2,30 @@
 
 # Checker functions to use in other config files for conditional config-setting.
 
-isMacOS() {
+is_mac_os() {
     [[ $(uname) == "Darwin" ]]
 }
 
-isLinux() {
+is_linux() {
     [[ $(uname) == "Linux" ]]
 }
 
-isRaspberryPi() {
-    isLinux && [[ "$(cat /sys/firmware/devicetree/base/model)" =~ "Raspberry Pi" ]]
+is_raspberry_pi() {
+    is_linux && [[ "$(cat /sys/firmware/devicetree/base/model)" =~ "Raspberry Pi" ]]
 }
 
-isCommandAvailable() {
-    command -v "$1" >/dev/null 2>&1
+is_command_available() {
+    command -v "$1" &>/dev/null
 }
 
-isIzzysMBA() {
-    isMacOS && [[ $(hostname) == "izzys-mba" ]]
+is_izzys_mba() {
+    is_mac_os && [[ $(hostname) == "izzys-mba" ]]
 }
 
-isIzzysMBP() {
-    isMacOS && [[ $(hostname) == "izzys-mbp" ]]
+is_izzys_mbp() {
+    is_mac_os && [[ $(hostname) == "izzys-mbp" ]]
 }
 
-isIzzysRaspberryPi() {
-    isRaspberryPi && [[ $(hostname) == "izzys-raspberrypi" ]]
+is_izzys_raspberry_pi() {
+    is_raspberry_pi && [[ $(hostname) == "izzys-raspberrypi" ]]
 }
