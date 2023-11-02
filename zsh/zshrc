@@ -66,11 +66,13 @@ weather() {
     fi
 }
 
+# Added as part of pyenv install instructions [1]. On macOS, should be installed
+# via `brew`; elsewhere follow these instructions [2].
+# [1] https://github.com/pyenv/pyenv#set-up-your-shell-environment-for-pyenv
+# [2] https://github.com/pyenv/pyenv-installer
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 if is_command_available pyenv; then
-    # Added as part of pyenv install instructions
-    # https://github.com/pyenv/pyenv#set-up-your-shell-environment-for-pyenv
-    export PYENV_ROOT="$HOME/.pyenv"
-    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
 else
     echo "~/.zshrc: pyenv is not available, can't set settings."
