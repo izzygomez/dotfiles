@@ -170,6 +170,10 @@
 ;; from: https://emacs.stackexchange.com/a/437
 (defun display-startup-echo-area-message () (message nil))
 
+;; Keep search strings highlighted
+;; https://stackoverflow.com/a/3780053
+(setq lazy-highlight-cleanup nil)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Stuff that was automatically added
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
