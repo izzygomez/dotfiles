@@ -84,8 +84,8 @@ export GPG_TTY=$(tty)
 
 # Added automatically from install script:  https://github.com/nvm-sh/nvm#installing-and-updating
 # Note that these lines aren't inside the `if` block because (1) they fail
-# gracefully if nvm is not installed, and (2) they are needed for the `nvm` to
-# be available in the first place.
+# gracefully if nvm is not installed, and (2) they are needed for `nvm` to be
+# available in the first place.
 export NVM_DIR="$HOME/.nvm"
 # This loads nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
