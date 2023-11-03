@@ -114,6 +114,11 @@ else
     echo "~/.zshrc: not a recognized machine, not setting prompt prefix."
 fi
 
+# Raspberry Pi specific configuration.
+if is_raspberry_pi; then
+    source $dotfiles_dir/zsh/zshrc_raspberry_pi
+fi
+
 # Mac OS specific configuration; see zshrc_macos for details, but this must be
 # sourced last.
 if is_mac_os; then

@@ -1,0 +1,21 @@
+#!/bin/zsh
+
+# This file is sourced by ~/.zshrc, & it may be written in such a way that it
+# can't run on its own (i.e. it's not a script).
+
+if is_command_available keychain; then
+    # Keychain is a manager for SSH (& GPG) keys across different terminal
+    # sessions & even system reboots. It acts as a frontend to `ssh-agent` (&
+    # `gpg-agent`) & simplifies the process of loading keys when you start a new
+    # terminal session.
+    #
+    # Currently I'm using this to load Github SSH key to authenticate myself
+    # when I'm writing & committing code on the Raspberry Pi.
+    #
+    # Using `--quiet` flag so that keychain's startup info isn't noisy by
+    # printing info in all terminal experiences; stderr should apparently still
+    # be displayed if needed (haven't tested).
+    eval $(keychain --eval --quiet --agents ssh github_ssh_key)
+else
+    echo "~/.zshrc_raspberry_pi: keychain not installed, can't set settings."
+fi
