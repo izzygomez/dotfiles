@@ -38,10 +38,12 @@
 
 ;; Declare packages
 ;; [1] https://github.com/zerolfx/copilot.el
+;; [2] https://github.com/magnars/multiple-cursors.el
 (setq my-packages
       '(dash  ;; added per [1]
 	diff-hl
 	editorconfig  ;; added per [1]
+	multiple-cursors  ;; [2]
 	s  ;; added per [1]
 	solarized-theme
 	xclip))
@@ -59,6 +61,8 @@
 ;; & that `copilot.el/` is a sibling directory to this file.
 (add-to-list 'load-path (expand-file-name "copilot.el" (file-name-directory (file-truename "~/.emacs"))))
 (require 'copilot)
+
+(require 'multiple-cursors)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; User configuration
@@ -117,6 +121,14 @@
 
 ;; TODO consider going through [1] & setting up more copilot stuff
 ;; [1] https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/
+
+;;;; Multiple cursors
+;; mostly setting default configuration in repo README
+;; https://github.com/magnars/multiple-cursors.el
+(global-set-key (kbd "C-c e") 'mc/edit-lines)
+(global-set-key (kbd "C-c n") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-c p") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c a") 'mc/mark-all-like-this)
 
 ;;;;;;;;;;;;;;;;;
 ;; Other stuff ;;
