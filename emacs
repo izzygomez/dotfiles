@@ -13,6 +13,12 @@
 ;;
 ;; `C-h` is the help prefix key. e.g. `C-h k` is used to describe a keybinding.
 ;;
+;; Multiple cursors:
+;;   - `C-c e` to edit all lines in region
+;;   - `C-c n` to select next occurrence of region
+;;   - `C-c p` to select previous occurrence of region
+;;   - `C-c a` to select all occurrences of region
+;;
 ;; TODO Should probs check out https://www.masteringemacs.org/ for more.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
