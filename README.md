@@ -87,3 +87,4 @@ Note that `git restore submodule` does not discard working directory changes as 
 # in tmux, press C-a (prefix) + I (capital "i")
 ```
 * Auto-enforce formatting of shell-like files. See "Shell script formatting" section above.
+* `emacs`, `undo-tree` package: currently setting up undo tree history files to be saved in `~/.emacs.d/undo-tree-histories`, but there's no mechanism to delete history files for files that have been deleted (or possibly even handle cases where files are renamed?). Investigate this & fix.

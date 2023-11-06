@@ -46,6 +46,7 @@
 	multiple-cursors  ;; [2]
 	s  ;; added per [1]
 	solarized-theme
+	undo-tree
 	xclip))
 
 ;; Iterate on packages and install missing ones
@@ -63,6 +64,7 @@
 (require 'copilot)
 
 (require 'multiple-cursors)
+(require 'undo-tree)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; User configuration
@@ -130,6 +132,33 @@
 (global-set-key (kbd "C-c p") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c a") 'mc/mark-all-like-this)
 
+;;;; Undo tree
+;; https://www.emacswiki.org/emacs/UndoTree
+(global-undo-tree-mode)
+(setq undo-tree-visualizer-timestamps t)
+
+;; Save undo tree history files in a ~/.emacs.d instead of current directory.
+(setq undo-tree-history-directory-alist
+      '(("." . "~/.emacs.d/undo-tree-histories/")))
+
+;; Custom code from ChatGPT. This makes it so that when I'm
+;; in undo-tree-visualizer & I hit RET, it quits undo-tree-visualizer, kills the
+;; undo-tree buffer, & restores the previous window configuration.
+(defun my/undo-tree-visualizer-quit ()
+  "Quit undo-tree-visualizer, kill undo-tree buffer, and restore the previous window configuration."
+  (interactive)
+  (let ((buffer-to-restore (other-buffer (current-buffer))))
+    ;; Quit undo-tree-visualizer
+    (undo-tree-visualizer-quit)
+    ;; Kill the undo-tree buffer
+    (kill-buffer "*undo-tree*")
+    ;; Restore the other buffer in the current window
+    (set-window-buffer (selected-window) buffer-to-restore)))
+
+(with-eval-after-load 'undo-tree
+  (define-key undo-tree-visualizer-mode-map (kbd "RET") 'my/undo-tree-visualizer-quit))
+
+
 ;;;;;;;;;;;;;;;;;
 ;; Other stuff ;;
 ;;;;;;;;;;;;;;;;;
@@ -195,7 +224,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(s dash editorconfig solarized-theme)))
+ '(package-selected-packages '(undo-tree s dash editorconfig solarized-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
