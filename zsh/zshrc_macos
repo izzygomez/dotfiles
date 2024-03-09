@@ -26,6 +26,14 @@ if [ -f '/Users/izzyg/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/izzyg/goo
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/izzyg/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/izzyg/google-cloud-sdk/completion.zsh.inc'; fi
 
+if [ -d "/Applications/iTerm.app" ]; then
+	# Tell iTerm2 to use the custom preferences in the dotfiles repo
+	defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$dotfiles_dir/iterm2-config"
+	defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+else
+	echo "~/.zshrc_macos: iTerm2 not installed, can't set settings."
+fi
+
 ################################################################################
 # Homebrew package configurations
 ################################################################################
