@@ -27,11 +27,18 @@ if [ -f '/Users/izzyg/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/izzyg/goo
 if [ -f '/Users/izzyg/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/izzyg/google-cloud-sdk/completion.zsh.inc'; fi
 
 if [ -d "/Applications/iTerm.app" ]; then
-	# Tell iTerm2 to use the custom preferences in the dotfiles repo
-	defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$dotfiles_dir/iterm2-config"
-	defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+    # Check if settings are already set as desired.
+    current_prefs_folder=$(defaults read com.googlecode.iterm2 PrefsCustomFolder)
+    load_prefs_from_custom_folder=$(defaults read com.googlecode.iterm2 LoadPrefsFromCustomFolder)
+
+    # If not, set them.
+    if [[ "$current_prefs_folder" != "$dotfiles_dir/iterm2-config" || "$load_prefs_from_custom_folder" != "1" ]]; then
+        echo "~/.zshrc_macos: Setting iTerm2 settings. iTerm2 will need to be restarted for changes to take effect.\nIMPORTANT: set \"iTerm2 > Settings > General > Preferences > Save Changes\" to \"Automatically\"."
+        defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$dotfiles_dir/iterm2-config"
+        defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+    fi
 else
-	echo "~/.zshrc_macos: iTerm2 not installed, can't set settings."
+    echo "~/.zshrc_macos: iTerm2 not installed, can't set settings."
 fi
 
 ################################################################################
