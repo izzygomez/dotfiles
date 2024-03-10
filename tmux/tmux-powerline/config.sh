@@ -39,7 +39,7 @@ fi
 	export TMUX_POWERLINE_STATUS_VISIBILITY="on"
 	# The status bar refresh interval in seconds.
 	# Note that events that force-refresh the status bar (such as window renaming) will ignore this.
-	export TMUX_POWERLINE_STATUS_INTERVAL="0"
+	export TMUX_POWERLINE_STATUS_INTERVAL="1"
 	# The location of the window list. Can be {"absolute-centre, centre, left, right"}.
 	if [ "$does_tmux_support_absolute_centre" -eq 1 ]; then
 		export TMUX_POWERLINE_STATUS_JUSTIFICATION="absolute-centre"
@@ -186,7 +186,7 @@ fi
 
 # time.sh {
 	# date(1) format for the time. Americans might want to have "%I:%M %p".
-	export TMUX_POWERLINE_SEG_TIME_FORMAT="%H:%M"
+	export TMUX_POWERLINE_SEG_TIME_FORMAT="%I:%M:%S %p"
 # }
 
 # tmux_session_info.sh {
