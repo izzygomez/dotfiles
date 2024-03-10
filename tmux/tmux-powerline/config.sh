@@ -31,7 +31,7 @@ fi
 	export TMUX_POWERLINE_THEME="izzy-default"
 	# TODO shouldn't assume that dotfiles/ dir lives in ~/code/
 	# Overlay directory to look for themes. There you can put your own themes outside the repo. Fallback will still be the "themes" directory in the repo.
-	export TMUX_POWERLINE_DIR_USER_THEMES="~/code/dotfiles/tmux/tmux-powerline/themes"
+	export TMUX_POWERLINE_DIR_USER_THEMES="${XDG_CONFIG_HOME:-$HOME/.config}/tmux-powerline/themes"
 	# Overlay directory to look for segments. There you can put your own segments outside the repo. Fallback will still be the "segments" directory in the repo.
 	export TMUX_POWERLINE_DIR_USER_SEGMENTS="${XDG_CONFIG_HOME:-$HOME/.config}/tmux-powerline/segments"
 

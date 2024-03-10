@@ -9,7 +9,7 @@
     ~/.gitconfig: gitconfig
     ~/.iterm2-config: iterm2-config
     ~/.tmux.conf: tmux/tmux.conf
-    ~/.config/tmux-powerline/config.sh: tmux/tmux-powerline/config.sh
+    ~/.config/tmux-powerline: tmux/tmux-powerline
     ~/.zprofile: zsh/zprofile
     ~/.zshrc: zsh/zshrc
 
