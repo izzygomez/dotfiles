@@ -13,9 +13,9 @@ alias ek="emacsclient -e '(kill-emacs)' && echo 'Killed emacs daemon.'"
 # Helper function to connect to emacs daemon with or without arguments.
 connect_to_emacs() {
     if [ $# -eq 0 ]; then
-        ec -c -a ""
+        ec -c
     else
-        ec "$@"
+        ec -c "$@"
     fi
 }
 
