@@ -29,7 +29,6 @@ fi
 
 	# The theme to use.
 	export TMUX_POWERLINE_THEME="izzy-default"
-	# TODO shouldn't assume that dotfiles/ dir lives in ~/code/
 	# Overlay directory to look for themes. There you can put your own themes outside the repo. Fallback will still be the "themes" directory in the repo.
 	export TMUX_POWERLINE_DIR_USER_THEMES="${XDG_CONFIG_HOME:-$HOME/.config}/tmux-powerline/themes"
 	# Overlay directory to look for segments. There you can put your own segments outside the repo. Fallback will still be the "segments" directory in the repo.
@@ -51,6 +50,9 @@ fi
 	export TMUX_POWERLINE_STATUS_LEFT_LENGTH="90"
 	# The maximum length of the right status bar.
 	export TMUX_POWERLINE_STATUS_RIGHT_LENGTH="90"
+
+	# The separator to use between windows on the status bar.
+	export TMUX_POWERLINE_WINDOW_STATUS_SEPARATOR=""
 
 	# Uncomment these if you want to enable tmux bindings for muting (hiding) one of the status bars.
 	# E.g. this example binding would mute the left status bar when pressing <prefix> followed by Ctrl-[
