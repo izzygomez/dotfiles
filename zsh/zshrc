@@ -52,11 +52,14 @@ fi
 
 if is_command_available tmux; then
     # Some useful & opinionated tmux aliases
-    alias t='tmux'
     alias tl='tmux ls'
     alias tk='tmux kill-server'
 
     # Create a new tmux session with a blank window in "~"
+    # Usage:
+    # > {tn,tmuxnew} [session-name]
+    # > t # no need to specify a session name
+    alias t='tmux new -n "" -c "~"'
     alias tmuxnew='tmux new -n "" -c "~" -s'
     alias tn='tmuxnew'
 
