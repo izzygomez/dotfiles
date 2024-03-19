@@ -70,8 +70,17 @@ else
     echo "~/.zshrc: tmux is not available, can't set settings."
 fi
 
-# Shortcut for having a browsable history, with date & time stamps
-alias hl='history -f | less'
+# Shortcuts for having a browsable history, with date & time stamps.
+# `h` is for the entire history, `ht N` is for the last N lines.
+alias h='history -f | less'
+__history_tail() {
+    if [ -z "$1" ]; then
+        echo "Usage: ht {number of lines}"
+        return 1
+    fi
+    history -f | tail -n $1 | less
+}
+alias ht=__history_tail
 
 # Command line weather widget
 # Usage:
