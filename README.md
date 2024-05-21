@@ -53,9 +53,9 @@ link:
 
 ### Machine-specific configuration
 
-Ideally, this dotfiles setup should work out-of-the-box on any machine, regardless of OS & availability of packages. In order to accomplish this, config dotfiles should be split in such a way that certain settings apply for only certain machine specs.
+Ideally, this dotfiles setup should work out-of-the-box on any machine, regardless of OS & availability of packages. In order to accomplish this, config dotfiles should be split & organized in such a way that settings are only applied for certain machine specs & depending on package availability.
 
-This effort is a 🚧 work in progress 🚧. See `zsh/checkers.sh` & its usage for examples on how this can be accomplished.
+This effort is a 🚧 work in progress 🚧. As an example, see usage of methods in `zsh/checkers.sh` to see how this can be accomplished.
 
 ### Shell script formatting
 
@@ -80,11 +80,11 @@ git pull
 & then returning to the `dotfiles` repo & commiting the updates
 
 ```shell
-cd ..  # should be in dotfiles/
+cd ..  # should be in dotfiles/ after running this
 git add submodule; git commit -m "update `submodule`"; git push
 ```
 
-Note that `git restore submodule` does not discard working directory changes as expected. To revert the submodule pointer to what it was before, either do as above but instead `git checkout` the previous commit hash, or run `git submodule update --init`.
+Note that `git restore submodule` does not discard working directory changes as one might expect. To revert the submodule pointer to what it was before, either do as above but instead `git checkout` the previous commit hash, or run `git submodule update --init`.
 
 ## TODOs
 
