@@ -83,15 +83,51 @@ __history_tail() {
 alias ht=__history_tail
 
 # Command line weather widget
-# Usage:
-# `weather`
-# or
-# `weather {location}`
 weather() {
+    if [ "$1" = "--help" ]; then
+        echo "Usage: weather [location]"
+        echo "Display the weather information for a specified location."
+        echo "If no location is specified, the weather for the current location is displayed."
+        echo "Example: weather 'Brooklyn, NY'"
+        echo "         weather 'San Francisco, CA'"
+        return
+    fi
+
+    get_location() {
+        # Use ipinfo.io to get geolocation data; this is useful to do because
+        # sometimes when using a VPN `curl wttr.in` returns a `not found` error,
+        # so here we force a location name every time according to IP location.
+        ipinfo=$(curl -s ipinfo.io)
+        city=$(echo "$ipinfo" | grep '"city"' | awk -F '"' '{print $4}')
+        region=$(echo "$ipinfo" | grep '"region"' | awk -F '"' '{print $4}')
+        echo "$city,$region"
+    }
+
     if [ -n "$1" ]; then
-        eval "curl -s wttr.in/$1"
+        location=$(echo "$1" | sed 's/ /+/g') # replace spaces with "+" in url
     else
-        curl -s wttr.in
+        location=$(get_location)
+        if [ -z "$location" ]; then
+            echo "Error: Unable to determine location. Please specify a location or disable VPN."
+            return
+        fi
+        location=$(echo "$location" | sed 's/ /+/g') # replace spaces with "+" in url
+    fi
+
+    # `?u` ensures F° units are used [1]
+    # [1] https://github.com/chubin/wttr.in?tab=readme-ov-file#weather-units
+    # note: separating `url` definition bc of weird behavior when adding a `?Y`
+    # string after a `$X` string.
+    url="wttr.in/$location"
+    response=$(curl -s "$url?u")
+
+    error="Weather report: not found"
+    if echo "$response" | grep -q "$error"; then
+        echo "Error: saw '$error' in response; maybe disable VPN?"
+	return
+    else
+        echo "$response"
+	return
     fi
 }
 
