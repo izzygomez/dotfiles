@@ -166,7 +166,7 @@ fi
 
 # Set prompt emoji prefixes to differentiate different machines.
 if is_izzys_mba; then
-    PROMPT='☁️  '$PROMPT
+    PROMPT='💨 '$PROMPT
 elif is_izzys_mbp; then
     PROMPT='🚀 '$PROMPT
 elif is_izzys_raspberry_pi; then
