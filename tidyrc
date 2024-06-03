@@ -1,0 +1,18 @@
+# Set indentation
+indent: auto
+indent-spaces: 2
+
+# Wrap lines at 80 characters
+wrap: 80
+
+# Remove the meta generator tag
+tidy-mark: no
+
+# Suppress non-essential output
+quiet: yes
+
+# Additional useful settings
+markup: true
+output-html: true
+show-warnings: true
+clean: yes

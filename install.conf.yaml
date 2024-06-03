@@ -9,6 +9,7 @@
     ~/.gitconfig: gitconfig
     ~/.hushlogin: hushlogin
     ~/.iterm2-config: iterm2-config
+    ~/.tidyrc: tidyrc
     ~/.tmux.conf: tmux/tmux.conf
     ~/.config/tmux-powerline: tmux/tmux-powerline
     ~/.zprofile: zsh/zprofile
