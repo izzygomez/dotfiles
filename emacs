@@ -1,17 +1,16 @@
 ;; -*- mode: lisp; -*-
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Some usage notes (beyond obvious known navigation ones)
+;; Some usage notes — beyond obvious known navigation keyboard shortcuts
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; `M-r` moves cursor to top, middle, & bottom of current window.
-;; (https://emacs.stackexchange.com/a/36849)
+;; Reloading config file:
+;;   - `M-x eval-buffer` while in this file reloads config without restart
 ;;
-;; `M-g g X` is equivalent to `M-x goto-line X`
-;;
-;; `M-x eval-buffer` while in emacs config file reloads config without restart
-;;
-;; `C-h` is the help prefix key. e.g. `C-h k` is used to describe a keybinding.
+;; Navigation:
+;;   - `M-r` moves cursor to top, middle, & bottom of current window.
+;;     - (https://emacs.stackexchange.com/a/36849)
+;;   - `M-g g X` is equivalent to `M-x goto-line X`
 ;;
 ;; Multiple cursors:
 ;;   - `C-c e` to edit all lines in region
@@ -19,7 +18,10 @@
 ;;   - `C-c p` to select previous occurrence of region
 ;;   - `C-c a` to select all occurrences of region
 ;;
-;; TODO Should probs check out https://www.masteringemacs.org/ for more.
+;; Other:
+;;   - `C-h` is the help prefix key. `C-h k` is used to describe a keybinding.
+;;
+;; TODO should probs check out https://www.masteringemacs.org/ for more.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Set up MELPA (https://www.emacswiki.org/emacs/MELPA)
@@ -32,8 +34,10 @@
 ;;
 ;; Grabbed this section from https://stackoverflow.com/a/55058934/5802691
 ;;
-;; tl;dr This should install desired packages when initializing emacs if they
-;; haven't been installed. Add new packages to `my-packages` below.
+;; This section should install desired packages when initializing emacs if they
+;; haven't been installed. Add new packages to `my-packages` below. Note that
+;; sometimes you may need to run `M-x package-refresh-contents` to update the
+;; package list, as indicated in the comments below.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Init the package facility
 (require 'package)
@@ -49,6 +53,7 @@
       '(dash  ;; added per [1]
 	diff-hl
 	editorconfig  ;; added per [1]
+	f  ;; added per [1]
 	multiple-cursors  ;; [2]
 	s  ;; added per [1]
 	solarized-theme
@@ -76,9 +81,9 @@
 ;; User configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;
-;; Packages ;;
-;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Package configuration ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Use diff-hl-mode in all buffers; this shows VC (e.g. Git) uncommitted changes
 ;; on left-side of emacs windows
@@ -126,6 +131,10 @@
 ;; tab key
 (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
 (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+
+;; disable copilot warning about indent offset:
+;; https://github.com/copilot-emacs/copilot.el/blob/733bff26450255e092c10873580e9abfed8a81b8/copilot.el#L111C12-L111C49
+(setq copilot-indent-offset-warning-disable t)
 
 ;; TODO consider going through [1] & setting up more copilot stuff
 ;; [1] https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/
@@ -230,7 +239,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(undo-tree s dash editorconfig solarized-theme)))
+ '(package-selected-packages '(f undo-tree s dash editorconfig solarized-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
