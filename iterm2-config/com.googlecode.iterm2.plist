@@ -6,6 +6,8 @@
 	<true/>
 	<key>AllowClipboardAccess</key>
 	<true/>
+	<key>ClickToSelectCommand</key>
+	<false/>
 	<key>Default Bookmark Guid</key>
 	<string>AC890CEE-9413-4D13-8146-0D315B84289D</string>
 	<key>DisableWindowSizeSnap</key>
