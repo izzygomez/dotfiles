@@ -29,7 +29,7 @@ source $ZSH/oh-my-zsh.sh
 #
 # This configuration should apply to all synchronized machines that make use of
 # https://github.com/izzygomez/dotfiles or
-# https://github.com/izzygomez/mac-setup-scripts
+# https://github.com/izzygomez/mac-setup
 ################################################################################
 
 if is_command_available emacs; then
