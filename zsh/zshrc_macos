@@ -85,12 +85,6 @@ configure_source_highlight() {
 }
 check_and_configure_packages source-highlight -- configure_source_highlight
 
-configure_thefuck() {
-    # Added per install commands from https://github.com/nvbn/thefuck
-    eval "$(thefuck --alias)"
-}
-check_and_configure_packages thefuck -- configure_thefuck
-
 # Added per instruction after running `brew install chruby ruby-install`, which
 # was run per instructions in https://jekyllrb.com/docs/installation/macos/
 configure_ruby() {
