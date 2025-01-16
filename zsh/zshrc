@@ -160,6 +160,67 @@ if ! is_command_available nvm; then
     echo "~/.zshrc: nvm is not available."
 fi
 
+# Created the following by working with ChatGPT. Also had it write out super
+# detailed comments so it's easier to understand later on.
+#
+# Define a custom wrapper for the `less` command that shows the full file path
+# (or "[stdin]" for streams) in the prompt, along with visible line ranges and
+# the total line count when possible.
+less_with_full_path() {
+    # Define a local variable to store the file path or stream indicator
+    local real_file_path
+
+    # Check if the first argument to the function ($1) is provided
+    if [ -n "$1" ]; then
+	# If a file is passed as the first argument:
+	# - Resolve its absolute path using `realpath`
+	# - Replace the home directory path ($HOME) with a tilde (~) for brevity
+	# - Suppress any errors from `realpath` (e.g., if the file doesn't
+	#   exist) using `2>/dev/null`
+	real_file_path=$(realpath "$1" 2>/dev/null | sed "s|$HOME|~|")
+    else
+	# If no file is passed (i.e., input is a stream or pipe):
+	# Use "[stdin]" as the file path placeholder
+	real_file_path="[stdin]"
+    fi
+
+    # Check if the provided argument is a regular file (not a stream or pipe)
+    if [ -f "$1" ]; then
+	# If it's a regular file:
+	# - Precompute the total number of lines in the file using `wc -l`
+	# - Remove any leading whitespace from `wc -l` output using `tr -d ' '`
+	local total_lines=$(wc -l < "$1" | tr -d ' ')
+
+	# Call the `less` command with the following options:
+	# - `-R`: Display raw control characters, allowing for syntax
+	#         highlighting
+	# - `-j1`: Set the cursor position to the first visible line (top of the
+	#          screen)
+	# - `-P`: Customize the prompt to show:
+	#     1. Full file path (or "~" for home directory)
+	#     2. Current visible line range (`%lt` for top line, `%lb` for
+	#        bottom line)
+	#     3. Total line count (precomputed via `wc -l`)
+	command less -R -j1 -P"$real_file_path (lines %lt-%lb/$total_lines)" "$@"
+    else
+	# If it's a stream or pipe (not a regular file):
+	# - Use `%L` for total line count, which `less` calculates dynamically
+	#   once it reaches the end of the stream.
+	# - The prompt will display:
+	#     1. "[stdin]" as the file path
+	#     2. Current visible line range (`%lt` for top line, `%lb` for
+	#        bottom line)
+	#     3. Total line count (`%L`), dynamically updated as `less`
+	#        processes input
+	command less -R -j1 -P"$real_file_path (lines %lt-%lb/%L)" "$@"
+    fi
+}
+
+# Create an alias for `less` to automatically use the custom function
+# This ensures any call to `less` (e.g., `less somefile`, `seq 1 100 | less`)
+# uses the wrapper
+alias less='less_with_full_path'
+
 ################################################################################
 # Machine-specific configuration
 ################################################################################
