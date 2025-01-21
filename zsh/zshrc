@@ -10,17 +10,74 @@ dotfiles_dir=$(dirname $(dirname $(realpath ~/.zshrc)))
 source $dotfiles_dir/zsh/checkers.sh
 
 ################################################################################
+# Pure prompt configuration.
+################################################################################
+
+# Check if Pure [1] is installed; if not, fallback to setting an oh-my-zsh theme.
+#
+# This `autoload...` line is from the "Getting Started" section of the pure
+# README [1], but it's also necessary here to load all prompt_*_setup functions
+# to do appropriate check below. For more context, see [2].
+#
+# [1] https://github.com/sindresorhus/pure?tab=readme-ov-file#install
+# [2] https://chatgpt.com/share/678fe919-c960-800c-88e3-088be26ec2d9
+autoload -U promptinit; promptinit
+if (( $+functions[prompt_pure_setup] )); then
+    # This line from README [1]
+    prompt pure
+
+    # The rest in this code block is custom formatting.
+    # colors:
+    zstyle :prompt:pure:path color '#ADD8E6'
+    zstyle :prompt:pure:prompt:success color green
+    # show git stash with symbol ≡:
+    zstyle :prompt:pure:git:stash show yes
+
+    # set ZSH_THEME to empty, per [1]
+    export ZSH_THEME=""
+else
+    echo "~/.zshrc: pure prompt not installed, falling back to setting oh-my-zsh theme."
+    # Fall back to an oh-my-zsh theme if Pure isn't available.
+    export ZSH_THEME="robbyrussell"
+fi
+
+################################################################################
 # Oh My Zsh configuration.
+#
+# TODO: I just realized it's *assumed* that oh-my-zsh is installed on any
+# machine that uses this dotfiles repo, which may not be true. Fix this, either
+# by enforcing oh-my-zsh is installed for rest of `~/.zshrc` file to load, or
+# by setting up a fallback (& logging an appropriate error message).
 #
 # I deleted most of the commented out template lines that were not being used;
 # see file in omz repo here:
 # https://github.com/ohmyzsh/ohmyzsh/blob/master/templates/zshrc.zsh-template
+#
+# Note: I considered removing oh-my-zsh entirely as a dependency, but I quickly
+# realized that it sets up a lot of nice things that I'd otherwise have to
+# manually configure. For now I'm going to keep it, but note that no theme will
+# be set here since I'm using the `pure` prompt (see next section).
+#
+# To be more explicit: the oh-my-zsh startup script loads in a bunch of lib
+# files [1] that are extremely useful. This includes things like being able to
+# `cd` without typing `cd`, having a `l` alias, git aliases, referencing parent
+# directories with `.....`, and more that I haven't even discovered yet. Maybe
+# in the future I can work towards removing oh-my-zsh as a dependency, but for
+# now I'll just make it a bit more invisible by setting its update frequency to
+# only happen every 60 days.
+#
+# [1] https://github.com/ohmyzsh/ohmyzsh/blob/028d65363230b4aa54f3aaa14e03237243a2f1d8/oh-my-zsh.sh#L195-L200
 ################################################################################
 
 export ZSH="$HOME/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+# ZSH_THEME="robbyrussell"  # commented out, set up above in Pure section
 plugins=(git)
+
+# Set the oh-my-zsh update frequency to 60 days. This must be set before
+# sourcing the oh-my-zsh script.
+zstyle ':omz:update' frequency 60
+zstyle ':omz:update' verbose minimal
 
 source $ZSH/oh-my-zsh.sh
 
