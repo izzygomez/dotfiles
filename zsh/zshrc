@@ -278,6 +278,26 @@ less_with_full_path() {
 # uses the wrapper
 alias less='less_with_full_path'
 
+# Standardize pasting in zsh by making Ctrl-Y/C-y behave the same as pasting
+# from system clipboard. This removes the emacs-style "yank last killed text"
+# default behavior, which I don't use anyways.
+yank_from_clipboard() {
+    # Insert text from the system clipboard.
+    if is_mac_os; then
+	LBUFFER+=$(pbpaste)
+    elif is_linux; then
+	# TODO: impl
+	echo "~/.zshrc: yank_from_clipboard not implemented on linux."
+    else
+	echo "~/.zshrc: not a recognized machine, not setting yank_from_clipboard."
+    fi
+}
+# declare custom function as a ZLE widget
+zle -N yank_from_clipboard
+# bind C-Y to yank_from_clipboard. Note that "emacs" appears here because the
+# emacs keymap mode is the default editing mode in zsh.
+bindkey -M emacs "^Y" yank_from_clipboard
+
 ################################################################################
 # Machine-specific configuration
 ################################################################################
