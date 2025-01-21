@@ -56,7 +56,7 @@ fi
 # Note: I considered removing oh-my-zsh entirely as a dependency, but I quickly
 # realized that it sets up a lot of nice things that I'd otherwise have to
 # manually configure. For now I'm going to keep it, but note that no theme will
-# be set here since I'm using the `pure` prompt (see next section).
+# be set here if the `pure` prompt is available (see prior section).
 #
 # To be more explicit: the oh-my-zsh startup script loads in a bunch of lib
 # files [1] that are extremely useful. This includes things like being able to
