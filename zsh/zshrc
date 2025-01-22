@@ -243,6 +243,13 @@ zle -N yank_from_clipboard
 # emacs keymap mode is the default editing mode in zsh.
 bindkey -M emacs "^Y" yank_from_clipboard
 
+# TODO: do similar operation for C-W, M-W, & backspace commands in zsh.
+# Specifically, right now C-W ("cut") & M-W ("copy") aren't working as I'd like
+# them to when highlighting text inside the zsh command prompt when *not* inside
+# copy mode. While we're at it, also make it so that if a region of text is
+# highlighted & I press backspace, the entire block is deleted, not just the
+# where the cursor was last at.
+
 ################################################################################
 # Machine-specific configuration
 ################################################################################
