@@ -3,12 +3,14 @@
 # This file is sourced by ~/.zshrc, & it may be written in such a way that it
 # can't run on its own (i.e. it depends on upstream dependencies).
 
+################################################################################
 # Created the following by working with ChatGPT. Also had it write out super
 # detailed comments so it's easier to understand later on.
 #
 # Define a custom wrapper for the `less` command that shows the full file path
 # (or "[stdin]" for streams) in the prompt, along with visible line ranges and
 # the total line count when possible.
+################################################################################
 less_with_full_path() {
     # Define a local variable to store the file path or stream indicator
     local real_file_path
@@ -63,3 +65,15 @@ less_with_full_path() {
 # This ensures any call to `less` (e.g., `less somefile`, `seq 1 100 | less`)
 # uses the wrapper
 alias less='less_with_full_path'
+
+################################################################################
+# lesskey configuration
+################################################################################
+# Per [1], versions of `less` >= 582 no longer need to use the `lesskey` command
+# to compile the `~/.lesskey` source file. We'll therefore check that `less`
+# has an appropriate version, & will log an error if it doesn't.
+# [1] https://man7.org/linux/man-pages/man1/lesskey.1.html
+LESS_VERSION=$(less --version | head -n 1 | awk '{print $2}')
+if [ "${LESS_VERSION%%.*}" -lt 582 ]; then
+    echo "zshrc_less: less version is too old ($LESS_VERSION); must update in order to use ~/.lesskey"
+fi
