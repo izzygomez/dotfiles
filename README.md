@@ -102,3 +102,4 @@ Note that `git restore submodule` does not discard working directory changes as 
 - `emacs` is not working well on raspi setup: the `diff-hl-mode` related code for uncommitted changes is not working well (something related to the `add-hook` line?).
 - Seems like "Save Changes" setting on iTerm2 > Settings > General > Preferences is not configurable via `defaults` (see [this commit](https://github.com/izzygomez/dotfiles/commit/1407f3b27a351d58c169057d94a67605bab54878) for usage example), so TODO here is to set value of this setting to "Automatically" via some other method; for the moment, am doing this via an `echo` statement in `zshrc_macos`.
 - This README is a bit bulky & verbose, consider editing it down to something more streamlined [like this](https://github.com/denolfe/dotfiles/blob/9bb9957a0055cce71071f5c0ad5d050d95f2c255/README.md).
+- Address all TODOs littered throughout code.

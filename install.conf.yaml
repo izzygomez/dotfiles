@@ -5,6 +5,7 @@
 - clean: ["~"]
 
 - link:
+    # TODO figure out how to only link this file on macOS & not on linux
     ~/Library/KeyBindings/DefaultKeyBinding.dict:
       create: true # create necessary dirs if they don't exist
       path: DefaultKeyBinding.dict
