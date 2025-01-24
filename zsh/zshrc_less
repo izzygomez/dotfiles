@@ -20,9 +20,11 @@ less_with_full_path() {
 	# If a file is passed as the first argument:
 	# - Resolve its absolute path using `realpath`
 	# - Replace the home directory path ($HOME) with a tilde (~) for brevity
+	# - Replace any dots in file path (e.g., the dots separating a file name
+	#   from type) with an escaped dot, "\.".
 	# - Suppress any errors from `realpath` (e.g., if the file doesn't
 	#   exist) using `2>/dev/null`
-	real_file_path=$(realpath "$1" 2>/dev/null | sed "s|$HOME|~|")
+	real_file_path=$(realpath "$1" 2>/dev/null | sed "s|$HOME|~|" | sed 's/\./\\./g')
     else
 	# If no file is passed (i.e., input is a stream or pipe):
 	# Use "[stdin]" as the file path placeholder
