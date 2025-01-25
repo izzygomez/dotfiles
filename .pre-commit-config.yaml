@@ -1,0 +1,15 @@
+repos:
+  # 1. External hooks (pre-commit's built-in collection)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0 # Specify the latest stable version
+    hooks:
+      - id: trailing-whitespace # Removes trailing whitespace
+      - id: end-of-file-fixer # Ensures files end with a single newline
+      - id: check-yaml # Validates YAML syntax
+      - id: check-json # Validates JSON syntax
+      - id: check-added-large-files # Prevents large files from being added
+
+
+  # 2. TODO add a Shell script formatter, couldn't quite figure out a good
+  # solution here. Consider looking into [1] or something similar.
+  # [1] https://github.com/pecigonzalo/pre-commit-shfmt

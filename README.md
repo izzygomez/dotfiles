@@ -65,7 +65,11 @@ Shell scripts in this repo should be formatted with the following command:
 shfmt -i 4 -w FILE-NAME
 ```
 
-The `-i 4` flag specifies to use 4 spaces for indentation, & the `-w` flag overwrites `FILE-NAME` in place. This is not automatically enforced yet (see TODOs below).
+The `-i 4` flag specifies to use 4 spaces for indentation, & the `-w` flag overwrites `FILE-NAME` in place. This is not automatically enforced yet (see TODOs below). `pre-commit` hooks could be used to enforce this formatting, & this has already been set up in the `pre-commit-config.yaml` file.
+
+### Pre-commit hooks
+
+After installing [`pre-commit`](https://pre-commit.com/) (e.g., via `brew install pre-commit`), run `pre-commit install` to install the hooks. This will run the hooks before every commit. To run the hooks manually, use `pre-commit run --all-files --verbose`.
 
 ### Submodules
 
