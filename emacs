@@ -20,6 +20,7 @@
 ;;
 ;; Other:
 ;;   - `C-h` is the help prefix key. `C-h k` is used to describe a keybinding.
+;;   - `C-/` toggles comments on current line or selected lines. See below.
 ;;
 ;; TODO should probs check out https://www.masteringemacs.org/ for more.
 ;;
@@ -229,6 +230,19 @@
 ;; Keep search strings highlighted
 ;; https://stackoverflow.com/a/3780053
 (setq lazy-highlight-cleanup nil)
+
+;; Remap C-/ to comment-line, toggling current/selected line(s) to comment(s).
+;;
+;; Note that per [1], C-/ & C-_ are bound to `undo` by default, & C-/ actually
+;; just sends C-_ in some terminals (C-h k C-/ to test this). I don't use undo
+;; with these keybindings, so I'm fine updating it to comment toggle command,
+;; which also is idiomatic in other editors like VSCode. However, because I use
+;; undo-tree, this remapping needs to be done after undo-tree is loaded.
+;;
+;; [1] https://www.gnu.org/software/emacs/manual/html_node/emacs/Basic-Undo.html
+(with-eval-after-load 'undo-tree
+  (define-key undo-tree-map (kbd "C-_") #'comment-line)
+  (define-key undo-tree-map (kbd "C-/") #'comment-line))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Stuff that was automatically added
