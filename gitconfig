@@ -1,7 +1,7 @@
 # This is Git's per-user configuration file.
 [user]
 	name = Izzy Gomez
-	email = izzygmit@gmail.com
+	email = izzy@izzygomez.com
 	signingkey = 328FBD3D37A45C47
 [core]
 	editor = emacs
