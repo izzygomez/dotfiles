@@ -259,6 +259,8 @@ if is_izzys_mba; then
     PROMPT='💨 '$PROMPT
 elif is_izzys_mbp; then
     PROMPT='🚀 '$PROMPT
+elif is_izzys_metro_mbp; then
+    PROMPT='🏢 '$PROMPT
 elif is_izzys_raspberry_pi; then
     # Note: considering I mostly `mosh` into this machine & mosh has a long
     # history of not supporting certain emojis/characters [1], I'm limited in

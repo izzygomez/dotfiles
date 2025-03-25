@@ -81,7 +81,18 @@ check_and_configure_packages source-highlight -- configure_source_highlight
 configure_ruby() {
     source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
     source /opt/homebrew/opt/chruby/share/chruby/auto.sh
-    chruby ruby-3.1.2
+
+    desired_ruby="ruby-3.4.2"
+
+    # Only switch if desired ruby version is available
+    if chruby | grep -q $desired_ruby; then
+	chruby $desired_ruby
+    else
+	echo "Warning: $desired_ruby not found by chruby. Skipping chruby switch."
+	echo "Run this to install:"
+	echo "  ruby-install $desired_ruby"
+    fi
+
     # add brew-installed ruby to path
     export PATH="/usr/local/opt/ruby/bin:$PATH"
     # add gem (ruby) executable to path, per
