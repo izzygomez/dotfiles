@@ -57,14 +57,40 @@
 	f  ;; added per [1]
 	multiple-cursors  ;; [2]
 	s  ;; added per [1]
-	solarized-theme
 	undo-tree
-	xclip))
+	xclip
+	zenburn-theme
+	))
 
 ;; Iterate on packages and install missing ones
 (dolist (pkg my-packages)
   (unless (package-installed-p pkg)
     (package-install pkg)))
+
+;;;; The following code block was written with the help of ChatGPT. Essentially
+;;;; I want to auto-remove packages that are not in my-packages list, but I also
+;;;; want to keep packages that are dependencies of the packages in my-packages.
+;;;; This way I can guarantee that simply updating my-packages will do
+;;;; appropriate install & cleanup of packages.
+;; Function to get dependencies for a given package
+(defun my/get-dependencies (pkg)
+  "Return a list of packages that PKG depends on."
+  (when-let ((desc (cadr (assoc pkg package-alist))))
+    (mapcar #'car (package-desc-reqs desc))))
+;; Build an extended list including dependencies
+(setq my-extended-packages (copy-sequence my-packages))
+(dolist (pkg my-packages)
+  (dolist (dep (my/get-dependencies pkg))
+    (add-to-list 'my-extended-packages dep)))
+;; Use the extended list in your auto-removal snippet:
+(dolist (pkg package-alist)
+  (let ((pkg-name (car pkg))
+	(pkg-desc (cadr pkg)))
+    (unless (member pkg-name my-extended-packages)
+      (when pkg-desc
+	(message "Auto-removing package: %s" pkg-name)
+	(package-delete pkg-desc t)))))
+
 
 ;; Install copilot.el. Following instructions from:
 ;;  - https://github.com/zerolfx/copilot.el
@@ -117,9 +143,9 @@
 	(run-at-time nil 2 'continuous-diff-hl)))  ;; run every 2 seconds
 (start-running-timer)
 
-;; Set solarized dark color theme
-;; https://github.com/bbatsov/solarized-emacs
-(load-theme 'solarized-dark t)
+;; Set up theme
+;; https://github.com/bbatsov/zenburn-emacs
+(load-theme 'zenburn t)
 
 ;; Enable xclip-mode by default
 ;; https://elpa.gnu.org/packages/xclip.html
@@ -253,7 +279,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(diff-hl f undo-tree s dash editorconfig solarized-theme)))
+ '(package-selected-packages '(dash diff-hl editorconfig f s undo-tree)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
