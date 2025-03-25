@@ -24,7 +24,7 @@ if [ -d "/Applications/iTerm.app" ]; then
 
     # If not, set them.
     if [[ "$current_prefs_folder" != "$dotfiles_dir/iterm2-config" || "$load_prefs_from_custom_folder" != "1" ]]; then
-        echo "~/.zshrc_macos: Setting iTerm2 settings. iTerm2 will need to be restarted for changes to take effect.\nIMPORTANT: set \"iTerm2 > Settings > General > Preferences > Save Changes\" to \"Automatically\"."
+        echo "~/.zshrc_macos: Setting iTerm2 settings. iTerm2 will need to be restarted for changes to take effect.\nIMPORTANT: set \"iTerm2 > Settings > General > Settings > Save Changes\" to \"Automatically\"."
         defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$dotfiles_dir/iterm2-config"
         defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
     fi
