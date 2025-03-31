@@ -1,0 +1,23 @@
+/*
+Found this particular library [1] from a Reddit thread.
+Note that to make the findbar float on the top-right instead of the top-left, I had to define a
+new preference — `userchrome.floating-findbar-on-right.enabled` — in `about:config` & set it
+to `true`.
+[1] https://github.com/MrOtherGuy/firefox-csshacks/blob/master/chrome/floating_findbar_on_top.css
+*/
+@import url("floating_findbar_on_top.css");
+
+/*
+Disable green dot on pinned tabs that have changed.
+
+Got code to do this from [1], but got guidance on how to actually create & configure
+profile settings in [2] & [3].
+[1] https://forums.mozillazine.org/viewtopic.php?t=3126096
+[2] https://www.reddit.com/r/firefox/comments/xyqxyc/green_dot_under_gmail_tab/
+[3] https://www.reddit.com/r/FirefoxCSS/wiki/index/tutorials/
+*/
+tab.tabbrowser-tab
+  > .tab-stack
+  > .tab-content[pinned][titlechanged]:not([selected="true"]) {
+  background-image: none !important;
+}
