@@ -5,27 +5,31 @@
 - clean: ["~"]
 
 - link:
-    # Some usage notes. See [1] for more details.
+    # Some usage notes (see [1] for more details):
     # [1] https://github.com/anishathalye/dotbot/blob/master/README.md
-    # - if: <condition> will only link the file if the condition is true
-    # - create: true will create the target directory if it doesn't exist
-    # - force: true will overwrite the target file if it already exists
+    # - "if: <condition>" will only link the file if the condition is true
+    # - "create: true" will create the target directory if it doesn't exist
+    # - "force: true" will overwrite the target file if it already exists
 
     # Only link these files on macOS
     ~/Library/KeyBindings/DefaultKeyBinding.dict:
       if: "[ `uname` = Darwin ]"
       create: true
       path: DefaultKeyBinding.dict
-    ~/Library/Application Support/Firefox/izzys-firefox-profile/chrome:
-      if: "[ `uname` = Darwin ]"
-      create: true
-      force: true
-      path: firefox/chrome
+    # Firefox stuff
     ~/Library/Application Support/Firefox/profiles.ini:
       if: "[ `uname` = Darwin ]"
       create: true
       force: true
       path: firefox/profiles.ini
+    ~/Library/Application Support/Firefox/izzys-firefox-profile/chrome:
+      if: "[ `uname` = Darwin ]"
+      create: true
+      path: firefox/chrome
+    ~/Library/Application Support/Firefox/izzys-firefox-profile/user.js:
+      if: "[ `uname` = Darwin ]"
+      create: true
+      path: firefox/user.js
 
     # Files that are OS-independent
     ~/.emacs: emacs
