@@ -1,11 +1,12 @@
-/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/floating_findbar_on_top.css made available under Mozilla Public License v. 2.0
-See the above repository for updates as well as full license text. */
-
-/* This style makes findbar appear as floating box at the top-left of the content area.
- * If you want the findbar on right side instead then create a new pref
- * userchrome.floating-findbar-on-right.enabled and set it to true and restart Firefox
+/*
+ * A lot of the code here comes from `floating_findbar_on_top.css` [1], but I've
+ * since made some additional changes.
  *
- * Note that privacy.resistFingerprinting.letterboxing prevents this from working properly
+ * Note that to make the findbar float on the top-right instead of the top-left,
+ * I had to define a new preference `userchrome.floating-findbar-on-right.enabled`
+ * in `about:config` & set it to `true`.
+ *
+ * [1] https://github.com/MrOtherGuy/firefox-csshacks/blob/master/chrome/floating_findbar_on_top.css
  */
 
 findbar {
@@ -82,12 +83,22 @@ findbar::after {
   flex-grow: 100;
 }
 
-@media (-moz-bool-pref: "userchrome.floating-findbar-on-right.enabled") {
+/* Hide parts of the find bar that I don't care to see. */
+findbar checkbox.findbar-highlight,
+findbar checkbox.findbar-case-sensitive,
+findbar checkbox.findbar-match-diacritics,
+findbar checkbox.findbar-entire-word,
+findbar .findbar-find-status {
+  display: none !important;
+}
+
+@media -moz-pref("userchrome.floating-findbar-on-right.enabled") {
   findbar {
     flex-direction: row-reverse;
   }
   findbar > .findbar-container {
-    flex-direction: row-reverse;
+    /* don't reverse the direction of the findbar */
+    /* flex-direction: row-reverse; */
     border-inline-width: 1px 0px;
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 4px;

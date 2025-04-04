@@ -1,11 +1,7 @@
 /*
-Found this particular library [1] from a Reddit thread.
-Note that to make the findbar float on the top-right instead of the top-left, I had to define a
-new preference — `userchrome.floating-findbar-on-right.enabled` — in `about:config` & set it
-to `true`.
-[1] https://github.com/MrOtherGuy/firefox-csshacks/blob/master/chrome/floating_findbar_on_top.css
+Find bar settings.
 */
-@import url("floating_findbar_on_top.css");
+@import url("findbar.css");
 
 /*
 Disable green dot on pinned tabs that have changed.
