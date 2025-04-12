@@ -179,7 +179,11 @@
 (global-undo-tree-mode)
 (setq undo-tree-visualizer-timestamps t)
 
-;; Save undo tree history files in a ~/.emacs.d instead of current directory.
+;; Disable persistent undo history to avoid warnings when files change outside
+;; emacs.
+(setq undo-tree-auto-save-history nil)
+;; Save undo tree history files in a ~/.emacs.d instead of current directory;
+;; likely no longer needed since I disabled persistent undo history above.
 (setq undo-tree-history-directory-alist
       '(("." . "~/.emacs.d/undo-tree-histories/")))
 
@@ -221,14 +225,39 @@
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Scrolling.html
 (setq scroll-error-top-bottom 'true)
 
-;; Have Emacs create no backup files.
-;; https://stackoverflow.com/questions/151945/how-do-i-control-how-emacs-makes-backup-files
-;;
-;; TODO: should probably try to actually save stuff under something like
-;; ~/.emacs/backups or something, but I haven't been able to get this all
-;; working correctly. See above answer & https://www.gnu.org/software/emacs/manual/html_node/elisp/Backup-Files.html
-;; for more.
-(setq make-backup-files nil)
+;; Ensure that auto-save & backup directories exist.
+(dolist (dir '("~/.emacs.d/auto-save/" "~/.emacs.d/backups/"))
+  (unless (file-directory-p (expand-file-name dir))
+    (make-directory (expand-file-name dir) t)))
+
+;; backups: enable backups & store them in ~/.emacs.d/backups
+;; file format: "filename~"
+(setq backup-directory-alist `((".*" . "~/.emacs.d/backups")))
+(setq make-backup-files t)
+
+;; auto-save: redirect auto-save files out of project dirs
+;; file format: "#filename#"
+(setq auto-save-file-name-transforms
+      `((".*" "~/.emacs.d/auto-save/" t)))
+(setq auto-save-interval 20   ;; auto-save after 20 keystrokes
+      auto-save-timeout 5)    ;; auto-save after 5 seconds idle
+
+;; lockfiles: disable creation of lockfiles
+;; format: ".#filename"
+(setq create-lockfiles nil)
+
+;; auto-save: remove stale auto-save files after saving a file
+(defun my/cleanup-stale-auto-save ()
+  "Delete an existing auto-save file if it’s older than the file's last modification."
+  (when (and buffer-auto-save-file-name
+             (file-exists-p buffer-auto-save-file-name))
+    (let ((auto-save-time (nth 5 (file-attributes buffer-auto-save-file-name)))
+          (file-time (nth 5 (file-attributes (buffer-file-name)))))
+      (when (and file-time auto-save-time
+                 (time-less-p auto-save-time file-time))
+        (delete-file buffer-auto-save-file-name)
+        (message "Removed stale auto-save file for %s" (buffer-file-name))))))
+(add-hook 'after-save-hook 'my/cleanup-stale-auto-save)
 
 ;; Auto-refresh all buffers when files have changed on disk
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Auto-Revert.html
@@ -269,6 +298,19 @@
 (with-eval-after-load 'undo-tree
   (define-key undo-tree-map (kbd "C-_") #'comment-line)
   (define-key undo-tree-map (kbd "C-/") #'comment-line))
+
+;; Force *Buffer List* to open in current window & not split horizontally.
+(add-to-list 'display-buffer-alist
+             '("\\*Buffer List\\*" (display-buffer-same-window)))
+
+;; Highlight added/removed lines in commit messages
+(add-hook 'find-file-hook
+  (lambda ()
+    (when (string-match-p "COMMIT_EDITMSG\\'" (buffer-name))
+      (font-lock-add-keywords nil
+       '(("^\\(+.*\\)$" 1 'diff-added nil t)
+         ("^\\(-.*\\)$" 1 'diff-removed nil t)))
+      (font-lock-flush))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Stuff that was automatically added
