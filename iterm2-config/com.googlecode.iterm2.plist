@@ -471,6 +471,8 @@
 	<true/>
 	<key>PromptOnQuitEvenIfThereAreNoWindows</key>
 	<false/>
+	<key>QuitWhenAllWindowsClosed</key>
+	<false/>
 	<key>ShowFullScreenTabBar</key>
 	<true/>
 	<key>ShowNewOutputIndicator</key>
