@@ -27,8 +27,8 @@ link:
 
 ```shell
 ./install
-...
-==> All tasks executed successfully
+  ...
+  ==> All tasks executed successfully
 rm ~/.dotfile-backup
 ```
 
