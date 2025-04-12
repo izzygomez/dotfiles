@@ -16,6 +16,9 @@
       if: "[ `uname` = Darwin ]"
       create: true
       path: DefaultKeyBinding.dict
+    ~/.rectangle.config.json:
+      if: "[ `uname` = Darwin ]"
+      path: rectangle.config.json
     # Firefox stuff
     ~/Library/Application Support/Firefox/profiles.ini:
       if: "[ `uname` = Darwin ]"
