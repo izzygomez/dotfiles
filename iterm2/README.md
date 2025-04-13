@@ -23,7 +23,7 @@ If a commit includes iTerm2 preference changes:
 If you already pulled while iTerm2 was open:
 1. **Quit iTerm2 completely.**
 2. Open Terminal.app.
-3. Run `git restore iterm2-config/com.googlecode.iterm2.plist` to bring back the pulled version.
+3. Run `git restore iterm2/com.googlecode.iterm2.plist` to bring back the pulled version.
 4. Relaunch iTerm2 so it loads the updated config.
 
 This ensures you get the intended settings & avoid silent overwrites.

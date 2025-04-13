@@ -38,7 +38,6 @@
     ~/.emacs: emacs
     ~/.gitconfig: gitconfig
     ~/.hushlogin: hushlogin
-    ~/.iterm2-config: iterm2-config
     ~/.lesskey: lesskey
     ~/.npmrc: npmrc
     ~/.tidyrc: tidyrc
