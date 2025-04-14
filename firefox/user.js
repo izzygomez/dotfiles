@@ -20,5 +20,10 @@ user_pref("findbar.highlightAll", true);
 // Disable sound when search fails in the find bar.
 user_pref("accessibility.typeaheadfind.enablesound", false);
 
+//// Full screen settings ////
 // Disable full screen warning when entering full screen mode (value in ms).
 user_pref("full-screen-api.warning.timeout", 0);
+// Fastest transition to full screen mode.
+user_pref("full-screen-api.macos", false);
+user_pref("full-screen-api.transition-duration.enter", "0 0");
+user_pref("full-screen-api.transition-duration.leave", "0 0");
