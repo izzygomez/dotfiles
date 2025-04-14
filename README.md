@@ -1,6 +1,6 @@
 # Izzy's Dotfiles
 
-Personal dotfiles setup ([huh?](https://dotfiles.github.io/)) using [anishathalye/dotbot](https://github.com/anishathalye/dotbot).
+Personal [dotfiles](https://dotfiles.github.io/) setup using [dotbot](https://github.com/anishathalye/dotbot). Also setting other preferences, e.g. Firefox, iTerm2, macOS keybindings.
 
 ## Usage
 
