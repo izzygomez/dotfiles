@@ -1,6 +1,10 @@
+# -*- mode: conf -*-
 # Per [1], overriding Github linguist languages for proper syntax highlighting on github.com. See [2] for full language list.
 # [1] https://github.com/github-linguist/linguist/blob/master/docs/overrides.md#using-gitattributes
 # [2] https://github.com/github-linguist/linguist/blob/master/lib/linguist/languages.yml
 tmux.conf linguist-language=Shell
 gitconfig linguist-language=Git-Config
 DefaultKeyBinding.dict linguist-language=Objective-C
+lesskey linguist-language=INI
+npmrc linguist-language=INI
+tidyrc linguist-language=INI

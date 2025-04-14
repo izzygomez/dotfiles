@@ -32,6 +32,8 @@ link:
 rm ~/.dotfile-backup
 ```
 
+4. (Optional) Add file mapping in `.gitattributes` to enable correct syntax highlighting on Github.
+
 ### Installing dotfiles on new machine
 
 1. Clone & install dotfiles
