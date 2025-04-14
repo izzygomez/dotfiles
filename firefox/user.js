@@ -19,3 +19,6 @@ user_pref("userchrome.floating-findbar-on-right.enabled", true);
 user_pref("findbar.highlightAll", true);
 // Disable sound when search fails in the find bar.
 user_pref("accessibility.typeaheadfind.enablesound", false);
+
+// Disable full screen warning when entering full screen mode (value in ms).
+user_pref("full-screen-api.warning.timeout", 0);
