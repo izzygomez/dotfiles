@@ -78,7 +78,7 @@ After installing [`pre-commit`](https://pre-commit.com/) (e.g., via `brew instal
 Our submodule pointers can be updated by simply pulling new changes
 
 ```shell
-cd submodule
+cd {submodule}
 git checkout {main,master,...}
 git pull
 ```
@@ -87,10 +87,10 @@ git pull
 
 ```shell
 cd ..  # should be in dotfiles/ after running this
-git add submodule; git commit -m "update `submodule`"; git push
+git add {submodule}; git commit -m "update `{submodule}`"; git push
 ```
 
-Note that `git restore submodule` does not discard working directory changes as one might expect. To revert the submodule pointer to what it was before, either do as above but instead `git checkout` the previous commit hash, or run `git submodule update --init`.
+Note that `git restore {submodule}` does not discard working directory changes as one might expect. To revert the submodule pointer to what it was before, either do as above but instead `git checkout` the previous commit hash, or run `git submodule update --init`.
 
 ## TODOs
 
