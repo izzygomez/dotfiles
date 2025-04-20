@@ -100,6 +100,46 @@
 ;; & that `copilot.el/` is a sibling directory to this file.
 (add-to-list 'load-path (expand-file-name "copilot.el" (file-name-directory (file-truename "~/.emacs"))))
 (require 'copilot)
+;; Safe copilot setup.
+;; Wrote this with ChatGPT, essentially wanted to automate process of installing
+;; any copilot dependencies.
+(condition-case cp-err
+    (progn
+      ;; 1) Make sure Emacs can find your nvm npm & the eventual language server
+      (let ((nvm-bin (expand-file-name "~/.nvm/versions/node/v20.19.0/bin")))
+	(when (file-directory-p nvm-bin)
+	  (setenv "PATH" (concat nvm-bin ":" (getenv "PATH")))
+	  (add-to-list 'exec-path nvm-bin)))
+
+      ;; 2) Tell Emacs where to load copilot.el from (only once)
+      (add-to-list 'load-path
+		   (expand-file-name "copilot.el"
+				     (file-name-directory (file-truename "~/.emacs"))))
+      (require 'copilot)
+
+      ;; 3) Install the language server if it isn’t on PATH yet
+      (unless (executable-find "copilot-language-server")
+	(if-let ((npm (executable-find "npm")))
+	    (progn
+	      (message "Installing @github/copilot-language-server…")
+	      (shell-command (concat npm " install -g @github/copilot-language-server"))
+	      (message "copilot-language-server installed"))
+	  (message "npm not found; Copilot server install skipped")))
+
+      ;; 4) Configure Copilot
+      ;; disable copilot warning about indent offset:
+      ;; https://github.com/copilot-emacs/copilot.el/blob/733bff26450255e092c10873580e9abfed8a81b8/copilot.el#L111C12-L111C49
+      (setq copilot-indent-offset-warning-disable t)
+      ;; Use copilot-mode in any programming mode (i.e. derived from prog-mode)
+      (add-hook 'prog-mode-hook #'copilot-mode)
+
+      (define-key copilot-completion-map (kbd "<tab>") #'copilot-accept-completion)
+      (define-key copilot-completion-map (kbd "TAB")     #'copilot-accept-completion)
+      ;; TODO consider going through [1] & setting up more copilot stuff
+      ;; [1] https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/
+      )
+  (error
+   (message "Copilot setup failed, continuing init…\nError: %S" cp-err)))
 
 (require 'multiple-cursors)
 (require 'undo-tree)
@@ -150,21 +190,6 @@
 ;; Enable xclip-mode by default
 ;; https://elpa.gnu.org/packages/xclip.html
 (xclip-mode 1)
-
-;;;; GH Copilot
-;; Use copilot-mode in any programming mode (i.e. derived from prog-mode)
-(add-hook 'prog-mode-hook 'copilot-mode)
-
-;; tab key
-(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
-
-;; disable copilot warning about indent offset:
-;; https://github.com/copilot-emacs/copilot.el/blob/733bff26450255e092c10873580e9abfed8a81b8/copilot.el#L111C12-L111C49
-(setq copilot-indent-offset-warning-disable t)
-
-;; TODO consider going through [1] & setting up more copilot stuff
-;; [1] https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/
 
 ;;;; Multiple cursors
 ;; mostly setting default configuration in repo README
