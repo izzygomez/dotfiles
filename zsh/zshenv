@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+# Load Rust environment if installed
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
+# Turn off Homebrew analytics
+export HOMEBREW_NO_ANALYTICS=1
