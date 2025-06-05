@@ -32,6 +32,15 @@ else
     echo "~/.zshrc_macos: iTerm2 not installed, can't set settings."
 fi
 
+# Set the default screenshot location to ~/Downloads when using Cmd+Shift+3/4.
+desired_location="$HOME/Downloads"
+current_location=$(defaults read com.apple.screencapture location 2>/dev/null || echo "")
+if [[ "$current_location" != "$desired_location" ]]; then
+    defaults write com.apple.screencapture location "$desired_location"
+    killall SystemUIServer
+    echo "~/.zshrc_macos: Set screenshot location to $desired_location."
+fi
+
 ################################################################################
 # Homebrew package configurations
 ################################################################################
