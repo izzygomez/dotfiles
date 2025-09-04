@@ -1,0 +1,6 @@
+# Ignore backup configs
+automatic_backups/
+
+# Ignore any lock/state/runtime files
+*.lock
+karabiner_state.json

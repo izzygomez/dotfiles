@@ -11,7 +11,7 @@
     # - "create: true" will create the target directory if it doesn't exist
     # - "force: true" will overwrite the target file if it already exists
 
-    # Only link these files on macOS
+    ### Only link these files on macOS
     ~/Library/KeyBindings/DefaultKeyBinding.dict:
       if: "[ `uname` = Darwin ]"
       create: true
@@ -19,6 +19,11 @@
     ~/.rectangle.config.json:
       if: "[ `uname` = Darwin ]"
       path: rectangle.config.json
+    ~/.config/karabiner:
+      if: "[ `uname` = Darwin ]"
+      create: true
+      force: true
+      path: karabiner
     # Firefox stuff
     ~/Library/Application Support/Firefox/profiles.ini:
       if: "[ `uname` = Darwin ]"
@@ -34,7 +39,7 @@
       create: true
       path: firefox/user.js
 
-    # Files that are OS-independent
+    ### Files that are OS-independent
     ~/.emacs: emacs
     ~/.gitconfig: gitconfig
     ~/.hushlogin: hushlogin
