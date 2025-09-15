@@ -337,6 +337,15 @@
          ("^\\(-.*\\)$" 1 'diff-removed nil t)))
       (font-lock-flush))))
 
+;; Remap M-<backspace> to backward-delete-word instead of its default which
+;; copies the deleted word to the kill ring / clipboard.
+(defun backward-delete-word (arg)
+  "Delete words backward without saving to the kill ring."
+  (interactive "p")
+    (delete-region (point) (progn (backward-word arg) (point))))
+(global-set-key (kbd "M-DEL") #'backward-delete-word)
+(global-set-key (kbd "M-<backspace>") 'backward-delete-word)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Stuff that was automatically added
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
