@@ -19,11 +19,19 @@
      * Key Bindings for Emacs-like shortcuts on macOS
      */
 
-    /* Move forward (C-f) & backward (C-b) by a character.
+    /*
+     * Move forward (C-f) & backward (C-b) by a character.
      * AFAICT this should be default macOS behavior, but adding here for explicitness.
      */
     "^f" = "moveForward:";
     "^b" = "moveBackward:";
+
+    /*
+     * Move up (C-p) & down (C-n) by a line .
+     * AFAICT this should be default macOS behavior, but adding here for explicitness.
+     */
+    "^p" = "moveUp:";
+    "^n" = "moveDown:";
 
     /* Move forward (M-f) & backward (M-b) by a word */
     "~f" = "moveWordForward:";
