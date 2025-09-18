@@ -15,7 +15,7 @@
     ~/Library/KeyBindings/DefaultKeyBinding.dict:
       if: "[ `uname` = Darwin ]"
       create: true
-      path: DefaultKeyBinding.dict
+      path: macOS-keyboard-shortcuts/DefaultKeyBinding.dict
     ~/.rectangle.config.json:
       if: "[ `uname` = Darwin ]"
       path: rectangle.config.json
@@ -23,7 +23,7 @@
       if: "[ `uname` = Darwin ]"
       create: true
       force: true
-      path: karabiner
+      path: macOS-keyboard-shortcuts/karabiner
     # Firefox stuff
     ~/Library/Application Support/Firefox/profiles.ini:
       if: "[ `uname` = Darwin ]"

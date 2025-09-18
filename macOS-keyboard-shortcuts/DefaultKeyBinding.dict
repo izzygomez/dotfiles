@@ -1,13 +1,18 @@
 {
     /* Setting custom keybindings on macOS. See documentation [1]. Inspired by [2].
-     * For reference: ^ is control, ~ is option.
      *
-     * TODO: these bindings aren't being respected by some apps, e.g. Apple Notes, so
-     * consider using another solution like [3]
+     * Note that these will only work for Cocoa [3] text fields, so they won't
+     * be respected by some apps (e.g. Apple Notes, Gmail text fields), so I
+     * also have a Karabiner Elements [4] (in `karabiner.json`) system-wide
+     * solution with corresponding rules for rules here. This means this file no
+     * longer is necessary, but keeping around for posterity.
+     *
+     * For reference: ^ is control, ~ is option.
      *
      * [1] https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/TextDefaultsBindings/TextDefaultsBindings.html
      * [2] https://www.reddit.com/r/MacOS/comments/xz4c8l/comment/irkarsk/
-     * [3] https://karabiner-elements.pqrs.org/
+     * [3] https://en.wikipedia.org/wiki/Cocoa_(API)
+     * [4] https://karabiner-elements.pqrs.org/
      */
 
     /*
@@ -24,8 +29,10 @@
     "~f" = "moveWordForward:";
     "~b" = "moveWordBackward:";
 
-    /* Copy (M-w), Cut (C-w), and Paste (C-y) */
+    /* Copy (M-w), Cut (C-w), & Paste (C-y) */
     "~w" = "copy:";
     "^w" = "cut:";
     "^y" = "paste:";
+
+    /* TODO add something for "marking", i.e. C-space in Emacs */
 }
