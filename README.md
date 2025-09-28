@@ -6,21 +6,31 @@ Personal [dotfiles](https://dotfiles.github.io/) setup using [dotbot](https://gi
 
 For more instructions, check this [blog post](https://www.elliotdenolf.com/posts/bootstrap-your-dotfiles-with-dotbot) out. This section will briefly detail common flows.
 
-### Adding a dotfile
+### Adding a dotfile or dotdir
 
-1. Copy dotfile into this repo (no leading dot!), & make backup
+1. Copy into this repo (no leading dot!), & make backup
 
 ```shell
 cd dotfiles
+# dotfile
 cp ~/.dotfile ./dotfile
 mv ~/.dotfile ~/.dotfile-backup
+# dotdir
+cp -r ~/.dotdir ./dotdir
+mv ~/.dotdir ~/.dotdir-backup
 ```
 
-2. Add new dotfile into `install.conf.yaml`
+2. Add into `install.conf.yaml`. Note that there are OS-specific sectinos & instructions inside that file.
 
 ```yaml
-link:
-  ~/.dotfile: dotfile
+- link:
+    # dotfile
+    ~/.dotfile: dotfile
+    # dotdir
+    ~/.dotdir:
+      create: true # optional
+      force: true # optional
+      path: dotdir
 ```
 
 3. Run `install` script, & delete backup if successful
@@ -29,7 +39,10 @@ link:
 ./install
   ...
   ==> All tasks executed successfully
+# dotfile
 rm ~/.dotfile-backup
+# dotdir
+rm -r ~/.dotdir-backup
 ```
 
 4. (Optional) Add file mapping in `.gitattributes` to enable correct syntax highlighting on Github.
@@ -119,6 +132,5 @@ gco izzygomez/add-confirm-option-for-save-and-restore
 - Address all TODOs littered throughout code.
 - Figure out how to add em-dashes when typing in `emacs`. Some leads here: [1](https://www.reddit.com/r/emacs/comments/lp85tx/this_might_sound_stupid_but_how_do_i_go_about/), [2](https://www.reddit.com/r/emacs/comments/5eb1ay/replacing_2_x_hyphen_with_ndash/), [3](https://github.com/jorgenschaefer/typoel).
 - Consider adding [`zsh-completions`](https://github.com/zsh-users/zsh-completions?tab=readme-ov-file) package. For context, tried adding it while setting up [`ngrok completion`](https://ngrok.com/docs/agent/cli/#ngrok-completion) stuff in `.zshrc`, but I found out that the ordering of initializing `zsh-completions` & `ngrok` mattered, & I'd need to refactor dotfiles to get this working. Also, per `zsh-completions` README, it is also worth considering installing via something like `antigen` instead of, say, `brew` so that it can be setup on any OS.
-- Consider adding [Alfred](https://www.alfredapp.com/) preferences sync; requires ["Powerpack" upgrade](https://www.alfredapp.com/help/powerpack/license-types/).
 - `rectangle.config.json` is not automatically updated if settings are changed, need to manually export. Fix this. Might require upgrading to [pro version](https://rectangleapp.com/pro).
 - Consider adding VSCode/Cursor settings in here.

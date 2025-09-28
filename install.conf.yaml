@@ -24,6 +24,11 @@
       create: true
       force: true
       path: macOS-keyboard-shortcuts/karabiner
+    ~/.alfred:
+      if: "[ `uname` = Darwin ]"
+      create: true
+      force: true
+      path: alfred
     # Firefox stuff
     ~/Library/Application Support/Firefox/profiles.ini:
       if: "[ `uname` = Darwin ]"
