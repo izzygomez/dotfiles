@@ -20,7 +20,7 @@ cp -r ~/.dotdir ./dotdir
 mv ~/.dotdir ~/.dotdir-backup
 ```
 
-2. Add into `install.conf.yaml`. Note that there are OS-specific sectinos & instructions inside that file.
+2. Add into `install.conf.yaml`. Note that there are OS-specific sections & instructions inside that file.
 
 ```yaml
 - link:
