@@ -109,6 +109,9 @@ if is_command_available git; then
     # https://tech.serhatteker.com/post/2021-02/git-log-tree/
     alias gitgraph='git log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\'' --all'
     alias ggr='gitgraph'
+
+    # Nice shortcut to see git diff stats (without redirecting to pager).
+    alias gdst='git --no-pager diff --stat'
 else
     echo "~/.zshrc: git is not available, can't set settings."
 fi
