@@ -38,7 +38,7 @@
 # `git-delta` specific config
 [delta]
 	# side by side diff mode
-	side-by-side = true
+	# side-by-side = true
 	# line-numbers = true is assumed if side-by-side = true, but setting
 	# this explicitly in case I decide to toggle side-by-side off
 	line-numbers = true
