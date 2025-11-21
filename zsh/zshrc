@@ -136,6 +136,13 @@ else
     echo "~/.zshrc: tmux is not available, can't set settings."
 fi
 
+if is_command_available grep; then
+    # `grep` niceties: ignore case, colored output, show line numbers.
+    alias grep='grep --ignore-case --color=auto --line-number'
+else
+    echo "~/.zshrc: grep is not available, can't set alias."
+fi
+
 # Shortcuts for having a browsable history, with date & time stamps.
 # `h` is for the entire history, `ht N` is for the last N lines.
 alias h='history -f | less'
