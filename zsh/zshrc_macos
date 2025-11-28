@@ -41,6 +41,17 @@ if [[ "$current_location" != "$desired_location" ]]; then
     echo "~/.zshrc_macos: Set screenshot location to $desired_location."
 fi
 
+if [ -d "/Applications/Docker.app" ]; then
+    # The following lines have been added by Docker Desktop to enable Docker CLI completions.
+    if [ -d "$HOME/.docker/completions" ]; then
+        fpath=($HOME/.docker/completions $fpath)
+        autoload -Uz compinit
+        compinit
+    fi
+else
+    echo "~/.zshrc_macos: Docker Desktop not installed, can't set completions."
+fi
+
 ################################################################################
 # Homebrew package configurations
 ################################################################################
