@@ -346,6 +346,10 @@
 (global-set-key (kbd "M-DEL") #'backward-delete-word)
 (global-set-key (kbd "M-<backspace>") 'backward-delete-word)
 
+;; Enable visual line mode globally, which makes long lines wrap without "\"
+;; at the end of the line.
+(global-visual-line-mode 1)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Stuff that was automatically added
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
