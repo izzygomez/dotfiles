@@ -144,8 +144,8 @@ else
 fi
 
 if is_command_available grep; then
-    # `grep` niceties: ignore case, colored output, show line numbers.
-    alias grep='grep --ignore-case --color=auto --line-number'
+    # `grep` niceties: ignore case, colored output
+    alias grep='grep --ignore-case --color=auto'
 else
     echo "~/.zshrc: grep is not available, can't set alias."
 fi
