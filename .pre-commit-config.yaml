@@ -1,7 +1,20 @@
+# See pre-commit.com for documentation.
+#
+# Some helpful commands:
+# - `pre-commit install` to install the hooks.
+# - `pre-commit run --all-files --verbose` to run the hooks manually.
+# - `git commit -n/--no-verify` to skip the hooks.
+# - `pre-commit autoupdate` to update the hooks to the latest version.
+# - In hooks configurations below with `files` & `exclude` options set: to
+#   enumerate all files that will be processed by the hook, run:
+#   `git ls-files | grep -E '{files}' | grep -v -E '{exclude}'`
+#   where {files} is the regex of files to process, & {exclude} is the regex of
+#   files to exclude.
+
 repos:
   # 1. External hooks (pre-commit's built-in collection)
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0 # Specify the latest stable version
+    rev: v6.0.0
     hooks:
       - id: trailing-whitespace # Removes trailing whitespace
       - id: end-of-file-fixer # Ensures files end with a single newline
@@ -9,7 +22,32 @@ repos:
       - id: check-json # Validates JSON syntax
       - id: check-added-large-files # Prevents large files from being added
 
+  # Note for 2 & 3 below:
+  # Using `types: [text]` instead of `types: [shell, zsh]` because the identify
+  # library only tags zsh files as type 'zsh' when executable. Our zsh configs
+  # (zshrc, zprofile, etc.) are sourced not executed so should not be made
+  # executable. Therefore we use explicit `files` & `exclude` patterns.
 
-  # 2. TODO add a Shell script formatter, couldn't quite figure out a good
-  # solution here. Consider looking into [1] or something similar.
-  # [1] https://github.com/pecigonzalo/pre-commit-shfmt
+  # 2. Shell script formatting
+  # Per note above, run this to see what files will be formatted:
+  # git ls-files | grep -E '\.(sh|bash)$|^(zsh/.*|install)$' | grep -v -E '^(dotbot|copilot\.el)/|zsh/README\.md$'
+  - repo: https://github.com/scop/pre-commit-shfmt
+    rev: v3.12.0-2
+    hooks:
+      - id: shfmt
+        args: [-w, -s, -i, "4"] # Write changes, simplify code, 4-space indent
+        types: [text]
+        files: '\.(sh|bash)$|^(zsh/.*|install)$'
+        exclude: '^(dotbot|copilot\.el)/|zsh/README\.md$'
+
+  # 3. Shell script linting
+  # Per note above, run this to see what files will be formatted:
+  # git ls-files | grep -E '\.(sh|bash)$|^install$' | grep -v -E '^(dotbot|copilot\.el|zsh)/'
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1
+    hooks:
+      - id: shellcheck
+        types: [text]
+        # Note: excluding zsh/ files because ShellCheck doesn't support zsh
+        files: '\.(sh|bash)$|^install$'
+        exclude: '^(dotbot|copilot\.el|zsh)/'
