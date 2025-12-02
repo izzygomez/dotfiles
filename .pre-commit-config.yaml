@@ -30,7 +30,7 @@ repos:
 
   # 2. Shell script formatting
   # Per note above, run this to see what files will be formatted:
-  # `git ls-files | grep -E '\.(sh|bash)$|^(zsh/.*|install)$' | grep -v -E '^(dotbot/|copilot\.el)/|zsh/README\.md$'`
+  # git ls-files | grep -E '\.(sh|bash)$|^(zsh/.*|install)$' | grep -v -E '^(dotbot|copilot\.el)/|zsh/README\.md$'
   - repo: https://github.com/scop/pre-commit-shfmt
     rev: v3.12.0-2
     hooks:
@@ -38,16 +38,16 @@ repos:
         args: [-w, -s, -i, "4"] # Write changes, simplify code, 4-space indent
         types: [text]
         files: '\.(sh|bash)$|^(zsh/.*|install)$'
-        exclude: '^(dotbot/|copilot\.el)/|zsh/README\.md$'
+        exclude: '^(dotbot|copilot\.el)/|zsh/README\.md$'
 
   # 3. Shell script linting
   # Per note above, run this to see what files will be formatted:
-  # `git ls-files | grep -E '\.(sh|bash)$|^install$' | grep -v -E '^(dotbot/|copilot\.el)/'`
+  # git ls-files | grep -E '\.(sh|bash)$|^install$' | grep -v -E '^(dotbot|copilot\.el|zsh)/'
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.11.0.1
     hooks:
       - id: shellcheck
         types: [text]
-        # Note: not including zsh/ files because ShellCheck doesn't support zsh
+        # Note: excluding zsh/ files because ShellCheck doesn't support zsh
         files: '\.(sh|bash)$|^install$'
-        exclude: '^(dotbot/|copilot\.el)/'
+        exclude: '^(dotbot|copilot\.el|zsh)/'
