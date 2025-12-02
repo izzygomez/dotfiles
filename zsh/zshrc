@@ -21,8 +21,15 @@ source $dotfiles_dir/zsh/checkers.sh
 #
 # [1] https://github.com/sindresorhus/pure?tab=readme-ov-file#install
 # [2] https://chatgpt.com/share/678fe919-c960-800c-88e3-088be26ec2d9
-autoload -U promptinit; promptinit
-if (( $+functions[prompt_pure_setup] )); then
+autoload -U promptinit
+promptinit
+# Note: this line used to be the following [1], but it would break with `shfmt`
+# formatting in .pre-commit-config.yaml, since this line is zsh syntax but
+# `shfmt` is technically only supports bash syntax. Rewrote the logic to get
+# around this small limitation, but keeping [1] around for reference, since [1]
+# is what was recommended by ChatGPT in conversation above [2].
+# [1] `if (( $+functions[prompt_pure_setup] )); then`
+if [[ -n ${functions[prompt_pure_setup]} ]]; then
     # This line from README [1]
     prompt pure
 
@@ -197,10 +204,10 @@ weather() {
     error="Weather report: not found"
     if echo "$response" | grep -q "$error"; then
         echo "Error: saw '$error' in response; maybe disable VPN?"
-	return
+        return
     else
         echo "$response"
-	return
+        return
     fi
 }
 
@@ -239,12 +246,12 @@ fi
 yank_from_clipboard() {
     # Insert text from the system clipboard.
     if is_mac_os; then
-	LBUFFER+=$(pbpaste)
+        LBUFFER+=$(pbpaste)
     elif is_linux; then
-	# TODO: impl
-	echo "~/.zshrc: yank_from_clipboard not implemented on linux."
+        # TODO: impl
+        echo "~/.zshrc: yank_from_clipboard not implemented on linux."
     else
-	echo "~/.zshrc: not a recognized machine, not setting yank_from_clipboard."
+        echo "~/.zshrc: not a recognized machine, not setting yank_from_clipboard."
     fi
 }
 # declare custom function as a ZLE widget

@@ -23,7 +23,7 @@ if [ -d "/Applications/iTerm.app" ]; then
     load_prefs_from_custom_folder=$(defaults read com.googlecode.iterm2 LoadPrefsFromCustomFolder)
 
     # If not, set them.
-    if [[ "$current_prefs_folder" != "$dotfiles_dir/iterm2" || "$load_prefs_from_custom_folder" != "1" ]]; then
+    if [[ $current_prefs_folder != "$dotfiles_dir/iterm2" || $load_prefs_from_custom_folder != "1" ]]; then
         echo "~/.zshrc_macos: Setting iTerm2 settings. iTerm2 will need to be restarted for changes to take effect.\nIMPORTANT: set \"iTerm2 > Settings > General > Settings > Save Changes\" to \"Automatically\"."
         defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$dotfiles_dir/iterm2"
         defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
@@ -35,7 +35,7 @@ fi
 # Set the default screenshot location to ~/Downloads when using Cmd+Shift+3/4.
 desired_location="$HOME/Downloads"
 current_location=$(defaults read com.apple.screencapture location 2>/dev/null || echo "")
-if [[ "$current_location" != "$desired_location" ]]; then
+if [[ $current_location != "$desired_location" ]]; then
     defaults write com.apple.screencapture location "$desired_location"
     killall SystemUIServer
     echo "~/.zshrc_macos: Set screenshot location to $desired_location."
@@ -65,7 +65,7 @@ fi
 check_and_configure_packages() {
     # Collect all package names into an array
     local packages=()
-    while [[ "$#" -gt 0 && "$1" != "--" ]]; do
+    while [[ $# -gt 0 && $1 != "--" ]]; do
         packages+=("$1")
         shift
     done
@@ -81,8 +81,8 @@ check_and_configure_packages() {
     done
 
     # If all packages are installed, execute the function
-    if [[ "$all_packages_installed" -eq 1 ]]; then
-        if [[ "$1" == "--" ]]; then shift; fi
+    if [[ $all_packages_installed -eq 1 ]]; then
+        if [[ $1 == "--" ]]; then shift; fi
         "$@"
     fi
 }
@@ -106,11 +106,11 @@ configure_ruby() {
 
     # Only switch if desired ruby version is available
     if chruby | grep -q $desired_ruby; then
-	chruby $desired_ruby
+        chruby $desired_ruby
     else
-	echo "Warning: $desired_ruby not found by chruby. Skipping chruby switch."
-	echo "Run this to install:"
-	echo "  ruby-install $desired_ruby"
+        echo "Warning: $desired_ruby not found by chruby. Skipping chruby switch."
+        echo "Run this to install:"
+        echo "  ruby-install $desired_ruby"
     fi
 
     # add brew-installed ruby to path
