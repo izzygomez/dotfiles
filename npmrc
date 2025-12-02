@@ -1,2 +1,7 @@
 # https://www.yellowduck.be/posts/til-how-remove-npm-fund-message
 fund=false
+
+# Metronome-specific config. This token is exported in `zshrc_metro`, which is
+# ignored by git
+//npm.pkg.github.com/:_authToken=${NPM_METRONOME_TOKEN}
+@metronome-industries:registry=https://npm.pkg.github.com/
