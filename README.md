@@ -72,19 +72,17 @@ Ideally, this dotfiles setup should work out-of-the-box on any machine, regardle
 
 This effort is a 🚧 work in progress 🚧. As an example, see usage of methods in `zsh/checkers.sh` to see how this can be accomplished.
 
-### Shell script formatting
+### Pre-commit
 
-Shell scripts in this repo should be formatted with the following command:
+This repo uses [`pre-commit`](https://pre-commit.com/) to automatically format & lint files before they are committed. The hooks include:
 
-```shell
-shfmt -i 4 -w FILE-NAME
-```
+- **Shell script formatting** via [shfmt](https://github.com/mvdan/sh)
+  - Note: new shell scripts without a `.sh` extension should be added to the `files` option of the appropriate hook
+- **Shell script linting** via [shellcheck](https://www.shellcheck.net/)
+  - for bash/sh files only; zsh files are excluded as shellcheck doesn't support zsh
+- **General file checks** (trailing whitespace, end-of-file newlines, YAML/JSON validation, etc.)
 
-The `-i 4` flag specifies to use 4 spaces for indentation, & the `-w` flag overwrites `FILE-NAME` in place. This is not automatically enforced yet (see TODOs below). `pre-commit` hooks could be used to enforce this formatting, & this has already been set up in the `pre-commit-config.yaml` file.
-
-### Pre-commit hooks
-
-After installing [`pre-commit`](https://pre-commit.com/) (e.g., via `brew install pre-commit`), run `pre-commit install` to install the hooks. This will run the hooks before every commit. To run the hooks manually, use `pre-commit run --all-files --verbose`.
+See `.pre-commit-config.yaml` for configuration details & for usage instructions.
 
 ### Submodules
 
@@ -124,7 +122,6 @@ git fetch origin pull/502/head:izzygomez/add-confirm-option-for-save-and-restore
 gco izzygomez/add-confirm-option-for-save-and-restore
 ```
 
-- Auto-enforce formatting of shell-like files. See "Shell script formatting" section above.
 - `emacs`, `undo-tree` package: currently setting up undo tree history files to be saved in `~/.emacs.d/undo-tree-histories`, but there's no mechanism to delete history files for files that have been deleted (or possibly even handle cases where files are renamed?). Investigate this & fix.
 - `emacs` is not working well on raspi setup: the `diff-hl-mode` related code for uncommitted changes is not working well (something related to the `add-hook` line?).
 - Seems like "Save Changes" setting on iTerm2 > Settings > General > Preferences is not configurable via `defaults` (see [this commit](https://github.com/izzygomez/dotfiles/commit/1407f3b27a351d58c169057d94a67605bab54878) for usage example), so TODO here is to set value of this setting to "Automatically" via some other method; for the moment, am doing this via an `echo` statement in `zshrc_macos`.
