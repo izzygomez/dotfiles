@@ -1,4 +1,3 @@
-# This is Git's per-user configuration file.
 [user]
 	name = Izzy Gomez
 	email = izzy@izzygomez.com
@@ -18,6 +17,9 @@
 
 [pull]
 	ff = only
+
+[fetch]
+	prune = true
 
 [commit]
 	gpgsign = true
