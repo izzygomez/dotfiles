@@ -31,3 +31,17 @@ user_pref("full-screen-api.transition-duration.leave", "0 0");
 // Turn off tab groups & sidebar
 user_pref("browser.tabs.groups.enabled", false);
 user_pref("sidebar.revamp", false);
+
+// Turn off all AI features, using guidance here [1] as inspo.
+// [1] https://windowsreport.com/firefox-now-lets-you-disable-ai-just-not-regular-users/
+user_pref("browser.ml.chat.enabled", false);
+user_pref("browser.ml.chat.page.footerBadge", false);
+user_pref("browser.ml.chat.page.menuBadge", false);
+user_pref("browser.ml.chat.shortcuts", false);
+user_pref("browser.ml.chat.shortcuts.custom", false);
+user_pref("browser.ml.chat.sidebar", false);
+user_pref("browser.ml.checkForMemory", false);
+user_pref("browser.ml.enable", false);
+user_pref("browser.ml.linkPreview.enabled", false);
+user_pref("browser.ml.pageAssist.enabled", false);
+user_pref("browser.ml.smartAssist.enabled", false);
