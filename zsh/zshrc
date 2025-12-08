@@ -223,6 +223,9 @@ else
     echo "~/.zshrc: pyenv is not available, can't set settings."
 fi
 
+# Load Rust environment if installed
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
 # Added per instructions (7) while setting up GPG keys for git commits
 # https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key#telling-git-about-your-gpg-key
 export GPG_TTY=$(tty)

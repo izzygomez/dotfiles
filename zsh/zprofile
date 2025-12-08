@@ -5,9 +5,13 @@ dotfiles_dir=$(dirname $(dirname $(realpath ~/.zprofile)))
 source $dotfiles_dir/zsh/checkers.sh
 
 if is_mac_os; then
-    # TODO: should add check here to make sure `brew` is installed, & if it
-    # isn't print an error message (possibly also set flag to not go about
-    # setting other configs?)
-    # Added as part of Homebrew installation
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    # Set up Homebrew, if installed; check Apple Silicon path first
+    # (/opt/homebrew), then the Intel path (/usr/local).
+    if [[ -x /opt/homebrew/bin/brew ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    elif [[ -x /usr/local/bin/brew ]]; then
+        eval "$(/usr/local/bin/brew shellenv)"
+    else
+        echo "~/.zprofile: Homebrew is not installed, please install by visiting https://brew.sh/."
+    fi
 fi
