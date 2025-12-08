@@ -143,6 +143,12 @@ configure_grep() {
 }
 check_and_configure_packages grep -- configure_grep
 
+configure_ngrok() {
+    # Per `brew install ngrok` instructions
+    eval "$(ngrok completion)"
+}
+check_and_configure_packages ngrok -- configure_ngrok
+
 configure_zsh_autosuggestions() {
     # Per `brew install zsh-autosuggestions` instructions
     source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
