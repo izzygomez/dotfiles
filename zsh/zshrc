@@ -216,7 +216,7 @@ weather() {
 # [1] https://github.com/pyenv/pyenv#set-up-your-shell-environment-for-pyenv
 # [2] https://github.com/pyenv/pyenv-installer
 export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+is_command_available pyenv || export PATH="$PYENV_ROOT/bin:$PATH"
 if is_command_available pyenv; then
     eval "$(pyenv init -)"
 else
