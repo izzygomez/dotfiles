@@ -13,5 +13,6 @@ if is_mac_os; then
         eval "$(/usr/local/bin/brew shellenv)"
     else
         echo "~/.zprofile: Homebrew is not installed, please install by visiting https://brew.sh/."
+        export HOMEBREW_NOT_INSTALLED=1
     fi
 fi

@@ -79,6 +79,15 @@ export HOMEBREW_NO_UPDATE_REPORT_NEW=1
 # where `configure_block` is a function code block with config & `packages...`
 # is space separated list of packages.
 check_and_configure_packages() {
+    # Early exit if Homebrew is not installed (set in zprofile)
+    if [[ -n $HOMEBREW_NOT_INSTALLED ]]; then
+        if [[ -z $__HOMEBREW_WARNING_SHOWN ]]; then
+            echo "~/.zshrc_macos: Homebrew not installed, skipping package configuration(s)."
+            export __HOMEBREW_WARNING_SHOWN=1
+        fi
+        return 1
+    fi
+
     # Collect all package names into an array
     local packages=()
     while [[ $# -gt 0 && $1 != "--" ]]; do
