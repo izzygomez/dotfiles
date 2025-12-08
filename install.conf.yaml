@@ -54,7 +54,6 @@
     ~/.tmux.conf: tmux/tmux.conf
     ~/.config/tmux-powerline: tmux/tmux-powerline
     ~/.zprofile: zsh/zprofile
-    ~/.zshenv: zsh/zshenv
     ~/.zshrc: zsh/zshrc
 
 - shell:
