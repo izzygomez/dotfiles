@@ -7,10 +7,6 @@
 # Misc configuration
 ################################################################################
 
-# Remove hints about Homebrew behaviour with environment variables (this is
-# annoying to have around in `brew` command outputs). See: https://docs.brew.sh/Manpage
-export HOMEBREW_NO_ENV_HINTS=1
-
 ## Following lines added by gcloud install script: https://cloud.google.com/sdk/docs/install#mac
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/izzyg/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/izzyg/google-cloud-sdk/path.zsh.inc'; fi
@@ -59,8 +55,22 @@ else
 fi
 
 ################################################################################
-# Homebrew package configurations
+# Homebrew config & package configs
+# See https://docs.brew.sh/Manpage
 ################################################################################
+
+# remove hints
+export HOMEBREW_NO_ENV_HINTS=1
+# pass `--ask` to `brew install/upgrade/reinstall` commands
+# according to docs, this should only work for formulae, but in practice it
+# seems to also work for casks ¯\_(ツ)_/¯
+export HOMEBREW_ASK=1
+# display install times at end of command run
+export HOMEBREW_DISPLAY_INSTALL_TIMES=1
+# turn off analytics
+export HOMEBREW_NO_ANALYTICS=1
+# don't show new formulae/casks when running `brew update`
+export HOMEBREW_NO_UPDATE_REPORT_NEW=1
 
 # Function to check if set of Homebrew packages are installed, & if so apply
 # custom config.
