@@ -78,22 +78,14 @@ This repo uses [`pre-commit`](https://pre-commit.com/) to automatically format &
 
 ### Submodules
 
-Our submodule pointers can be updated by simply pulling new changes
+Update a submodule to track its remote's default branch, & commit the changes:
 
 ```shell
-cd {submodule}
-git checkout {main,master,...}
-git pull
+git submodule update --remote {submodule}
+git add {submodule} && git commit -m "updated submodule {submodule}" && git push
 ```
 
-& then returning to the `dotfiles` repo & commiting the updates
-
-```shell
-cd ..  # should be in dotfiles/ after running this
-git add {submodule}; git commit -m "update `{submodule}`"; git push
-```
-
-Note that `git restore {submodule}` does not discard working directory changes as one might expect. To revert the submodule pointer to what it was before, either do as above but instead `git checkout` the previous commit hash, or run `git submodule update --init`.
+To revert submodule pointers to what's currently committed, run `git submodule update --init`.
 
 <details>
 <summary><h2>TODOs</h2></summary>
