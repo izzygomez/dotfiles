@@ -117,5 +117,6 @@ gco izzygomez/add-confirm-option-for-save-and-restore
 - `rectangle.config.json` is not automatically updated if settings are changed, need to manually export. Fix this. Might require upgrading to [pro version](https://rectangleapp.com/pro).
 - Consider adding VSCode/Cursor settings in here.
 - Make loading `zshrc` faster
+- Consider installing dotbot as a [Homebrew package](https://formulae.brew.sh/formula/dotbot) & remove as submodule. Would have to update `install` script.
 
 </details>
