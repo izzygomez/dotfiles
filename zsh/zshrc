@@ -148,7 +148,27 @@ if is_command_available grep; then
     # `grep` niceties: ignore case, colored output
     alias grep='grep --ignore-case --color=auto'
 else
-    echo "~/.zshrc: grep is not available, can't set alias."
+    echo "~/.zshrc: grep is not available, can't set settings."
+fi
+
+if is_command_available eza; then
+    # `eza` [1] seems like it can be dropped in as a replacement for `ls`, so
+    # going to default to using it, with some opinionated defaults.
+    # [1] https://github.com/eza-community/eza
+    alias ls='eza --git --group-directories-first'
+else
+    echo "~/.zshrc: eza is not available, can't set settings."
+fi
+
+if is_command_available bat; then
+    # `bat` [1] seems like it can be dropped in as a replacement for `cat`, so
+    # going to default to using it, with some opinionated defaults.
+    # [1] https://github.com/sharkdp/bat
+    alias bat='bat --paging=always'
+    alias b='bat'
+    alias cat='bat'
+else
+    echo "~/.zshrc: bat is not available, can't set settings."
 fi
 
 # Shortcuts for having a browsable history, with date & time stamps.
