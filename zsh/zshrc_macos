@@ -51,7 +51,7 @@ if [ -d "/Applications/Docker.app" ]; then
         compinit
     fi
 else
-    echo "~/.zshrc_macos: Docker Desktop not installed, can't set completions."
+    echo "~/.zshrc_macos: Docker Desktop not installed, can't set settings."
 fi
 
 ################################################################################
