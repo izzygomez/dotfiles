@@ -302,8 +302,9 @@ if is_izzys_metro_mbp && [ -f "$dotfiles_dir/zsh/zshrc_metro" ]; then
     source "$dotfiles_dir/zsh/zshrc_metro"
 fi
 
-# Mac OS specific configuration; see zshrc_macos for details, but this must be
-# sourced last.
+# Mac OS specific configuration
+# see bottom of `zshrc_macos` for why this must be sourced last.
 if is_mac_os; then
     source $dotfiles_dir/zsh/zshrc_macos
 fi
+# NOTHING SHOULD BE ADDED BELOW THIS LINE
