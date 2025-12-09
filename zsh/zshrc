@@ -119,6 +119,7 @@ if is_command_available git; then
 
     # Nice shortcut to see git diff stats (without redirecting to pager).
     alias gdst='git --no-pager diff --stat'
+    alias gdcast='git --no-pager diff --cached --stat'
 else
     echo "~/.zshrc: git is not available, can't set settings."
 fi
