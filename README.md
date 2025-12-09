@@ -74,15 +74,7 @@ This effort is a 🚧 work in progress 🚧. As an example, see usage of methods
 
 ### Pre-commit
 
-This repo uses [`pre-commit`](https://pre-commit.com/) to automatically format & lint files before they are committed. The hooks include:
-
-- **Shell script formatting** via [shfmt](https://github.com/mvdan/sh)
-  - Note: new shell scripts without a `.sh` extension should be added to the `files` option of the appropriate hook
-- **Shell script linting** via [shellcheck](https://www.shellcheck.net/)
-  - for bash/sh files only; zsh files are excluded as shellcheck doesn't support zsh
-- **General file checks** (trailing whitespace, end-of-file newlines, YAML/JSON validation, etc.)
-
-See `.pre-commit-config.yaml` for configuration details & for usage instructions.
+This repo uses [`pre-commit`](https://pre-commit.com/) to automatically format & lint files before they are committed, & also as part of the required checks before a PR can be merged via [pre-commit.ci](https://pre-commit.ci/). See `.pre-commit-config.yaml` for configuration details.
 
 ### Submodules
 

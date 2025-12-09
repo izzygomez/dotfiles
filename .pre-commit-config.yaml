@@ -5,6 +5,7 @@
 # - `pre-commit run --all-files --verbose` to run the hooks manually.
 # - `git commit -n/--no-verify` to skip the hooks.
 # - `pre-commit autoupdate` to update the hooks to the latest version.
+# - `pre-commit clean` to clean out cached files.
 # - In hooks configurations below with `files` & `exclude` options set: to
 #   enumerate all files that will be processed by the hook, run:
 #   `git ls-files | grep -E '{files}' | grep -v -E '{exclude}'`
@@ -12,15 +13,21 @@
 #   files to exclude.
 
 repos:
-  # 1. External hooks (pre-commit's built-in collection)
+  # 1. Pre-commit's built-in collection
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
-      - id: trailing-whitespace # Removes trailing whitespace
-      - id: end-of-file-fixer # Ensures files end with a single newline
-      - id: check-yaml # Validates YAML syntax
-      - id: check-json # Validates JSON syntax
-      - id: check-added-large-files # Prevents large files from being added
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-yaml
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: no-commit-to-branch
+      - id: trailing-whitespace
 
   # Note for 2 & 3 below:
   # Using `types: [text]` instead of `types: [shell, zsh]` because the identify
