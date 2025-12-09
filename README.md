@@ -74,7 +74,7 @@ This effort is a 🚧 work in progress 🚧. As an example, see usage of methods
 
 ### Pre-commit
 
-This repo uses [`pre-commit`](https://pre-commit.com/) to automatically format & lint files before they are committed, & also as part of the required checks before a PR can be merged. See `.pre-commit-config.yaml` for configuration details.
+This repo uses [`pre-commit`](https://pre-commit.com/) to automatically format & lint files before they are committed, & also as part of the required checks before a PR can be merged via [pre-commit.ci](https://pre-commit.ci/). See `.pre-commit-config.yaml` for configuration details.
 
 ### Submodules
 
