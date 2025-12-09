@@ -13,7 +13,7 @@
 #   files to exclude.
 
 repos:
-  # 1. Pre-commit's built-in collection
+  # Pre-commit's built-in collection
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
@@ -29,13 +29,13 @@ repos:
       - id: no-commit-to-branch
       - id: trailing-whitespace
 
-  # Note for 2 & 3 below:
+  # Note for "Shell script formatting" & "Shell script linting" below:
   # Using `types: [text]` instead of `types: [shell, zsh]` because the identify
   # library only tags zsh files as type 'zsh' when executable. Our zsh configs
   # (zshrc, zprofile, etc.) are sourced not executed so should not be made
   # executable. Therefore we use explicit `files` & `exclude` patterns.
 
-  # 2. Shell script formatting
+  # Shell script formatting
   # Per note above, run this to see what files will be formatted:
   # git ls-files | grep -E '\.(sh|bash)$|^(zsh/.*|install)$' | grep -v -E '^(dotbot|copilot\.el)/|zsh/README\.md$'
   - repo: https://github.com/scop/pre-commit-shfmt
@@ -47,7 +47,7 @@ repos:
         files: '\.(sh|bash)$|^(zsh/.*|install)$'
         exclude: '^(dotbot|copilot\.el)/|zsh/README\.md$'
 
-  # 3. Shell script linting
+  # Shell script linting
   # Per note above, run this to see what files will be formatted:
   # git ls-files | grep -E '\.(sh|bash)$|^install$' | grep -v -E '^(dotbot|copilot\.el|zsh)/'
   - repo: https://github.com/shellcheck-py/shellcheck-py
@@ -58,3 +58,11 @@ repos:
         # Note: excluding zsh/ files because ShellCheck doesn't support zsh
         files: '\.(sh|bash)$|^install$'
         exclude: '^(dotbot|copilot\.el|zsh)/'
+
+  # Prettier
+  - repo: https://github.com/rbubley/mirrors-prettier
+    rev: "v3.7.4"
+    hooks:
+      - id: prettier
+        types_or: [javascript, json, yaml, css, markdown]
+        exclude: '^(dotbot|copilot\.el)/'

@@ -18,9 +18,11 @@ This means:
 ### What to do
 
 If a commit includes iTerm2 preference changes:
+
 - **Use a different terminal** (like Terminal.app) to pull, so iTerm2 isn't running & can't interfere.
 
 If you already pulled while iTerm2 was open:
+
 1. **Quit iTerm2 completely.**
 2. Open Terminal.app.
 3. Run `git restore iterm2/com.googlecode.iterm2.plist` to bring back the pulled version.
