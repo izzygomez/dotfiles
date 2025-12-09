@@ -45,3 +45,8 @@ user_pref("browser.ml.enable", false);
 user_pref("browser.ml.linkPreview.enabled", false);
 user_pref("browser.ml.pageAssist.enabled", false);
 user_pref("browser.ml.smartAssist.enabled", false);
+
+// DNS over HTTPS settings
+// AFAICT, '3' maps to "Max Protection", meaning that Firefox will always use
+// DNS via Cloudflare's DNS-over-HTTPS (DoH) service.
+user_pref("network.trr.mode", 3);
