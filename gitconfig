@@ -10,6 +10,8 @@
 	# to stdout (`echo ...`) & fallback to using `less`
 	# [1] https://github.com/dandavison/delta
 	pager = sh -c "delta 2>/dev/null || { echo '~/.gitconfig: delta is not installed, falling back to using less.'; less; }"
+	# Global gitignore file
+	excludesFile = ~/.gitignore-global
 
 [push]
 	autoSetupRemote = true

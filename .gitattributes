@@ -8,3 +8,4 @@ DefaultKeyBinding.dict linguist-language=Objective-C
 lesskey linguist-language=INI
 npmrc linguist-language=INI
 tidyrc linguist-language=INI
+gitignore-global linguist-language=Ignore-List

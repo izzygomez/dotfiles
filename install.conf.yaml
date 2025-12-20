@@ -47,6 +47,7 @@
     ### Files that are OS-independent
     ~/.emacs: emacs
     ~/.gitconfig: gitconfig
+    ~/.gitignore-global: gitignore-global
     ~/.hushlogin: hushlogin
     ~/.lesskey: lesskey
     ~/.npmrc: npmrc

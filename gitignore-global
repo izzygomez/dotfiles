@@ -1,0 +1,6 @@
+# OS or Editor folders
+.DS_Store
+
+# Ignore Claude files by default. These can be manually marked to be tracked by
+# git by running `git add -f CLAUDE.md`
+CLAUDE.md
