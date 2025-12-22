@@ -1,0 +1,114 @@
+#!/bin/zsh
+
+# This file is sourced by ~/.zshrc, & it may be written in such a way that it
+# can't run on its own (i.e. it depends on upstream dependencies).
+
+# Helper function to prompt for confirmation
+_gb_confirm() {
+    local prompt="$1"
+    echo -n "$prompt [y/N] "
+    read -r answer
+    [[ $answer =~ ^[Yy]$ ]]
+}
+
+# Created the following by working with ChatGPT. It's a useful tool for cleaning
+# up local git branches that are fully merged into the main branch.
+gb_clean() {
+    local base="main"
+
+    # Make sure we're in a git repo
+    git rev-parse --git-dir >/dev/null 2>&1 || {
+        echo "Not inside a git repository."
+        return 1
+    }
+
+    local current
+    current=$(git symbolic-ref --short HEAD 2>/dev/null || echo "")
+
+    # Keep origin/main reasonably fresh
+    git fetch origin "$base" >/dev/null 2>&1 || true
+
+    local base_ref="origin/$base"
+    if ! git show-ref --verify --quiet "refs/remotes/$base_ref"; then
+        base_ref="$base"
+    fi
+
+    echo "Cleaning branches relative to $base_ref (current branch: $current)"
+
+    # Collect branches to process (excluding main/master only)
+    local branches_to_check=()
+    while read -r b; do
+        if [[ $b != "$base" && $b != "master" ]]; then
+            branches_to_check+=("$b")
+        fi
+    done < <(git for-each-ref --format='%(refname:short)' refs/heads/)
+
+    # If no branches to process, say so and exit
+    if [[ ${#branches_to_check[@]} -eq 0 ]]; then
+        echo "No branches to clean — only '$base' exists locally."
+        return 0
+    else
+        # if we're going to process branches, add a separator line
+        echo
+    fi
+
+    for b in "${branches_to_check[@]}"; do
+        # Don't delete the branch we're currently on
+        if [[ $b == "$current" ]]; then
+            echo "[skip] $b (current branch)"
+            continue
+        fi
+
+        # Branch tip is in base's history → safe delete
+        if git merge-base --is-ancestor "$b" "$base_ref"; then
+            if git rev-parse --abbrev-ref "$b@{u}" >/dev/null 2>&1; then
+                # Has upstream → safe to delete automatically
+                echo "[merged] deleting branch: $b"
+                git branch -d "$b"
+            else
+                # No upstream → could be fresh branch, ask user
+                if _gb_confirm "[merged?] $b has no upstream. Delete?"; then
+                    git branch -d "$b"
+                else
+                    echo "[skip] $b (user declined)"
+                fi
+            fi
+            continue
+        fi
+
+        # Trees are identical (squash/rebase merged) → force delete
+        if git diff --quiet "$base_ref" "$b"; then
+            if git rev-parse --abbrev-ref "$b@{u}" >/dev/null 2>&1; then
+                # Has upstream → safe to delete automatically
+                echo "[same] force-deleting branch identical to $base_ref: $b"
+                git branch -D "$b"
+            else
+                # No upstream → could be fresh branch, ask user
+                if _gb_confirm "[same?] $b has no upstream but matches $base_ref. Delete?"; then
+                    git branch -D "$b"
+                else
+                    echo "[skip] $b (user declined)"
+                fi
+            fi
+            continue
+        fi
+
+        # If we get here, branch has unique work. Skip if no upstream (local WIP).
+        if ! git rev-parse --abbrev-ref "$b@{u}" >/dev/null 2>&1; then
+            echo "[skip] $b (local branch, not merged)"
+            continue
+        fi
+
+        # Has upstream but differs from base → keep
+        echo "[keep] $b (has unmerged changes)"
+    done
+}
+
+# Git commit graph alias
+# https://tech.serhatteker.com/post/2021-02/git-log-tree/
+alias gitgraph='git log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\'' --all'
+alias ggr='gitgraph'
+
+# Nice shortcut to see git diff stats (without redirecting to pager).
+alias gdst='git --no-pager diff --stat'
+alias gdcast='git --no-pager diff --cached --stat'

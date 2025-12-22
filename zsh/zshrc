@@ -112,14 +112,7 @@ fi
 bindkey '^R' history-incremental-pattern-search-backward
 
 if is_command_available git; then
-    # Git commit graph alias
-    # https://tech.serhatteker.com/post/2021-02/git-log-tree/
-    alias gitgraph='git log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\'' --all'
-    alias ggr='gitgraph'
-
-    # Nice shortcut to see git diff stats (without redirecting to pager).
-    alias gdst='git --no-pager diff --stat'
-    alias gdcast='git --no-pager diff --cached --stat'
+    source $dotfiles_dir/zsh/zshrc_git
 else
     echo "~/.zshrc: git is not available, can't set settings."
 fi
