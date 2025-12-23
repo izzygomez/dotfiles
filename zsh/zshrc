@@ -33,6 +33,34 @@ if [[ -n ${functions[prompt_pure_setup]} ]]; then
     # This line from README [1]
     prompt pure
 
+    # Hack to suppress Pure's newline on first prompt only. See this thread [1]
+    # for context on author's opinion on the matter & a workaround that inspired
+    # this implementation. Note that this works for new lines in a new tab, tmux
+    # pane/window, etc, & also when running `clear`.
+    # [1] https://github.com/sindresorhus/pure/issues/509
+    __pure_first_prompt=1
+    print() {
+        if [ 0 -eq $# -a "prompt_pure_precmd" = "${funcstack[-1]}" ]; then
+            # Pure is trying to print its preprompt newline
+            if [[ $__pure_first_prompt -eq 1 ]]; then
+                __pure_first_prompt=0
+                # Suppress on first prompt
+            else
+                # Allow on subsequent prompts
+                builtin print "$@"
+            fi
+        else
+            # Normal print call, pass through
+            builtin print "$@"
+        fi
+    }
+
+    # Reset flag when clear is run so next prompt has no newline
+    clear() {
+        __pure_first_prompt=1
+        command clear
+    }
+
     # The rest in this code block is custom formatting.
     # colors:
     zstyle :prompt:pure:path color '#ADD8E6'
