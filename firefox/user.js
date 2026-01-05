@@ -46,7 +46,11 @@ user_pref("browser.ml.linkPreview.enabled", false);
 user_pref("browser.ml.pageAssist.enabled", false);
 user_pref("browser.ml.smartAssist.enabled", false);
 
-// DNS over HTTPS settings
-// AFAICT, '3' maps to "Max Protection", meaning that Firefox will always use
-// DNS via Cloudflare's DNS-over-HTTPS (DoH) service.
-user_pref("network.trr.mode", 3);
+// DNS over HTTPS settings. AFAICT, here are the possible mappings:
+// 1: Default Protection
+// 2: Increased Protection
+// 3: Max Protection
+// 4: Off
+// Keeping this "Off" to default to using Mullvad's (VPN) DNS resolver; see
+// docs here: https://mullvad.net/en/help/dns-leaks
+user_pref("network.trr.mode", 4);
