@@ -55,6 +55,7 @@ local baby_blue='152' # converted from hex '#ADD8E6', which is what I used in
     # os_icon               # os identifier
     dir                     # current directory
     vcs                     # git status
+    command_execution_time  # duration of the last command
     # =========================[ Line #2 ]=========================
     newline                 # \n
     prompt_char             # prompt symbol
@@ -67,7 +68,6 @@ local baby_blue='152' # converted from hex '#ADD8E6', which is what I used in
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
     status                  # exit code of the last command
-    command_execution_time  # duration of the last command
     background_jobs         # presence of background jobs
     context                 # user@hostname
     # vpn_ip                # virtual private network indicator
@@ -523,7 +523,7 @@ local baby_blue='152' # converted from hex '#ADD8E6', which is what I used in
   # Show this many fractional digits. Zero means round to seconds.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=1
   # Execution time color.
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=101
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=$baby_blue
   # Duration format: 1d 2h 3m 4s.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FORMAT='d h m s'
   # Custom icon.
