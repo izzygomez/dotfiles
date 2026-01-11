@@ -1,5 +1,2 @@
-# OS or Editor folders
-.DS_Store
-
 # Metronome-specific config. Should NOT be publicly visible.
 zsh/zshrc_metro
