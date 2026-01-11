@@ -5,3 +5,6 @@
 # git by running `git add -f CLAUDE.md`
 CLAUDE.md
 .claude/
+
+# Ignore Cursor files by default.
+.cursor/
