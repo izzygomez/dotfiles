@@ -49,7 +49,7 @@ fi
 # Note: I considered removing oh-my-zsh entirely as a dependency, but I quickly
 # realized that it sets up a lot of nice things that I'd otherwise have to
 # manually configure. For now I'm going to keep it, but note that no theme will
-# be set here if the `pure` prompt is available (see prior section).
+# be set here if the other themes are set up(see p10k sections).
 #
 # To be more explicit: the oh-my-zsh startup script loads in a bunch of lib
 # files [1] that are extremely useful. This includes things like being able to
@@ -66,7 +66,7 @@ export ZSH="$HOME/.oh-my-zsh"
 
 if [[ -d $ZSH ]]; then
     # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-    # ZSH_THEME="robbyrussell"  # commented out, set up above in Pure section
+    # ZSH_THEME="robbyrussell"  # commented out, set up above in p10k section
     plugins=(git)
 
     # Set the oh-my-zsh update frequency to 60 days. This must be set before

@@ -11,7 +11,7 @@
 
 # Some sensible & opinionated colors.
 local baby_blue='152' # converted from hex '#ADD8E6', which is what I used in
-                      # Pure prompt [3]
+                      # `pure` prompt [3]
 
 # [1] https://github.com/romkatv/powerlevel10k
 # [2] https://github.com/izzygomez/dotfiles/pull/36
