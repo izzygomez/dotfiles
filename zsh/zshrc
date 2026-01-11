@@ -16,7 +16,12 @@ source $dotfiles_dir/zsh/checkers.sh
 # TODO: The brew check below is specific to macOS. Consider making this more
 # general to support other platforms (e.g. Linux) where p10k might be installed
 # differently.
+__p10k_enabled=false
 if [[ -f ~/.p10k.zsh ]] && [[ -f $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme ]]; then
+    __p10k_enabled=true
+fi
+
+if $__p10k_enabled; then
     # Enable p10k instant prompt. Should stay close to the top of ~/.zshrc.
     # Initialization code that may require console input (password prompts, [y/n]
     # confirmations, etc.) must go above this block; everything else may go below.
@@ -288,19 +293,29 @@ bindkey -M emacs "^Y" yank_from_clipboard
 
 # Set prompt emoji prefixes to differentiate different machines.
 if is_izzys_mba; then
-    PROMPT='💨 '$PROMPT
+    __prompt_emoji='💨 '
 elif is_izzys_mbp; then
-    PROMPT='🚀 '$PROMPT
+    __prompt_emoji='🚀 '
 elif is_izzys_metro_mbp; then
-    PROMPT='🏢 '$PROMPT
+    __prompt_emoji='🏢 '
 elif is_izzys_raspberry_pi; then
     # Note: considering I mostly `mosh` into this machine & mosh has a long
     # history of not supporting certain emojis/characters [1], I'm limited in
     # what I can use here.
     # [1] https://github.com/mobile-shell/mosh/issues/234
-    PROMPT='🤖 '$PROMPT
+    __prompt_emoji='🤖 '
 else
     echo "~/.zshrc: not a recognized machine, not setting prompt prefix."
+fi
+# Apply the emoji using p10k if available, otherwise fall back to PROMPT.
+if [[ -n $__prompt_emoji ]]; then
+    if $__p10k_enabled; then
+        # p10k is active; use its mechanism to add emoji before the prompt char.
+        typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="$__prompt_emoji"
+    else
+        # Fallback for non-p10k prompts (e.g. oh-my-zsh theme).
+        PROMPT="$__prompt_emoji$PROMPT"
+    fi
 fi
 
 # Raspberry Pi specific configuration.
