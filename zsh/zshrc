@@ -10,69 +10,32 @@ dotfiles_dir=$(dirname $(dirname $(realpath ~/.zshrc)))
 source $dotfiles_dir/zsh/checkers.sh
 
 ################################################################################
-# Pure prompt configuration.
+# Powerlevel10k ('p10k') prompt configuration.
 ################################################################################
 
-# Check if Pure [1] is installed; if not, fallback to setting an oh-my-zsh theme.
-#
-# This `autoload...` line is from the "Getting Started" section of the pure
-# README [1], but it's also necessary here to load all prompt_*_setup functions
-# to do appropriate check below. For more context, see [2].
-#
-# [1] https://github.com/sindresorhus/pure?tab=readme-ov-file#install
-# [2] https://chatgpt.com/share/678fe919-c960-800c-88e3-088be26ec2d9
-autoload -U promptinit
-promptinit
-# Note: this line used to be the following [1], but it would break with `shfmt`
-# formatting in .pre-commit-config.yaml, since this line is zsh syntax but
-# `shfmt` is technically only supports bash syntax. Rewrote the logic to get
-# around this small limitation, but keeping [1] around for reference, since [1]
-# is what was recommended by ChatGPT in conversation above [2].
-# [1] `if (( $+functions[prompt_pure_setup] )); then`
-if [[ -n ${functions[prompt_pure_setup]} ]]; then
-    # This line from README [1]
-    prompt pure
+# TODO: The brew check below is specific to macOS. Consider making this more
+# general to support other platforms (e.g. Linux) where p10k might be installed
+# differently.
+if [[ -f ~/.p10k.zsh ]] && [[ -f $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme ]]; then
+    # Enable p10k instant prompt. Should stay close to the top of ~/.zshrc.
+    # Initialization code that may require console input (password prompts, [y/n]
+    # confirmations, etc.) must go above this block; everything else may go below.
+    if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${USER}.zsh" ]]; then
+        source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${USER}.zsh"
+    fi
 
-    # Hack to suppress Pure's newline on first prompt only. See this thread [1]
-    # for context on author's opinion on the matter & a workaround that inspired
-    # this implementation. Note that this works for new lines in a new tab, tmux
-    # pane/window, etc, & also when running `clear`.
-    # [1] https://github.com/sindresorhus/pure/issues/509
-    __pure_first_prompt=1
-    print() {
-        if [ 0 -eq $# -a "prompt_pure_precmd" = "${funcstack[-1]}" ]; then
-            # Pure is trying to print its preprompt newline
-            if [[ $__pure_first_prompt -eq 1 ]]; then
-                __pure_first_prompt=0
-                # Suppress on first prompt
-            else
-                # Allow on subsequent prompts
-                builtin print "$@"
-            fi
-        else
-            # Normal print call, pass through
-            builtin print "$@"
-        fi
-    }
+    # Doing this `source` per instructions in README [1]
+    # [1] https://github.com/romkatv/powerlevel10k/blob/efc9ddd9b615a0042b5bcc36f97f070ca6fdf09e/README.md#homebrew
+    source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
 
-    # Reset flag when clear is run so next prompt has no newline
-    clear() {
-        __pure_first_prompt=1
-        command clear
-    }
+    # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+    source ~/.p10k.zsh
 
-    # The rest in this code block is custom formatting.
-    # colors:
-    zstyle :prompt:pure:path color '#ADD8E6'
-    zstyle :prompt:pure:prompt:success color green
-    # show git stash with symbol ≡:
-    zstyle :prompt:pure:git:stash show yes
-
-    # set ZSH_THEME to empty, per [1]
+    # set ZSH_THEME to empty
     export ZSH_THEME=""
 else
-    echo "~/.zshrc: pure prompt not installed, falling back to setting oh-my-zsh theme."
-    # Fall back to an oh-my-zsh theme if Pure isn't available.
+    echo "~/.zshrc: p10k theme not installed or missing configuration, falling back to setting oh-my-zsh theme."
+    # Fall back to an oh-my-zsh theme if p10k isn't available.
     export ZSH_THEME="robbyrussell"
 fi
 
