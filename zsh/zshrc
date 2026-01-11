@@ -92,6 +92,8 @@ fi
 # https://github.com/izzygomez/mac-setup
 ################################################################################
 
+alias x='exit'
+
 if is_command_available emacs; then
     source $dotfiles_dir/zsh/zshrc_emacs
 else
