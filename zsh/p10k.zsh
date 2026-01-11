@@ -396,14 +396,14 @@ local baby_blue='152' # converted from hex '#ADD8E6', which is what I used in
     if (( $1 )); then
       # Styling for up-to-date Git status.
       local       meta='%f'     # default foreground
-      local      clean='%76F'   # green foreground
+      local      clean='%244F'  # grey foreground
       local   modified='%178F'  # yellow foreground
       local  untracked='%39F'   # blue foreground
       local conflicted='%196F'  # red foreground
     else
       # Styling for incomplete and stale Git status.
       local       meta='%244F'  # grey foreground
-      local      clean='%244F'  # grey foreground
+      local      clean='%196F'  # red foreground
       local   modified='%244F'  # grey foreground
       local  untracked='%244F'  # grey foreground
       local conflicted='%244F'  # grey foreground
