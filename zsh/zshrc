@@ -94,6 +94,8 @@ fi
 
 alias x='exit'
 
+alias code='cd "$HOME/code"'
+
 if is_command_available emacs; then
     source $dotfiles_dir/zsh/zshrc_emacs
 else
