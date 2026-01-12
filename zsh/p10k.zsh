@@ -334,6 +334,12 @@ local baby_blue='152' # converted from hex '#ADD8E6', which is what I used in
   #
   # VCS_STATUS_* parameters are set by gitstatus plugin. See reference:
   # https://github.com/romkatv/gitstatus/blob/master/gitstatus.plugin.zsh.
+
+  # Max length for branch/tag names before truncation. Names longer than this
+  # will show the first half … last half with an ellipsis in the middle.
+  typeset -g POWERLEVEL9K_VCS_BRANCH_NAME_MAX_LENGTH=64
+  typeset -g POWERLEVEL9K_VCS_TAG_NAME_MAX_LENGTH=64
+
   function my_git_formatter() {
     emulate -L zsh
 
@@ -364,10 +370,11 @@ local baby_blue='152' # converted from hex '#ADD8E6', which is what I used in
 
     if [[ -n $VCS_STATUS_LOCAL_BRANCH ]]; then
       local branch=${(V)VCS_STATUS_LOCAL_BRANCH}
-      # If local branch name is at most 32 characters long, show it in full.
-      # Otherwise show the first 12 … the last 12.
+      # If local branch name exceeds max length, truncate with ellipsis in middle.
       # Tip: To always show local branch name in full without truncation, delete the next line.
-      (( $#branch > 32 )) && branch[13,-13]="…"  # <-- this line
+      local branch_max=$POWERLEVEL9K_VCS_BRANCH_NAME_MAX_LENGTH
+      local branch_trunc_idx=$(( branch_max / 2 ))
+      (( $#branch > branch_max )) && branch[branch_trunc_idx+1,-branch_trunc_idx-1]="…"
       res+="${clean}${(g::)POWERLEVEL9K_VCS_BRANCH_ICON}${branch//\%/%%}"
     fi
 
@@ -377,10 +384,11 @@ local baby_blue='152' # converted from hex '#ADD8E6', which is what I used in
           && -z $VCS_STATUS_LOCAL_BRANCH  # <-- this line
         ]]; then
       local tag=${(V)VCS_STATUS_TAG}
-      # If tag name is at most 32 characters long, show it in full.
-      # Otherwise show the first 12 … the last 12.
+      # If tag name exceeds max length, truncate with ellipsis in middle.
       # Tip: To always show tag name in full without truncation, delete the next line.
-      (( $#tag > 32 )) && tag[13,-13]="…"  # <-- this line
+      local tag_max=$POWERLEVEL9K_VCS_TAG_NAME_MAX_LENGTH
+      local tag_trunc_idx=$(( tag_max / 2 ))
+      (( $#tag > tag_max )) && tag[tag_trunc_idx+1,-tag_trunc_idx-1]="…"
       res+="${meta}#${clean}${tag//\%/%%}"
     fi
 
