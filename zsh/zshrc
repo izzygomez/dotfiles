@@ -130,12 +130,30 @@ if is_command_available git; then
     # with a cooldown to avoid hammering the remote. After fetch completes,
     # the next prompt will show updated status (gitstatus runs async on precmd).
     #
+    # EXCEPTION: On branch switches, we do a SYNCHRONOUS fetch. This ensures
+    # the prompt shows accurate ahead/behind status immediately after checkout.
+    # The slight delay is worth the accuracy for this common workflow.
+    #
     # [1] https://github.com/romkatv/powerlevel10k
     # [2] https://github.com/sindresorhus/pure
+    typeset -gA __git_last_branch # Track branch per repo (keyed by git root)
     __git_fetch_bg() {
         # Only run if we're in a git repo
         local git_root
         git_root=$(git rev-parse --show-toplevel 2>/dev/null) || return
+
+        # Get current branch (or "DETACHED" for detached HEAD)
+        local current_branch
+        current_branch=$(git symbolic-ref --short HEAD 2>/dev/null) || current_branch="DETACHED"
+
+        # Check if branch changed since last prompt (handles checkout, switch, merge, rebase, etc.)
+        local last_branch="${__git_last_branch[$git_root]}"
+        if [[ $current_branch != $last_branch ]]; then
+            __git_last_branch[$git_root]=$current_branch
+            # Branch changed - synchronous fetch so prompt shows accurate status immediately
+            git fetch --quiet 2>/dev/null
+            return
+        fi
 
         # Use FETCH_HEAD timestamp to avoid fetching too frequently
         local fetch_marker="${git_root}/.git/FETCH_HEAD"
