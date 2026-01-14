@@ -1,0 +1,66 @@
+#!/bin/zsh
+
+# This file is sourced by ~/.zshrc, & it may be written in such a way that it
+# can't run on its own (i.e. it depends on upstream dependencies).
+
+################################################################################
+# Zsh history configuration
+#
+# Docs: https://zsh.sourceforge.io/Doc/Release/Options.html
+################################################################################
+
+# Where your zsh history is stored on disk. Persists across sessions.
+export HISTFILE=~/.zsh_history
+
+# How many commands zsh keeps in memory per shell session. It controls what you
+# see with `history`, Ctrl-R, or completions. Shouldn't be too large, because it
+# can impact performance.
+export HISTSIZE=300000
+
+# How many commands zsh saves to $HISTFILE on disk. Obviously larger than
+# HISTSIZE — arbitrarily large.
+export SAVEHIST=5000000
+
+# Share history across all open zsh sessions by (1) importing new commands from
+# HISTFILE & (2) immediately appending new commands to the history file (versus
+# on shell exit).
+# Note: this implies INC_APPEND_HISTORY (so no need to set it), and makes
+# APPEND_HISTORY unnecessary since commands are written immediately.
+setopt SHARE_HISTORY
+
+# Store timestamps with each history entry.
+setopt EXTENDED_HISTORY
+
+# Explicitly keep all duplicates in history, & don't expire duplicates first
+# (when SAVEHIST is reached). This preserves the full historical record with
+# timestamps. Useful for seeing exactly what I ran & when.
+unsetopt HIST_IGNORE_DUPS
+unsetopt HIST_IGNORE_ALL_DUPS
+unsetopt HIST_EXPIRE_DUPS_FIRST
+
+# Don't show duplicates when searching history via Ctrl-R. Per above, duplicates
+# are still stored in the history file, but won't clutter up search results.
+setopt HIST_FIND_NO_DUPS
+
+# Don't save commands that start with a leading space; handy for secrets.
+setopt HIST_IGNORE_SPACE
+
+# Remove extra whitespace before saving commands to history.
+setopt HIST_REDUCE_BLANKS
+
+# When using history expansion (!!, !$, etc.), let you edit before executing.
+setopt HIST_VERIFY
+
+################################################################################
+# Shortcuts for having a browsable history, with date & time stamps.
+# `h` is for the entire history, `ht N` is for the last N lines.
+################################################################################
+alias h='history -f | less'
+__history_tail() {
+    if [ -z "$1" ]; then
+        echo "Usage: ht {number of lines}"
+        return 1
+    fi
+    history -f | tail -n $1 | less
+}
+alias ht=__history_tail

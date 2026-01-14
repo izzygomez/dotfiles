@@ -205,17 +205,8 @@ else
     echo "~/.zshrc: bat is not available, can't set settings."
 fi
 
-# Shortcuts for having a browsable history, with date & time stamps.
-# `h` is for the entire history, `ht N` is for the last N lines.
-alias h='history -f | less'
-__history_tail() {
-    if [ -z "$1" ]; then
-        echo "Usage: ht {number of lines}"
-        return 1
-    fi
-    history -f | tail -n $1 | less
-}
-alias ht=__history_tail
+# zsh history configuration
+source $dotfiles_dir/zsh/zshrc_history
 
 # Command line weather widget
 weather() {
