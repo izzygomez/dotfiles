@@ -356,6 +356,9 @@ fi
 if is_izzys_metro_mbp && [ -f "$dotfiles_dir/zsh/zshrc_metro" ]; then
     source "$dotfiles_dir/zsh/zshrc_metro"
 fi
+# this is set in zshrc_metro, which is in .gitignore, so we default to an empty
+# string here to avoid errors when trying to use it in `~/.npmrc`.
+export NPM_METRONOME_TOKEN="${NPM_METRONOME_TOKEN:-}"
 
 # Mac OS specific configuration.
 # See bottom of `zshrc_macos` for why this must be sourced last.
