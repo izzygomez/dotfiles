@@ -112,48 +112,7 @@ fi
 bindkey '^R' history-incremental-pattern-search-backward
 
 if is_command_available git; then
-    # Git commit graph alias
-    # https://tech.serhatteker.com/post/2021-02/git-log-tree/
-    alias gitgraph='git log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\'' --all'
-    alias ggr='gitgraph'
-
-    # Nice shortcut to see git diff stats (without redirecting to pager).
-    alias gdst='git --no-pager diff --stat'
-    alias gdcast='git --no-pager diff --cached --stat'
-
-    # Background git fetch for p10k [1] prompt (similar to pure [2]).
-    # Unlike pure prompt, p10k/gitstatus doesn't fetch from remote - it only
-    # reads local git state. This means VCS_STATUS_COMMITS_{AHEAD,BEHIND}
-    # (see ~/.p10k.zsh) is stale unless we periodically fetch.
-    #
-    # Like pure, this runs on every `precmd` (before each prompt is drawn),
-    # with a cooldown to avoid hammering the remote. After fetch completes,
-    # the next prompt will show updated status (gitstatus runs async on precmd).
-    #
-    # [1] https://github.com/romkatv/powerlevel10k
-    # [2] https://github.com/sindresorhus/pure
-    __git_fetch_bg() {
-        # Only run if we're in a git repo
-        local git_root
-        git_root=$(git rev-parse --show-toplevel 2>/dev/null) || return
-
-        # Use FETCH_HEAD timestamp to avoid fetching too frequently
-        local fetch_marker="${git_root}/.git/FETCH_HEAD"
-        local cooldown=3 # 3 seconds cooldown (pure fetches frequently)
-
-        if [[ -f $fetch_marker ]]; then
-            local last_fetch=$(stat -f %m "$fetch_marker" 2>/dev/null || stat -c %Y "$fetch_marker" 2>/dev/null)
-            local now=$(date +%s)
-            ((now - last_fetch < cooldown)) && return
-        fi
-
-        # Fetch in background silently, as subshell so it doesn't show in jobs
-        (git fetch --quiet &>/dev/null &)
-    }
-
-    # Run on precmd (before every prompt, like pure does)
-    autoload -Uz add-zsh-hook
-    add-zsh-hook precmd __git_fetch_bg
+    source $dotfiles_dir/zsh/zshrc_git
 else
     echo "~/.zshrc: git is not available, can't set settings."
 fi
