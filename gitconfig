@@ -5,11 +5,11 @@
 
 [core]
 	editor = emacs
-	# Setting the `git-delta` package [1] to be default pager, since has
-	# some nicer features than less. If it's not installed, log a message
-	# to stdout (`echo ...`) & fallback to using `less`
+	# Setting the `git-delta` package [1] to be default pager, since it has
+	# some nicer features than less. If it's not installed, we fallback to using
+	# `less`, see ./zsh/zshrc_git for details.
 	# [1] https://github.com/dandavison/delta
-	pager = sh -c "delta 2>/dev/null || { echo '~/.gitconfig: delta is not installed, falling back to using less.'; less; }"
+	pager = delta
 	# Global gitignore file
 	excludesFile = ~/.gitignore-global
 
@@ -35,9 +35,11 @@
 
 # config for interactive commands, e.g. `git add -p`, `git stash -p`, etc
 [interactive]
-	# Similar fallback mechanisms as above, except we can't log anything in
-	# `diffFilter`, so can't do a `sh` wrapper with a custom `echo` log.
-	diffFilter = delta --color-only || cat
+	# Like above, setting the `git-delta` package [1] to be default diff filter.
+	# Similarly, if it's not installed, we fallback to using `less`, see
+	# ./zsh/zshrc_git for details.
+	# [1] https://github.com/dandavison/delta
+	diffFilter = delta --color-only
 
 # `git-delta` specific config
 [delta]
