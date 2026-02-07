@@ -297,6 +297,9 @@ man() {
     command man "$@"
 }
 
+# Add ~/.local/bin to PATH for local binaries.
+export PATH="$HOME/.local/bin:$PATH"
+
 ################################################################################
 # Machine-specific configurations
 ################################################################################
