@@ -9,3 +9,6 @@ lesskey linguist-language=INI
 npmrc linguist-language=INI
 tidyrc linguist-language=INI
 gitignore-global linguist-language=Ignore-List
+
+# Encrypt files containing secrets via git-crypt
+graphite/user_config filter=git-crypt diff=git-crypt
