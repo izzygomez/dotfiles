@@ -14,7 +14,7 @@
 
 # Exclude `graphite/user_config` from all pre-commit hooks. This file,
 # annoyingly, gets re-formatted every time we use graphite, so it consistently
-# breaks the end-of-file-fixer hook. It als contains a secret authToken &
+# breaks the end-of-file-fixer hook. It also contains a secret authToken &
 # should not be committed as-is, which is why we are committing it via
 # git-crypt; see: https://github.com/izzygomez/dotfiles/pull/58/
 exclude: "^graphite/user_config$"
