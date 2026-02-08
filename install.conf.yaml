@@ -45,6 +45,9 @@
       path: firefox/user.js
 
     ### Files that are OS-independent
+    ~/.config/graphite/user_config:
+      create: true
+      path: graphite/user_config
     ~/.emacs: emacs
     ~/.gitconfig: gitconfig
     ~/.gitignore-global: gitignore-global
