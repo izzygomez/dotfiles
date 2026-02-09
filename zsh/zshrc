@@ -275,6 +275,7 @@ bindkey -M emacs "^Y" yank_from_clipboard
 # highlighted & I press backspace, the entire block is deleted, not just the
 # where the cursor was last at.
 
+# This is a no-op wrapper for `man` to provide useful tips for zsh builtins.
 man() {
     local zsh_builtins=(
         alias autoload bg bindkey break builtin bye cap cd chdir clone command
