@@ -1,6 +1,6 @@
 # iTerm2 Config
 
-This directory contains `com.googlecode.iterm2.plist`, which iTerm2 loads on startup (see [`.zshrc_macos`](https://github.com/izzygomez/dotfiles/blob/416bad5ec774e62db93764e2bac7986e46defc25/zsh/zshrc_macos#L20-L33) for setup details).
+This directory contains `com.googlecode.iterm2.plist`, which iTerm2 loads on startup (see [`zshrc_macos`](../zsh/fragments/zshrc_macos) for setup details).
 
 ## Syncing Safely
 

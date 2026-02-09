@@ -7,7 +7,7 @@
 	editor = emacs
 	# Setting the `git-delta` package [1] to be default pager, since it has
 	# some nicer features than less. If it's not installed, we fallback to using
-	# `less`, see ./zsh/zshrc_git for details.
+	# `less`, see ./zsh/fragments/zshrc_git for details.
 	# [1] https://github.com/dandavison/delta
 	pager = delta
 	# Global gitignore file
@@ -37,7 +37,7 @@
 [interactive]
 	# Like above, setting the `git-delta` package [1] to be default diff filter.
 	# Similarly, if it's not installed, we fallback to using `less`, see
-	# ./zsh/zshrc_git for details.
+	# ./zsh/fragments/zshrc_git for details.
 	# [1] https://github.com/dandavison/delta
 	diffFilter = delta --color-only
 
