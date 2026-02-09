@@ -15,7 +15,7 @@
 # Exclude `graphite/*` files from all pre-commit hooks. These files,
 # annoyingly, get re-formatted every time we use graphite, so they consistently
 # break certain hooks, e.g. end-of-file-fixer.
-exclude: "^graphite/*$"
+exclude: "^graphite/*"
 
 repos:
   # Pre-commit's built-in collection
