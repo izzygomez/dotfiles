@@ -10,14 +10,14 @@ Here's a quick overview of the files in this directory, where `{FIREFOX_DIR} == 
 
 Tips for syncing with a new machine:
 
-- If the new machine has a fresh install of Firefox, simply run the dotfiles `install` script & Firefox will automatically pick up the new profile.
-- If the new machine has an existing Firefox profile with data (i.e. browsing history, cookies, etc.), copy the contents of the profile directory into a new directory, & then run the dotfiles `install` script. This will create a new profile with the same data as the old one, but with the synced custom settings.
+- If the new machine has a fresh install of Firefox, simply run the dotfiles `install-dotfiles.sh` script & Firefox will automatically pick up the new profile.
+- If the new machine has an existing Firefox profile with data (i.e. browsing history, cookies, etc.), copy the contents of the profile directory into a new directory, & then run the dotfiles `install-dotfiles.sh` script. This will create a new profile with the same data as the old one, but with the synced custom settings.
 
 ```bash
 cd {FIREFOX_DIR}/Profiles
 mdkir izzys-firefox-profile
 cp -r Profiles/{random-profile-name}/* izzys-firefox-profile/
-~/code/dotfiles/install
+~/code/dotfiles/install-dotfiles.sh
 # optionally, delete old profile(s)
 rm -r Profiles/{random-profile-name}
 ```

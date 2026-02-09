@@ -36,7 +36,7 @@ mv ~/.dotdir ~/.dotdir-backup
 3. Run `install` script, & delete backup if successful
 
 ```shell
-./install
+./install-dotfiles.sh
   ...
   ==> All tasks executed successfully
 # dotfile
@@ -54,14 +54,14 @@ rm -r ~/.dotdir-backup
 ```shell
 git clone https://github.com/izzygomez/dotfiles --recursive
 cd dotfiles
-./install
+./install-dotfiles.sh
 ```
 
 2. Install new dotfile updates
 
 ```shell
 git pull
-./install
+./install-dotfiles.sh
 ```
 
 ## Misc
