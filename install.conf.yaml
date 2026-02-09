@@ -47,7 +47,12 @@
     ### Files that are OS-independent
     ~/.config/graphite/user_config:
       create: true
+      force: true
       path: graphite/user_config
+    ~/.config/graphite/aliases:
+      create: true
+      force: true
+      path: graphite/aliases
     ~/.emacs: emacs
     ~/.gitconfig: gitconfig
     ~/.gitignore-global: gitignore-global
