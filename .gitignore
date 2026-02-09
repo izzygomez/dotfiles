@@ -1,2 +1,2 @@
 # Metronome-specific config. Should NOT be publicly visible.
-zsh/zshrc_metro
+zsh/fragments/zshrc_metro

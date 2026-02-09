@@ -97,13 +97,13 @@ alias x='exit'
 alias code='cd "$HOME/code"'
 
 if is_command_available emacs; then
-    source $dotfiles_dir/zsh/zshrc_emacs
+    source $dotfiles_dir/zsh/fragments/zshrc_emacs
 else
     echo "~/.zshrc: emacs is not available, can't set settings."
 fi
 
 if is_command_available less; then
-    source $dotfiles_dir/zsh/zshrc_less
+    source $dotfiles_dir/zsh/fragments/zshrc_less
 else
     echo "~/.zshrc: less is not available, can't set settings."
 fi
@@ -112,7 +112,7 @@ fi
 bindkey '^R' history-incremental-pattern-search-backward
 
 if is_command_available git; then
-    source $dotfiles_dir/zsh/zshrc_git
+    source $dotfiles_dir/zsh/fragments/zshrc_git
 else
     echo "~/.zshrc: git is not available, can't set settings."
 fi
@@ -165,13 +165,13 @@ else
 fi
 
 if is_command_available gt; then
-    source $dotfiles_dir/zsh/zshrc_gt
+    source $dotfiles_dir/zsh/fragments/zshrc_gt
 else
     echo "~/.zshrc: gt is not available, can't set settings."
 fi
 
 # zsh history configuration
-source $dotfiles_dir/zsh/zshrc_history
+source $dotfiles_dir/zsh/fragments/zshrc_history
 
 # Command line weather widget
 weather() {
@@ -340,12 +340,12 @@ fi
 
 # Raspberry Pi specific configuration.
 if is_raspberry_pi; then
-    source $dotfiles_dir/zsh/zshrc_raspberry_pi
+    source $dotfiles_dir/zsh/fragments/zshrc_raspberry_pi
 fi
 
 # Corp laptop specific configuration.
-if is_izzys_metro_mbp && [ -f "$dotfiles_dir/zsh/zshrc_metro" ]; then
-    source "$dotfiles_dir/zsh/zshrc_metro"
+if is_izzys_metro_mbp && [ -f "$dotfiles_dir/zsh/fragments/zshrc_metro" ]; then
+    source "$dotfiles_dir/zsh/fragments/zshrc_metro"
 fi
 # this is set in zshrc_metro, which is in .gitignore, so we default to an empty
 # string here to avoid errors when trying to use it in `~/.npmrc`.
@@ -354,6 +354,6 @@ export NPM_METRONOME_TOKEN="${NPM_METRONOME_TOKEN:-}"
 # Mac OS specific configuration.
 # See bottom of `zshrc_macos` for why this must be sourced last.
 if is_mac_os; then
-    source $dotfiles_dir/zsh/zshrc_macos
+    source $dotfiles_dir/zsh/fragments/zshrc_macos
 fi
 # NOTHING SHOULD BE ADDED BELOW THIS LINE
