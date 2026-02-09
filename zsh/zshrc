@@ -164,6 +164,12 @@ else
     echo "~/.zshrc: bat is not available, can't set settings."
 fi
 
+if is_command_available gt; then
+    source $dotfiles_dir/zsh/zshrc_gt
+else
+    echo "~/.zshrc: gt is not available, can't set settings."
+fi
+
 # zsh history configuration
 source $dotfiles_dir/zsh/zshrc_history
 

@@ -1,0 +1,54 @@
+#!/bin/zsh
+
+# This file is sourced by ~/.zshrc, & it may be written in such a way that it
+# can't run on its own (i.e. it depends on upstream dependencies).
+
+source $dotfiles_dir/zsh/checkers.sh
+
+# Wrapper around `gt` that intercepts `gt submit` to also print GitHub
+# PR links. Graphite only shows its own dashboard links in the output;
+# this extracts owner/repo/number & prints the corresponding GitHub
+# URL(s). All other `gt` subcommands pass through unchanged.
+gt() {
+    if [[ $1 != "submit" ]]; then
+        command gt "$@"
+        return $?
+    fi
+    shift # remove "submit" from args
+
+    local tmpfile
+    tmpfile=$(mktemp)
+    local exit_code
+
+    # Use `script` to capture output while preserving the TTY so that
+    # interactive prompts (title, body, confirm, etc.) still work.
+    if is_mac_os; then
+        script -q "$tmpfile" command gt submit "$@"
+        exit_code=$?
+    elif is_linux; then
+        script -q -c "command gt submit $*" "$tmpfile"
+        exit_code=$?
+    else
+        command gt submit "$@"
+        return $?
+    fi
+
+    # Strip ANSI escape codes & carriage returns that `script` leaves
+    # behind, then convert any Graphite PR URLs to GitHub PR URLs.
+    local github_urls
+    github_urls=$(
+        sed $'s/\x1b\[[0-9;]*[a-zA-Z]//g; s/\r//g' "$tmpfile" |
+            grep -oE 'https://app\.graphite\.com/github/pr/[^[:space:]]+' |
+            sed 's|app\.graphite\.com/github/pr/\([^/]*\)/\([^/]*\)/\([0-9]*\)|github.com/\1/\2/pull/\3|'
+    )
+
+    if [[ -n $github_urls ]]; then
+        echo ""
+        echo "$github_urls" | while IFS= read -r url; do
+            echo "GitHub PR: $url"
+        done
+    fi
+
+    rm -f "$tmpfile"
+    return $exit_code
+}
