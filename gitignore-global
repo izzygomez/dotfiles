@@ -1,10 +1,13 @@
 # OS or Editor folders
 .DS_Store
 
-# Ignore Claude files by default. These can be manually marked to be tracked by
+# ignore Claude files by default. These can be manually marked to be tracked by
 # git by running `git add -f CLAUDE.md`
 CLAUDE.md
 .claude/
 
-# Ignore Cursor files by default.
+# ignore Cursor files by default.
 .cursor/
+
+# ignore npm packages
+node_modules/
