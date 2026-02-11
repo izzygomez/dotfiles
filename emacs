@@ -55,6 +55,7 @@
 	diff-hl
 	editorconfig  ;; added per [1]
 	f  ;; added per [1]
+	markdown-mode
 	multiple-cursors  ;; [2]
 	s  ;; added per [1]
 	undo-tree
@@ -359,7 +360,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(diff-hl f multiple-cursors undo-tree xclip zenburn-theme)))
+ '(package-selected-packages
+   '(diff-hl f markdown-mode multiple-cursors undo-tree xclip
+	     zenburn-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
