@@ -12,29 +12,20 @@
     # - "force: true" will overwrite the target file if it already exists
 
     ### Only link these files on macOS
-    ~/Library/KeyBindings/DefaultKeyBinding.dict:
-      if: "[ `uname` = Darwin ]"
-      create: true
-      path: macOS-keyboard-shortcuts/DefaultKeyBinding.dict
-    ~/.rectangle.config.json:
-      if: "[ `uname` = Darwin ]"
-      path: rectangle.config.json
-    ~/.config/karabiner:
-      if: "[ `uname` = Darwin ]"
-      create: true
-      force: true
-      path: macOS-keyboard-shortcuts/karabiner
     ~/.alfred:
       if: "[ `uname` = Darwin ]"
       create: true
       force: true
       path: alfred
-    # Firefox stuff
-    ~/Library/Application Support/Firefox/profiles.ini:
+    ~/.config/karabiner:
       if: "[ `uname` = Darwin ]"
       create: true
       force: true
-      path: firefox/profiles.ini
+      path: macOS-keyboard-shortcuts/karabiner
+    ~/.rectangle.config.json:
+      if: "[ `uname` = Darwin ]"
+      path: rectangle.config.json
+    # Firefox stuff
     ~/Library/Application Support/Firefox/izzys-firefox-profile/chrome:
       if: "[ `uname` = Darwin ]"
       create: true
@@ -43,6 +34,15 @@
       if: "[ `uname` = Darwin ]"
       create: true
       path: firefox/user.js
+    ~/Library/Application Support/Firefox/profiles.ini:
+      if: "[ `uname` = Darwin ]"
+      create: true
+      force: true
+      path: firefox/profiles.ini
+    ~/Library/KeyBindings/DefaultKeyBinding.dict:
+      if: "[ `uname` = Darwin ]"
+      create: true
+      path: macOS-keyboard-shortcuts/DefaultKeyBinding.dict
 
     ### Files that are OS-independent
     ~/.config/graphite/user_config:
@@ -53,18 +53,18 @@
       create: true
       force: true
       path: graphite/aliases
+    ~/.config/tmux-powerline: tmux/tmux-powerline
     ~/.emacs: emacs
     ~/.gitconfig: gitconfig
     ~/.gitignore-global: gitignore-global
     ~/.hushlogin: hushlogin
     ~/.lesskey: lesskey
     ~/.npmrc: npmrc
+    ~/.p10k.zsh: zsh/p10k.zsh
     ~/.tidyrc: tidyrc
     ~/.tmux.conf: tmux/tmux.conf
-    ~/.config/tmux-powerline: tmux/tmux-powerline
     ~/.zprofile: zsh/zprofile
     ~/.zshrc: zsh/zshrc
-    ~/.p10k.zsh: zsh/p10k.zsh
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
