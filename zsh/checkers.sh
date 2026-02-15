@@ -26,8 +26,8 @@ is_izzys_mbp() {
     is_mac_os && [[ $(hostname) == "izzys-mbp" ]]
 }
 
-is_izzys_metro_mbp() {
-    is_mac_os && [[ $(hostname) == "izzys-metro-mbp" ]]
+is_izzys_stripe_mbp() {
+    is_mac_os && [[ $(hostname) == "izzys-metro-mbp" || $(hostname) == "st-ig1" ]]
 }
 
 is_izzys_raspberry_pi() {

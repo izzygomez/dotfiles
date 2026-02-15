@@ -307,6 +307,52 @@ man() {
 # Add ~/.local/bin to PATH for local binaries.
 export PATH="$HOME/.local/bin:$PATH"
 
+# Helper to check whether all git-crypt managed files are unlocked.
+#
+# Parses .gitattributes for files with `filter=git-crypt` & inspects each
+# file's header for the GITCRYPT magic byte signature (i.e. a null byte followed
+# by "GITCRYPT") which is present when a file is still encrypted.
+#
+# Returns 0 (success) if all git-crypt files are unlocked, or 1 (failure) if any
+# are still locked. Intended to be called inline as a condition before sourcing
+# git-crypt managed files.
+are_git_crypt_files_unlocked() {
+    # non-blocking check for git-crypt availability
+    if ! is_command_available git-crypt; then
+        echo "~/.zshrc: git-crypt is not available, won't be able to unlock git-crypt managed files."
+    fi
+
+    local git_crypt_files=()
+    while IFS= read -r line; do
+        git_crypt_files+=("$line")
+    done < <(grep 'filter=git-crypt' "$dotfiles_dir/.gitattributes" | awk '{print $1}')
+
+    if [[ ${#git_crypt_files[@]} -eq 0 ]]; then
+        return 0
+    fi
+
+    local locked_files=()
+    local file
+    for file in "${git_crypt_files[@]}"; do
+        local full_path="$dotfiles_dir/$file"
+        if [ -f "$full_path" ]; then
+            if head -c 20 "$full_path" | grep -qa "GITCRYPT"; then
+                locked_files+=("$file")
+            fi
+        else
+            echo "~/.zshrc: git-crypt file not found: $file"
+        fi
+    done
+
+    if [[ ${#locked_files[@]} -gt 0 ]]; then
+        echo "~/.zshrc: the following git-crypt files are locked: ${locked_files[*]}"
+        echo '~/.zshrc: run `git-crypt unlock` to unlock them.'
+        return 1
+    fi
+
+    return 0
+}
+
 ################################################################################
 # Machine-specific configurations
 ################################################################################
@@ -316,7 +362,7 @@ if is_izzys_mba; then
     __prompt_emoji='💨 '
 elif is_izzys_mbp; then
     __prompt_emoji='🚀 '
-elif is_izzys_metro_mbp; then
+elif is_izzys_stripe_mbp; then
     __prompt_emoji='🏢 '
 elif is_izzys_raspberry_pi; then
     # Note: considering I mostly `mosh` into this machine & mosh has a long
@@ -344,11 +390,15 @@ if is_raspberry_pi; then
 fi
 
 # Corp laptop specific configuration.
-if is_izzys_metro_mbp && [ -f "$dotfiles_dir/zsh/fragments/zshrc_metro" ]; then
-    source "$dotfiles_dir/zsh/fragments/zshrc_metro"
+if is_izzys_stripe_mbp; then
+    if are_git_crypt_files_unlocked; then
+        source "$dotfiles_dir/zsh/fragments/zshrc_stripe"
+    else
+        echo "~/.zshrc: git-crypt files are locked, can't source zshrc_stripe."
+    fi
 fi
-# this is set in zshrc_metro, which is in .gitignore, so we default to an empty
-# string here to avoid errors when trying to use it in `~/.npmrc`.
+# this is set in zshrc_stripe, which may be encrypted, so we set an empty string
+# fallback here to avoid errors when trying to use it in `~/.npmrc`.
 export NPM_METRONOME_TOKEN="${NPM_METRONOME_TOKEN:-}"
 
 # Mac OS specific configuration.

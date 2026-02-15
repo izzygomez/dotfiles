@@ -12,3 +12,4 @@ gitignore-global linguist-language=Ignore-List
 
 # Encrypt files containing secrets via git-crypt
 graphite/user_config filter=git-crypt diff=git-crypt
+zsh/fragments/zshrc_stripe filter=git-crypt diff=git-crypt
