@@ -5,11 +5,20 @@
 
 source $dotfiles_dir/zsh/checkers.sh
 
-# Wrapper around `gt` that intercepts `gt submit` to also print GitHub
-# PR links. Graphite only shows its own dashboard links in the output;
-# this extracts owner/repo/number & prints the corresponding GitHub
-# URL(s). All other `gt` subcommands pass through unchanged.
+# Wrapper around Graphite's `gt` command. Does a few things:
+# - Checks if git-crypt files are unlocked. Because `graphite/user_config` is
+#   one of those files, we limit the use of `gt` to only when the files are
+#   unlocked.
+# - Intercepts `gt submit` to also print GitHub PR links. Graphite only shows
+#   its own dashboard links in the output; this extracts owner/repo/number &
+#   prints the corresponding GitHub URL(s).
+# - All other `gt` subcommands pass through unchanged.
 gt() {
+    if ! are_git_crypt_files_unlocked; then
+        echo "~/.zshrc_gt: git-crypt files are locked, can't use gt."
+        return 1
+    fi
+
     if [[ $1 != "submit" ]]; then
         command gt "$@"
         return $?
