@@ -1,13 +1,10 @@
-# OS or Editor folders
-.DS_Store
+# Files to ignore in git globally. These can be manually marked to be tracked by
+# git by running `git add -f {filename}`
 
-# ignore Claude files by default. These can be manually marked to be tracked by
-# git by running `git add -f CLAUDE.md`
 CLAUDE.md
 .claude/
-
-# ignore Cursor files by default.
 .cursor/
-
-# ignore npm packages
+.DS_Store
 node_modules/
+.ruff_cache/
+.vscode
