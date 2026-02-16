@@ -337,7 +337,7 @@ are_git_crypt_files_unlocked() {
         local full_path="$dotfiles_dir/$file"
         if [ -f "$full_path" ]; then
             if head -c 20 "$full_path" | grep -qa "GITCRYPT"; then
-                locked_files+=("$file")
+                locked_files+=("$full_path")
             fi
         else
             echo "~/.zshrc: git-crypt file not found: $file"
@@ -345,8 +345,9 @@ are_git_crypt_files_unlocked() {
     done
 
     if [[ ${#locked_files[@]} -gt 0 ]]; then
-        echo "~/.zshrc: the following git-crypt files are locked: ${locked_files[*]}"
-        echo '~/.zshrc: run `git-crypt unlock` to unlock them.'
+        echo "~/.zshrc: the following git-crypt files are locked:"
+        printf '  %s\n' "${locked_files[@]}"
+        echo "~/.zshrc: run \`git-crypt unlock\` inside $dotfiles_dir to unlock them."
         return 1
     fi
 
