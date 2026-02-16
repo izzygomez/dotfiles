@@ -1,5 +1,7 @@
 # Izzy's Dotfiles
 
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+
 Personal [dotfiles](https://dotfiles.github.io/) setup using [dotbot](https://github.com/anishathalye/dotbot). Also setting other preferences, e.g. Firefox, iTerm2, macOS keybindings.
 
 ## Usage
@@ -71,10 +73,6 @@ git pull
 Ideally, this dotfiles setup should work out-of-the-box on any machine, regardless of OS & availability of packages. In order to accomplish this, config dotfiles should be split & organized in such a way that settings are only applied for certain machine specs & depending on package availability.
 
 This effort is a 🚧 work in progress 🚧. As an example, see usage of methods in `zsh/checkers.sh` to see how this can be accomplished.
-
-### Pre-commit
-
-This repo uses [`pre-commit`](https://pre-commit.com/) to automatically format & lint files before they are committed, & also as part of the required checks before a PR can be merged via [pre-commit.ci](https://pre-commit.ci/). See `.pre-commit-config.yaml` for configuration details.
 
 ### Submodules
 
