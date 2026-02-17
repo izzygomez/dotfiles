@@ -55,6 +55,7 @@ local baby_blue='152' # converted from hex '#ADD8E6', which is what I used in
     # os_icon               # os identifier
     dir                     # current directory
     vcs                     # git status
+    virtualenv              # python virtual environment
     command_execution_time  # duration of the last command
     status                  # exit code of the last command
     background_jobs         # presence of background jobs
@@ -497,6 +498,20 @@ local baby_blue='152' # converted from hex '#ADD8E6', which is what I used in
   typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=76
   typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=76
   typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=178
+
+  ##########################[ virtualenv: python virtual environment ]##########################
+  #######################[ https://docs.python.org/3/library/venv.html ]########################
+  # Python virtual environment color.
+  typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=37
+  # Don't show Python version next to the virtual environment name.
+  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
+  # If set to "false", won't show virtualenv if pyenv is already showing the same info.
+  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_WITH_PYENV=false
+  # Separate environment name from Python version only with a space.
+  typeset -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=
+  # Render as (🐍 venv_name) -- icon inside parentheses with the venv directory name.
+  typeset -g POWERLEVEL9K_VIRTUALENV_VISUAL_IDENTIFIER_EXPANSION=
+  typeset -g POWERLEVEL9K_VIRTUALENV_CONTENT_EXPANSION='(🐍 virtualenv in ${P9K_CONTENT}/)'
 
   ##########################[ status: exit code of the last command ]###########################
   # Enable OK_PIPE, ERROR_PIPE and ERROR_SIGNAL status states to allow us to enable, disable and
