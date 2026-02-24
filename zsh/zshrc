@@ -145,10 +145,19 @@ else
 fi
 
 if is_command_available eza; then
-    # `eza` [1] seems like it can be dropped in as a replacement for `ls`, so
-    # going to default to using it, with some opinionated defaults.
+    # eza [1] is a drop-in replacement for `ls`, so defaulting to using it, with
+    # some opinionated defaults.
+    #
+    # icons requires nerdfonts to be installed. on macOS, this is done via
+    # `brew install font-hack-nerd-font` & by using this font in your terminal
+    # of choice; see [2] for some context. TODO: consider having a fallback
+    # or better error messaging here in case these things aren't installed or
+    # set correctly (we currently simply assume they are).
+    #
     # [1] https://github.com/eza-community/eza
-    alias ls='eza --git --group-directories-first'
+    # [2] https://github.com/eza-community/eza/issues/1275
+    alias ls='eza --git --group-directories-first --icons=always'
+    export EZA_CONFIG_DIR="$HOME/.config/eza"
 else
     echo "~/.zshrc: eza is not available, can't set settings."
 fi
