@@ -62,6 +62,8 @@
       force: true
       path: graphite/aliases
     ~/.config/tmux-powerline: tmux/tmux-powerline
+    # Symlink to this repo itself
+    ~/dotfiles: ""
     ~/.emacs: emacs
     ~/.gitconfig: gitconfig
     ~/.gitignore-global: gitignore-global
