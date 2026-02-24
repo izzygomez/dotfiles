@@ -6,10 +6,10 @@
 
 - link:
     # Some usage notes (see [1] for more details):
-    # [1] https://github.com/anishathalye/dotbot/blob/master/README.md
     # - "if: <condition>" will only link the file if the condition is true
-    # - "create: true" will create the target directory if it doesn't exist
-    # - "force: true" will overwrite the target file if it already exists
+    # - "create: true" creates parent directories if they don't already exist
+    # - "force: true" overwrites the target file if it already exists
+    # [1] https://github.com/anishathalye/dotbot/blob/master/README.md
 
     ### Only link these files on macOS
     ~/.alfred:
@@ -25,6 +25,16 @@
     ~/.rectangle.config.json:
       if: "[ `uname` = Darwin ]"
       path: rectangle.config.json
+    # Cursor stuff
+    # these files are stored as .jsonc in this repo since they contain comments.
+    # Cursor expects .json filenames but parses them as JSONC under the hood,
+    # so the .json -> .jsonc symlinks work just fine.
+    ~/Library/Application Support/Cursor/User/keybindings.json:
+      if: "[ `uname` = Darwin ]"
+      path: cursor/keybindings.jsonc
+    ~/Library/Application Support/Cursor/User/settings.json:
+      if: "[ `uname` = Darwin ]"
+      path: cursor/settings.jsonc
     # Firefox stuff
     ~/Library/Application Support/Firefox/izzys-firefox-profile/chrome:
       if: "[ `uname` = Darwin ]"
