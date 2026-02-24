@@ -113,7 +113,6 @@ gco izzygomez/add-confirm-option-for-save-and-restore
 - Figure out how to add em-dashes when typing in `emacs`. Some leads here: [1](https://www.reddit.com/r/emacs/comments/lp85tx/this_might_sound_stupid_but_how_do_i_go_about/), [2](https://www.reddit.com/r/emacs/comments/5eb1ay/replacing_2_x_hyphen_with_ndash/), [3](https://github.com/jorgenschaefer/typoel).
 - Consider adding [`zsh-completions`](https://github.com/zsh-users/zsh-completions?tab=readme-ov-file) package. For context, tried adding it while setting up [`ngrok completion`](https://ngrok.com/docs/agent/cli/#ngrok-completion) stuff in `.zshrc`, but I found out that the ordering of initializing `zsh-completions` & `ngrok` mattered, & I'd need to refactor dotfiles to get this working. Also, per `zsh-completions` README, it is also worth considering installing via something like `antigen` instead of, say, `brew` so that it can be setup on any OS.
 - `rectangle.config.json` is not automatically updated if settings are changed, need to manually export. Fix this. Might require upgrading to [pro version](https://rectangleapp.com/pro).
-- Consider adding VSCode/Cursor settings in here.
 - Consider installing dotbot as a [Homebrew package](https://formulae.brew.sh/formula/dotbot) & remove as submodule. Would have to update `install-dotfiles` script.
 
 </details>

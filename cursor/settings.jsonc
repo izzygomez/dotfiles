@@ -1,0 +1,75 @@
+{
+  "editor.minimap.enabled": false,
+  "git.autofetch": true,
+  "files.exclude": {
+    "**/.git": false
+  },
+  "hardhat.telemetry": false,
+  "redhat.telemetry.enabled": false,
+  "editor.rulers": [80],
+  "editor.stickyScroll.enabled": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "files.associations": {
+    "*.xml": "html",
+    "*.svg": "html"
+  },
+  "editor.inlineSuggest.enabled": true,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnType": true
+  },
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.formatOnSave": true
+  },
+  "settingsSync.ignoredExtensions": [],
+  "go.toolsManagement.autoUpdate": true,
+  "python.experiments.optOutFrom": [],
+  "python.autoComplete.extraPaths": [],
+  "python.analysis.extraPaths": [],
+  "githubPullRequests.pullBranch": "never",
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": true,
+    "scminput": false,
+    "yaml": true
+  },
+  // turn off code suggestions in text files
+  // got from: https://stackoverflow.com/a/71056461
+  "[plaintext]": {
+    "editor.quickSuggestions": {
+      "other": false,
+      "comments": false,
+      "strings": false
+    }
+  },
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "rust-analyzer.linkedProjects": ["./5.1/structs/Cargo.toml"],
+  "editor.wordWrap": "on",
+  "inlineChat.lineNaturalLanguageHint": false,
+  "explorer.confirmDragAndDrop": false,
+  "javascript.preferences.organizeImports": {},
+  "cursor.cpp.disabledLanguages": ["plaintext", "scminput"],
+  "yaml.maxItemsComputed": 100000,
+  "cSpell.blockCheckingWhenLineLengthGreaterThan": 100000,
+  "cSpell.userWords": ["izzy"],
+  "explorer.confirmDelete": false,
+  "cSpell.enabled": false,
+  "workbench.colorTheme": "Default Dark Modern",
+  "cursorpyright.analysis.extraPaths": [],
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "chatgpt.commentCodeLensEnabled": false,
+  "workbench.editor.enablePreview": false,
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "gitlens.codeLens.enabled": false
+}
