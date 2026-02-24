@@ -46,9 +46,13 @@
 
     ### Files that are OS-independent
     ~/.claude/keybindings.json:
-      # don't force-create dir if it doesn't exist
+      create: false # don't force-create dir if it doesn't exist
       force: true
       path: claude/keybindings.json
+    ~/.config/eza:
+      create: true
+      force: true
+      path: eza
     ~/.config/graphite/user_config:
       create: true
       force: true
