@@ -17,5 +17,5 @@ if is_command_available keychain; then
     # be displayed if needed (haven't tested).
     eval $(keychain --eval --quiet --agents ssh github_ssh_key)
 else
-    echo "~/.zshrc_raspberry_pi: keychain not installed, can't set settings."
+    echo "zshrc_raspberry_pi: keychain not installed, can't set settings."
 fi
