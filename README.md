@@ -89,22 +89,6 @@ To revert submodule pointers to what's currently committed, run `git submodule u
 <summary><h2>TODOs</h2></summary>
 
 - Consider writing a script that can be run to enumerate dot files in `~` that need to be ported into this repo & output diff to console output. Can create some sort of "ignore" list to not print out, e.g. `.zsh_history`.
-- Figure out how to synchronize `tmux` plugins across machines, i.e. automate the following currently-manual steps of having to install plugins the first time `tmux` is run:
-
-```shell
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-tmux source ~/.tmux.conf
-# in tmux, press C-a (prefix) + I (capital "i")
-```
-
-- Speaking of `tmux`, enforce using [my PR branch](https://github.com/tmux-plugins/tmux-resurrect/pull/502) for the `tmux-resurrect` plugin (at least until it's merged):
-
-```shell
-cd ~/.tmux/plugins/tmux-resurrect
-git fetch origin pull/502/head:izzygomez/add-confirm-option-for-save-and-restore
-gco izzygomez/add-confirm-option-for-save-and-restore
-```
-
 - `emacs`, `undo-tree` package: currently setting up undo tree history files to be saved in `~/.emacs.d/undo-tree-histories`, but there's no mechanism to delete history files for files that have been deleted (or possibly even handle cases where files are renamed?). Investigate this & fix.
 - `emacs` is not working well on raspi setup: the `diff-hl-mode` related code for uncommitted changes is not working well (something related to the `add-hook` line?).
 - Seems like "Save Changes" setting on iTerm2 > Settings > General > Preferences is not configurable via `defaults` (see [this commit](https://github.com/izzygomez/dotfiles/commit/1407f3b27a351d58c169057d94a67605bab54878) for usage example), so TODO here is to set value of this setting to "Automatically" via some other method; for the moment, am doing this via an `echo` statement in `zshrc_macos`.

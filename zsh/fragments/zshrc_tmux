@@ -1,0 +1,115 @@
+#!/bin/zsh
+
+# Sourced by ~/.zshrc. Not intended to be run standalone; may rely on
+# variables & functions defined earlier in the sourcing chain.
+
+################################################################################
+# Aliases
+################################################################################
+
+# Some useful & opinionated tmux aliases
+alias tl='tmux ls'
+alias tk='tmux kill-server'
+
+# Create a new tmux session with a blank window in "~"
+# Usage:
+# > {tn,tmuxnew} [session-name]
+# > t # no need to specify a session name
+alias t='tmux new -n "" -c "~"'
+alias tmuxnew='tmux new -n "" -c "~" -s'
+alias tn='tmuxnew'
+
+# Attach to a tmux session while detaching any other clients
+alias tmuxattach='tmux attach -dt'
+alias ta='tmuxattach'
+
+################################################################################
+# TPM (Tmux Plugin Manager) & plugin setup
+#
+# Ensures TPM is installed, all plugins declared in ~/.tmux.conf are present,
+# & tmux-resurrect is checked out to the PR #502 branch that adds
+# confirm-save/restore support. All checks are cheap (directory existence, git
+# branch name) so they run on every shell startup with zero output in the
+# normal case; interactive prompts only appear when something is missing.
+################################################################################
+
+__setup_tmux_plugins() {
+    local _tpm_dir="$HOME/.tmux/plugins/tpm"
+    local _plugins_dir="$HOME/.tmux/plugins"
+
+    # Step 1: Bootstrap TPM if not installed.
+    if [[ ! -d $_tpm_dir ]]; then
+        echo "zshrc_tmux: TPM (Tmux Plugin Manager) is not installed."
+        echo "TPM is required for tmux plugins defined in ~/.tmux.conf to work."
+        echo
+        local _reply_install_tpm
+        read "_reply_install_tpm?Install TPM now? [Y/n] "
+        echo
+        if [[ -z $_reply_install_tpm || $_reply_install_tpm =~ ^[Yy]$ ]]; then
+            git clone https://github.com/tmux-plugins/tpm "$_tpm_dir"
+        else
+            echo "zshrc_tmux: skipping TPM install. Tmux plugins will not work until TPM is installed."
+        fi
+    fi
+
+    # Step 2: Install any missing tmux plugins via TPM.
+    if [[ -d $_tpm_dir ]]; then
+        local _missing_plugins=()
+        local _plugin_name _dir_name
+        while IFS= read -r _plugin_name; do
+            [[ -z $_plugin_name ]] && continue
+            _dir_name="${_plugin_name##*/}"
+            if [[ ! -d "$_plugins_dir/$_dir_name" ]]; then
+                _missing_plugins+=("$_plugin_name")
+            fi
+        done < <(grep -E "^\s*set(-option)?\s+-g\s+@plugin" "$HOME/.tmux.conf" 2>/dev/null |
+            sed "s/['\"]//g" | awk '{print $4}')
+
+        if [[ ${#_missing_plugins[@]} -gt 0 ]]; then
+            echo
+            echo "zshrc_tmux: the following tmux plugins are not installed:"
+            printf '  - %s\n' "${_missing_plugins[@]}"
+            local _reply_install_plugins
+            echo
+            read "_reply_install_plugins?Install missing plugins now? [Y/n] "
+            echo
+            if [[ -z $_reply_install_plugins || $_reply_install_plugins =~ ^[Yy]$ ]]; then
+                "$_tpm_dir/bin/install_plugins" | grep -v "Already installed"
+                if [[ ${pipestatus[1]} -ne 0 ]]; then
+                    echo "zshrc_tmux: plugin installation failed."
+                    echo "You can try again manually inside tmux with: prefix + I"
+                fi
+            else
+                echo "zshrc_tmux: skipping plugin install. You can install manually inside tmux with: prefix + I"
+            fi
+        fi
+    fi
+
+    # Step 3: Ensure tmux-resurrect is on my PR branch.
+    # https://github.com/tmux-plugins/tmux-resurrect/pull/502
+    local _resurrect_dir="$_plugins_dir/tmux-resurrect"
+    local _resurrect_branch="izzygomez/add-confirm-option-for-save-and-restore"
+    if [[ -d $_resurrect_dir ]]; then
+        local _current_branch
+        _current_branch=$(git -C "$_resurrect_dir" branch --show-current 2>/dev/null)
+        if [[ $_current_branch != "$_resurrect_branch" ]]; then
+            echo
+            echo "zshrc_tmux: switching tmux-resurrect to branch '$_resurrect_branch'..."
+            if ! git -C "$_resurrect_dir" fetch origin "pull/502/head:$_resurrect_branch" 2>/dev/null; then
+                echo "zshrc_tmux: ERROR: failed to fetch PR #502 branch for tmux-resurrect."
+                echo "Check network connectivity and try again, or run manually:"
+                echo "cd $_resurrect_dir && git fetch origin pull/502/head:$_resurrect_branch"
+            elif ! git -C "$_resurrect_dir" checkout "$_resurrect_branch" 2>/dev/null; then
+                echo "zshrc_tmux: ERROR: failed to checkout branch '$_resurrect_branch' in tmux-resurrect."
+                echo "Try manually: cd $_resurrect_dir && git checkout $_resurrect_branch"
+            fi
+        fi
+    else
+        echo
+        echo "zshrc_tmux: tmux-resurrect plugin not found at $_resurrect_dir."
+        echo "Confirm/save/restore options in ~/.tmux.conf require this plugin."
+        echo "Install tmux plugins first (TPM prefix + I), then restart your shell."
+    fi
+}
+__setup_tmux_plugins
+unfunction __setup_tmux_plugins
