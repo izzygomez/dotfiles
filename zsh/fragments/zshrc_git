@@ -52,7 +52,7 @@ if ! is_command_available delta; then
     export GIT_CONFIG_COUNT=1
     export GIT_CONFIG_KEY_0="interactive.diffFilter"
     export GIT_CONFIG_VALUE_0="cat"
-    echo "~/.zshrc_git: delta is not available, falling back to using less."
+    echo "zshrc_git: delta is not available, falling back to using less."
     echo "Note: this will override the pager & diff filter settings in ~/.gitconfig temporarily for this shell session."
 else
     unset GIT_PAGER GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0

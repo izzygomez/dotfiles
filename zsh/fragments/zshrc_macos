@@ -20,18 +20,18 @@ if [ -d "/Applications/iTerm.app" ]; then
 
     # If not, set them.
     if [[ $current_prefs_folder != "$dotfiles_dir/iterm2" || $load_prefs_from_custom_folder != "1" ]]; then
-        echo "~/.zshrc_macos: Setting iTerm2 settings. iTerm2 will need to be restarted for changes to take effect.\nIMPORTANT: set \"iTerm2 > Settings > General > Settings > Save Changes\" to \"Automatically\"."
+        echo "zshrc_macos: Setting iTerm2 settings. iTerm2 will need to be restarted for changes to take effect.\nIMPORTANT: set \"iTerm2 > Settings > General > Settings > Save Changes\" to \"Automatically\"."
         defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$dotfiles_dir/iterm2"
         defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
     fi
 else
-    echo "~/.zshrc_macos: iTerm2 not installed, can't set settings."
+    echo "zshrc_macos: iTerm2 not installed, can't set settings."
 fi
 
 if [ -d "/Applications/Cursor.app" ]; then
     alias c="cursor"
 else
-    echo "~/.zshrc_macos: Cursor not installed, can't set settings."
+    echo "zshrc_macos: Cursor not installed, can't set settings."
 fi
 
 # Set the default screenshot location to ~/Downloads when using Cmd+Shift+3/4.
@@ -40,7 +40,7 @@ current_location=$(defaults read com.apple.screencapture location 2>/dev/null ||
 if [[ $current_location != "$desired_location" ]]; then
     defaults write com.apple.screencapture location "$desired_location"
     killall SystemUIServer
-    echo "~/.zshrc_macos: Set screenshot location to $desired_location."
+    echo "zshrc_macos: Set screenshot location to $desired_location."
 fi
 
 if [ -d "/Applications/Docker.app" ]; then
@@ -51,7 +51,7 @@ if [ -d "/Applications/Docker.app" ]; then
         compinit
     fi
 else
-    echo "~/.zshrc_macos: Docker Desktop not installed, can't set settings."
+    echo "zshrc_macos: Docker Desktop not installed, can't set settings."
 fi
 
 ################################################################################
@@ -81,7 +81,7 @@ check_and_configure_packages() {
     # Early exit if Homebrew is not installed (set in zprofile)
     if [[ -n $HOMEBREW_NOT_INSTALLED ]]; then
         if [[ -z $__HOMEBREW_WARNING_SHOWN ]]; then
-            echo "~/.zshrc_macos: Homebrew not installed, skipping package configuration(s)."
+            echo "zshrc_macos: Homebrew not installed, skipping package configuration(s)."
             export __HOMEBREW_WARNING_SHOWN=1
         fi
         return 1
@@ -98,7 +98,7 @@ check_and_configure_packages() {
     local all_packages_installed=1
     for package in "${packages[@]}"; do
         if ! is_command_available "$package" && ! [[ -d "$(brew --cellar)/$package" ]]; then
-            echo "~/.zshrc_macos: $package not installed, can't set settings."
+            echo "zshrc_macos: $package not installed, can't set settings."
             all_packages_installed=0
             break
         fi

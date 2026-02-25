@@ -15,7 +15,7 @@ source $dotfiles_dir/zsh/checkers.sh
 # - All other `gt` subcommands pass through unchanged.
 gt() {
     if ! are_git_crypt_files_unlocked; then
-        echo "~/.zshrc_gt: git-crypt files are locked, can't use gt."
+        echo "zshrc_gt: git-crypt files are locked, can't use gt."
         return 1
     fi
 
