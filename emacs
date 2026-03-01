@@ -1,9 +1,16 @@
-;; -*- mode: lisp; -*-
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Some usage notes — beyond obvious known navigation keyboard shortcuts
+;; -*- mode: lisp; indent-tabs-mode: nil; -*-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
+;;                ███████╗███╗   ███╗ █████╗  ██████╗███████╗
+;;                ██╔════╝████╗ ████║██╔══██╗██╔════╝██╔════╝
+;;                █████╗  ██╔████╔██║███████║██║     ███████╗
+;;                ██╔══╝  ██║╚██╔╝██║██╔══██║██║     ╚════██║
+;;                ███████╗██║ ╚═╝ ██║██║  ██║╚██████╗███████║
+;;                ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Usage notes
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Reloading config file:
 ;;   - `M-x eval-buffer` while in this file reloads config without restart
 ;;
@@ -18,132 +25,90 @@
 ;;   - `C-c p` to select previous occurrence of region
 ;;   - `C-c a` to select all occurrences of region
 ;;
+;; Formatting this file:
+;;   - Select all `C-x h`, then re-indent `M-x indent-region`
+;;   - To convert tabs to spaces: `C-x h`, then `M-x untabify`
+;;
+;; C-h is the universal "tell me about..." help prefix:
+;;   - `C-h v` describe a variable (e.g. `C-h v package-archives RET`)
+;;   - `C-h f` describe a function (e.g. `C-h f untabify RET`)
+;;   - `C-h k` describe a keybinding (e.g. `C-h k C-x h`)
+;;   - `C-h o` describe any symbol (when unsure if it's a function or variable)
+;;   - `C-h a` search for commands by keyword
+;;   - `C-h ?` list all help commands
+;;
 ;; Other:
-;;   - `C-h` is the help prefix key. `C-h k` is used to describe a keybinding.
 ;;   - `C-/` toggles comments on current line or selected lines. See below.
 ;;
-;; TODO should probs check out https://www.masteringemacs.org/ for more.
-;;
+;; See https://www.masteringemacs.org/ for more.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Set up MELPA (https://www.emacswiki.org/emacs/MELPA)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package initialization
-;;
-;; Grabbed this section from https://stackoverflow.com/a/55058934/5802691
 ;;
 ;; This section should install desired packages when initializing emacs if they
 ;; haven't been installed. Add new packages to `my-packages` below. Note that
 ;; sometimes you may need to run `M-x package-refresh-contents` to update the
 ;; package list, as indicated in the comments below.
+;;
+;; Inspired by https://stackoverflow.com/a/55058934/5802691
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Init the package facility
+
+;; Init the package facility & add MELPA
+;; https://www.emacswiki.org/emacs/MELPA
 (require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 ;; (package-refresh-contents)
-;; ^this line is commented since refreshing packages is time-consuming and
+;; ^this line is commented since refreshing packages is time-consuming &
 ;; should be done on demand, i.e. M-x package-refresh-contents
 
 ;; Declare packages
-;; [1] https://github.com/zerolfx/copilot.el
-;; [2] https://github.com/magnars/multiple-cursors.el
 (setq my-packages
-      '(dash  ;; added per [1]
-	diff-hl
-	editorconfig  ;; added per [1]
-	f  ;; added per [1]
-	markdown-mode
-	multiple-cursors  ;; [2]
-	s  ;; added per [1]
-	undo-tree
-	xclip
-	zenburn-theme
-	))
+      '(
+        ;; https://github.com/copilot-emacs/copilot.el
+        copilot
+        ;; https://github.com/dgutov/diff-hl
+        diff-hl
+        ;; https://jblevins.org/projects/markdown-mode/
+        markdown-mode
+        ;; https://github.com/magnars/multiple-cursors.el
+        multiple-cursors
+        ;; https://www.emacswiki.org/emacs/UndoTree
+        undo-tree
+        ;; https://elpa.gnu.org/packages/xclip.html
+        xclip
+        ;; https://github.com/bbatsov/zenburn-emacs
+        zenburn-theme
+        ))
 
-;; Iterate on packages and install missing ones
+;; Iterate on packages & install missing ones
 (dolist (pkg my-packages)
   (unless (package-installed-p pkg)
     (package-install pkg)))
 
-;;;; The following code block was written with the help of ChatGPT. Essentially
-;;;; I want to auto-remove packages that are not in my-packages list, but I also
-;;;; want to keep packages that are dependencies of the packages in my-packages.
-;;;; This way I can guarantee that simply updating my-packages will do
-;;;; appropriate install & cleanup of packages.
-;; Function to get dependencies for a given package
-(defun my/get-dependencies (pkg)
-  "Return a list of packages that PKG depends on."
-  (when-let ((desc (cadr (assoc pkg package-alist))))
-    (mapcar #'car (package-desc-reqs desc))))
-;; Build an extended list including dependencies
-(setq my-extended-packages (copy-sequence my-packages))
-(dolist (pkg my-packages)
-  (dolist (dep (my/get-dependencies pkg))
-    (add-to-list 'my-extended-packages dep)))
-;; Use the extended list in your auto-removal snippet:
-(dolist (pkg package-alist)
-  (let ((pkg-name (car pkg))
-	(pkg-desc (cadr pkg)))
-    (unless (member pkg-name my-extended-packages)
-      (when pkg-desc
-	(message "Auto-removing package: %s" pkg-name)
-	(package-delete pkg-desc t)))))
+;; Auto-remove installed packages not in my-packages or needed as transitive
+;; dependencies. Removing a package from my-packages triggers cleanup on next
+;; init.
+(defun my/package-keep-list ()
+  "Return my-packages plus all their transitive dependencies."
+  (let ((keep '())
+        (queue (append my-packages nil)))
+    (while queue
+      (let ((pkg (pop queue)))
+        (unless (memq pkg keep)
+          (push pkg keep)
+          (when-let ((desc (cadr (assoc pkg package-alist))))
+            (dolist (req (package-desc-reqs desc))
+              (push (car req) queue))))))
+    keep))
 
-
-;; Install copilot.el. Following instructions from:
-;;  - https://github.com/zerolfx/copilot.el
-;;  - https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/
-;;
-;; Note: this following line assumes that `~/.emacs` is a symlink to this file,
-;; & that `copilot.el/` is a sibling directory to this file.
-(add-to-list 'load-path (expand-file-name "copilot.el" (file-name-directory (file-truename "~/.emacs"))))
-(require 'copilot)
-;; Safe copilot setup.
-;; Wrote this with ChatGPT, essentially wanted to automate process of installing
-;; any copilot dependencies.
-(condition-case cp-err
-    (progn
-      ;; 1) Make sure Emacs can find your nvm npm & the eventual language server
-      (let ((nvm-bin (expand-file-name "~/.nvm/versions/node/v20.19.0/bin")))
-	(when (file-directory-p nvm-bin)
-	  (setenv "PATH" (concat nvm-bin ":" (getenv "PATH")))
-	  (add-to-list 'exec-path nvm-bin)))
-
-      ;; 2) Tell Emacs where to load copilot.el from (only once)
-      (add-to-list 'load-path
-		   (expand-file-name "copilot.el"
-				     (file-name-directory (file-truename "~/.emacs"))))
-      (require 'copilot)
-
-      ;; 3) Install the language server if it isn’t on PATH yet
-      (unless (executable-find "copilot-language-server")
-	(if-let ((npm (executable-find "npm")))
-	    (progn
-	      (message "Installing @github/copilot-language-server…")
-	      (shell-command (concat npm " install -g @github/copilot-language-server"))
-	      (message "copilot-language-server installed"))
-	  (message "npm not found; Copilot server install skipped")))
-
-      ;; 4) Configure Copilot
-      ;; disable copilot warning about indent offset:
-      ;; https://github.com/copilot-emacs/copilot.el/blob/733bff26450255e092c10873580e9abfed8a81b8/copilot.el#L111C12-L111C49
-      (setq copilot-indent-offset-warning-disable t)
-      ;; Use copilot-mode in any programming mode (i.e. derived from prog-mode)
-      (add-hook 'prog-mode-hook #'copilot-mode)
-
-      (define-key copilot-completion-map (kbd "<tab>") #'copilot-accept-completion)
-      (define-key copilot-completion-map (kbd "TAB")     #'copilot-accept-completion)
-      ;; TODO consider going through [1] & setting up more copilot stuff
-      ;; [1] https://robert.kra.hn/posts/2023-02-22-copilot-emacs-setup/
-      )
-  (error
-   (message "Copilot setup failed, continuing init…\nError: %S" cp-err)))
-
-(require 'multiple-cursors)
-(require 'undo-tree)
+(let ((keep (my/package-keep-list)))
+  (dolist (entry package-alist)
+    (unless (memq (car entry) keep)
+      (when-let ((desc (cadr entry)))
+        (message "Auto-removing package: %s" (car entry))
+        (package-delete desc t)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; User configuration
@@ -153,36 +118,25 @@
 ;; Package configuration ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Copilot setup.
+;; https://github.com/copilot-emacs/copilot.el
+(require 'copilot)
+(setq copilot-indent-offset-warning-disable t)
+(add-hook 'prog-mode-hook #'copilot-mode)
+(define-key copilot-completion-map (kbd "<tab>") #'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "TAB")   #'copilot-accept-completion)
+
 ;; Use diff-hl-mode in all buffers; this shows VC (e.g. Git) uncommitted changes
 ;; on left-side of emacs windows
 ;; https://github.com/dgutov/diff-hl
 (global-diff-hl-mode)
 (diff-hl-margin-mode 1)
 (diff-hl-flydiff-mode 1)
-;; With ChatGPT help (!):
-;;   - buffer-list-update-hook runs every time the buffer list is updated (e.g.
-;;     when switching buffers), so diff-hl-update [1] will be run now too.
-;;   - I also defined my own timer fxn (runs every 2 sec) to continuously update
-;;     the diff-hl state based on potential changes to file's git status per
-;;     commands done outside of emacs (e.g. if I `git add` & `git commit` a
-;;     file, before this timer the diff on left side of file wouldn't update
-;;     until buffer was refreshed). Technically this is does what `(add-hook *)`
-;;     line does below, so `buffer-list-update-hook` is superfluous, but keeping
-;;     around just in case I need to comment out timer fxn for performance
-;;     reasons. Whole thing is wrapped in "start timer" fxn to ensure only one
-;;     of these timers is running at once (e.g. while debugging &
-;;     M-x eval-buffer'ing this file a bunch of times in a row, can spawn many
-;;     timers, which can be trickier to debug).
-;; [1] https://github.com/dgutov/diff-hl#integration
-(add-hook 'buffer-list-update-hook 'diff-hl-update)
-(defun continuous-diff-hl ()
-  (funcall 'diff-hl-update))
-(defun start-running-timer ()
-  (when (boundp 'running-timer)
-    (cancel-timer running-timer))
-  (setq running-timer
-	(run-at-time nil 2 'continuous-diff-hl)))  ;; run every 2 seconds
-(start-running-timer)
+;; Periodically refresh diff-hl to pick up changes made outside Emacs
+;; (e.g. git add, git commit from a terminal).
+(when (boundp 'my/diff-hl-timer)
+  (cancel-timer my/diff-hl-timer))
+(setq my/diff-hl-timer (run-at-time nil 2 #'diff-hl-update))
 
 ;; Set up theme
 ;; https://github.com/bbatsov/zenburn-emacs
@@ -192,19 +146,20 @@
 ;; https://elpa.gnu.org/packages/xclip.html
 (xclip-mode 1)
 
-;;;; Multiple cursors
-;; mostly setting default configuration in repo README
+;; Multiple cursors
+;; Mostly setting default configuration in repo README.
 ;; https://github.com/magnars/multiple-cursors.el
+(require 'multiple-cursors)
 (global-set-key (kbd "C-c e") 'mc/edit-lines)
 (global-set-key (kbd "C-c n") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-c p") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c a") 'mc/mark-all-like-this)
 
-;;;; Undo tree
+;; Undo tree
 ;; https://www.emacswiki.org/emacs/UndoTree
+(require 'undo-tree)
 (global-undo-tree-mode)
 (setq undo-tree-visualizer-timestamps t)
-
 ;; Disable persistent undo history to avoid warnings when files change outside
 ;; emacs.
 (setq undo-tree-auto-save-history nil)
@@ -212,12 +167,11 @@
 ;; likely no longer needed since I disabled persistent undo history above.
 (setq undo-tree-history-directory-alist
       '(("." . "~/.emacs.d/undo-tree-histories/")))
-
-;; Custom code from ChatGPT. This makes it so that when I'm
+;; Custom function to quit undo-tree-visualizer. This makes it so that when I'm
 ;; in undo-tree-visualizer & I hit RET, it quits undo-tree-visualizer, kills the
 ;; undo-tree buffer, & restores the previous window configuration.
 (defun my/undo-tree-visualizer-quit ()
-  "Quit undo-tree-visualizer, kill undo-tree buffer, and restore the previous window configuration."
+  "Quit undo-tree-visualizer, kill undo-tree buffer, & restore the previous window configuration."
   (interactive)
   (let ((buffer-to-restore (other-buffer (current-buffer))))
     ;; Quit undo-tree-visualizer
@@ -229,7 +183,6 @@
 
 (with-eval-after-load 'undo-tree
   (define-key undo-tree-visualizer-mode-map (kbd "RET") 'my/undo-tree-visualizer-quit))
-
 
 ;;;;;;;;;;;;;;;;;
 ;; Other stuff ;;
@@ -331,19 +284,19 @@
 
 ;; Highlight added/removed lines in commit messages
 (add-hook 'find-file-hook
-  (lambda ()
-    (when (string-match-p "COMMIT_EDITMSG\\'" (buffer-name))
-      (font-lock-add-keywords nil
-       '(("^\\(+.*\\)$" 1 'diff-added nil t)
-         ("^\\(-.*\\)$" 1 'diff-removed nil t)))
-      (font-lock-flush))))
+          (lambda ()
+            (when (string-match-p "COMMIT_EDITMSG\\'" (buffer-name))
+              (font-lock-add-keywords nil
+                                      '(("^\\(+.*\\)$" 1 'diff-added nil t)
+                                        ("^\\(-.*\\)$" 1 'diff-removed nil t)))
+              (font-lock-flush))))
 
 ;; Remap M-<backspace> to backward-delete-word instead of its default which
 ;; copies the deleted word to the kill ring / clipboard.
 (defun backward-delete-word (arg)
   "Delete words backward without saving to the kill ring."
   (interactive "p")
-    (delete-region (point) (progn (backward-word arg) (point))))
+  (delete-region (point) (progn (backward-word arg) (point))))
 (global-set-key (kbd "M-DEL") #'backward-delete-word)
 (global-set-key (kbd "M-<backspace>") 'backward-delete-word)
 
@@ -352,7 +305,8 @@
 (global-visual-line-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Stuff that was automatically added
+;; Stuff that's automatically added/edited. Probs shouldn't manually edit this,
+;; other than explanatory comments.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (custom-set-variables
@@ -362,7 +316,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(diff-hl f markdown-mode multiple-cursors undo-tree xclip
-	     zenburn-theme)))
+     zenburn-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
