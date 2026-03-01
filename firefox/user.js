@@ -45,6 +45,12 @@ user_pref("browser.ml.enable", false);
 user_pref("browser.ml.linkPreview.enabled", false);
 user_pref("browser.ml.pageAssist.enabled", false);
 user_pref("browser.ml.smartAssist.enabled", false);
+user_pref("browser.ai.control.default", "blocked");
+user_pref("browser.ai.control.linkPreviewKeyPoints", "blocked");
+user_pref("browser.ai.control.pdfjsAltText", "blocked");
+user_pref("browser.ai.control.sidebarChatbot", "blocked");
+user_pref("browser.ai.control.smartTabGroups", "blocked");
+user_pref("browser.ai.control.translations", "blocked");
 
 // DNS over HTTPS settings. AFAICT, here are the possible mappings:
 // 1: Default Protection
