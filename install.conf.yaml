@@ -74,7 +74,9 @@
     ~/.config/tmux-powerline: tmux/tmux-powerline
     # Symlink to this repo itself
     ~/dotfiles: ""
-    ~/.emacs: emacs
+    ~/.emacs.d/init.el:
+      create: true
+      path: emacs/init.el
     ~/.gitconfig: gitconfig
     ~/.gitignore-global: gitignore-global
     ~/.hushlogin: hushlogin
