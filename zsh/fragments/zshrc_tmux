@@ -87,21 +87,38 @@ __setup_tmux_plugins() {
 
     # Step 3: Ensure tmux-resurrect is on my PR branch.
     # https://github.com/tmux-plugins/tmux-resurrect/pull/502
+    #
+    # This should gracefully handle the case where
+    # ~/.tmux/plugins/tmux-resurrect has origin pointing to the upstream repo
+    # (i.e. this plugin was installed from TPM), or to my fork (i.e. origin
+    # was manually reconfigured, or this is the machine where I created the
+    # fork). In either case, all we care about is making sure we're on the right
+    # PR branch to get the desired behavior.
     local _resurrect_dir="$_plugins_dir/tmux-resurrect"
-    local _resurrect_branch="izzygomez/add-confirm-option-for-save-and-restore"
+    local _pr_branch="add-confirm-option-for-save-and-restore"
+    local _fork_url="https://github.com/izzygomez/tmux-resurrect.git"
     if [[ -d $_resurrect_dir ]]; then
         local _current_branch
         _current_branch=$(git -C "$_resurrect_dir" branch --show-current 2>/dev/null)
-        if [[ $_current_branch != "$_resurrect_branch" ]]; then
+        if [[ $_current_branch != "$_pr_branch" ]]; then
             echo
-            echo "zshrc_tmux: switching tmux-resurrect to branch '$_resurrect_branch'..."
-            if ! git -C "$_resurrect_dir" fetch origin "pull/502/head:$_resurrect_branch" 2>/dev/null; then
+            echo "zshrc_tmux: switching tmux-resurrect to PR #502 branch..."
+
+            # Case 1: PR branch exists locally but isn't checked out.
+            if git -C "$_resurrect_dir" rev-parse --verify "$_pr_branch" &>/dev/null; then
+                git -C "$_resurrect_dir" checkout "$_pr_branch" 2>/dev/null
+
+            # Case 2: PR branch doesn't exist locally (e.g. fresh machine). Fetch
+            # from fork URL directly.
+            elif git -C "$_resurrect_dir" fetch "$_fork_url" "$_pr_branch" 2>/dev/null &&
+                git -C "$_resurrect_dir" checkout "$_pr_branch" 2>/dev/null; then
+                : # success
+
+            # Case 3: fetch failed (no network, bad URL, etc.).
+            else
                 echo "zshrc_tmux: ERROR: failed to fetch PR #502 branch for tmux-resurrect."
                 echo "Check network connectivity and try again, or run manually:"
-                echo "cd $_resurrect_dir && git fetch origin pull/502/head:$_resurrect_branch"
-            elif ! git -C "$_resurrect_dir" checkout "$_resurrect_branch" 2>/dev/null; then
-                echo "zshrc_tmux: ERROR: failed to checkout branch '$_resurrect_branch' in tmux-resurrect."
-                echo "Try manually: cd $_resurrect_dir && git checkout $_resurrect_branch"
+                echo "  cd $_resurrect_dir && git fetch $_fork_url $_pr_branch && git checkout $_pr_branch"
             fi
         fi
     else
