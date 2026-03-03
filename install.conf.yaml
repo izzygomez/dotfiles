@@ -12,7 +12,7 @@
     # [1] https://github.com/anishathalye/dotbot/blob/master/README.md
 
     ### Only link these files on macOS
-    ~/.alfred:
+    ~/.config/alfred:
       if: "[ `uname` = Darwin ]"
       create: true
       force: true
@@ -22,7 +22,7 @@
       create: true
       force: true
       path: macOS-keyboard-shortcuts/karabiner
-    ~/.rectangle.config.json:
+    ~/.config/rectangle.config.json:
       if: "[ `uname` = Darwin ]"
       path: rectangle.config.json
     # Cursor stuff
@@ -71,9 +71,10 @@
       create: true
       force: true
       path: graphite/aliases
+    ~/.config/p10k.zsh: zsh/p10k.zsh
     ~/.config/tmux-powerline: tmux/tmux-powerline
     # Symlink to this repo itself
-    ~/dotfiles: ""
+    ~/.dotfiles: ""
     ~/.emacs.d/init.el:
       create: true
       path: emacs/init.el
@@ -82,7 +83,6 @@
     ~/.hushlogin: hushlogin
     ~/.lesskey: lesskey
     ~/.npmrc: npmrc
-    ~/.p10k.zsh: zsh/p10k.zsh
     ~/.tidyrc: tidyrc
     ~/.tmux.conf: tmux/tmux.conf
     ~/.zprofile: zsh/zprofile
