@@ -63,14 +63,10 @@
       create: true
       force: true
       path: eza
-    ~/.config/graphite/user_config:
+    ~/.config/graphite:
       create: true
       force: true
-      path: graphite/user_config
-    ~/.config/graphite/aliases:
-      create: true
-      force: true
-      path: graphite/aliases
+      path: graphite
     ~/.config/p10k.zsh: zsh/p10k.zsh
     ~/.config/tmux-powerline: tmux/tmux-powerline
     # Symlink to this repo itself
