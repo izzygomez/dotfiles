@@ -17,7 +17,7 @@ source $dotfiles_dir/zsh/checkers.sh
 # general to support other platforms (e.g. Linux) where p10k might be installed
 # differently.
 __p10k_enabled=false
-if [[ -f ~/.p10k.zsh ]] && [[ -f $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme ]]; then
+if [[ -f ~/.config/p10k.zsh ]] && [[ -f $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme ]]; then
     __p10k_enabled=true
 fi
 
@@ -33,8 +33,8 @@ if $__p10k_enabled; then
     # [1] https://github.com/romkatv/powerlevel10k/blob/efc9ddd9b615a0042b5bcc36f97f070ca6fdf09e/README.md#homebrew
     source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
 
-    # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-    source ~/.p10k.zsh
+    # To customize prompt, run `p10k configure` or edit ~/.config/p10k.zsh.
+    source ~/.config/p10k.zsh
 
     # set ZSH_THEME to empty
     export ZSH_THEME=""

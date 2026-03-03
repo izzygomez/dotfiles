@@ -15,7 +15,7 @@ alias gdcast='git --no-pager diff --cached --stat'
 # Background git fetch for p10k [1] prompt (similar to pure [2]).
 # Unlike pure prompt, p10k/gitstatus doesn't fetch from remote - it only
 # reads local git state. This means VCS_STATUS_COMMITS_{AHEAD,BEHIND}
-# (see ~/.p10k.zsh) is stale unless we periodically fetch.
+# (see ~/.config/p10k.zsh) is stale unless we periodically fetch.
 #
 # Like pure, this runs on every `precmd` (before each prompt is drawn),
 # with a cooldown to avoid hammering the remote. After fetch completes,
