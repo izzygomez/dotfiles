@@ -367,6 +367,11 @@ are_git_crypt_files_unlocked() {
     return 0
 }
 
+# Resolve symlinks when changing directories, so `pwd` always shows the real
+# path rather than the symlink path. Using `physical` rather than `chase_links`
+# for compatibility with ksh & bash; see `man zshoptions` for details.
+set -o physical
+
 ################################################################################
 # Machine-specific configurations
 ################################################################################
