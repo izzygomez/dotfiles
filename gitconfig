@@ -12,6 +12,7 @@
 	pager = delta
 	# Global gitignore file
 	excludesFile = ~/.gitignore-global
+	commentChar = ";"
 
 [push]
 	autoSetupRemote = true
