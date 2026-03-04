@@ -114,9 +114,9 @@ check_and_configure_packages() {
 configure_source_highlight() {
     # Syntax highlighting in `less` per instructions here:
     # https://ole.michelsen.dk/blog/syntax-highlight-files-macos-terminal-less/
+    # See related configuration in zshrc_less.
     LESSPIPE=$(which src-hilite-lesspipe.sh)
     export LESSOPEN="| ${LESSPIPE} %s"
-    export LESS=' -R '
 }
 check_and_configure_packages source-highlight -- configure_source_highlight
 
