@@ -121,10 +121,16 @@
 ;; Copilot setup.
 ;; https://github.com/copilot-emacs/copilot.el
 (require 'copilot)
-(setq copilot-indent-offset-warning-disable t)
-(add-hook 'prog-mode-hook #'copilot-mode)
-(define-key copilot-completion-map (kbd "<tab>") #'copilot-accept-completion)
-(define-key copilot-completion-map (kbd "TAB")   #'copilot-accept-completion)
+(cond
+  ((not (executable-find "node"))
+   (warn "Copilot: node not found in PATH. Install node, then restart."))
+  ((not (copilot-installed-version))
+   (warn "Copilot: language server not installed. Run M-x copilot-install-server, then restart."))
+  (t
+   (setq copilot-indent-offset-warning-disable t)
+   (add-hook 'prog-mode-hook #'copilot-mode)
+   (define-key copilot-completion-map (kbd "<tab>") #'copilot-accept-completion)
+   (define-key copilot-completion-map (kbd "TAB")   #'copilot-accept-completion)))
 
 ;; Use diff-hl-mode in all buffers; this shows VC (e.g. Git) uncommitted changes
 ;; on left-side of emacs windows
