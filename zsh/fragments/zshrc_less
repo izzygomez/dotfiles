@@ -4,12 +4,13 @@
 # variables & functions defined earlier in the sourcing chain.
 
 ################################################################################
-# Created the following by working with ChatGPT. Also had it write out super
-# detailed comments so it's easier to understand later on.
-#
-# Define a custom wrapper for the `less` command that shows the full file path
-# (or "[stdin]" for streams) in the prompt, along with visible line ranges and
-# the total line count when possible.
+# Custom wrapper for `less` that enhances the prompt to show:
+# - The full file path (or "[stdin]" for streams)
+# - The visible line range
+# - The total line count
+# Note: only applies when `less` is invoked directly in the shell. Programs that
+# spawn `less` as a pager (e.g., `man`, `git diff`) bypass the alias & won't use
+# this wrapper.
 ################################################################################
 less_with_full_path() {
     # Define a local variable to store the file path or stream indicator
@@ -38,9 +39,8 @@ less_with_full_path() {
         # - Remove any leading whitespace from `wc -l` output using `tr -d ' '`
         local total_lines=$(wc -l <"$1" | tr -d ' ')
 
-        # Call the `less` command with the following options:
-        # - `-R`: Display raw control characters, allowing for syntax
-        #         highlighting
+        # Call the `less` command with the following options, in addition to the
+        # defaults set via the LESS environment variable below:
         # - `-j1`: Set the cursor position to the first visible line (top of the
         #          screen)
         # - `-P`: Customize the prompt to show:
@@ -48,7 +48,7 @@ less_with_full_path() {
         #     2. Current visible line range (`%lt` for top line, `%lb` for
         #        bottom line)
         #     3. Total line count (precomputed via `wc -l`)
-        command less -R -j1 -P"$real_file_path (lines %lt-%lb/$total_lines)" "$@"
+        command less -j1 -P"$real_file_path (lines %lt-%lb/$total_lines)" "$@"
     else
         # If it's a stream or pipe (not a regular file):
         # - Use `%L` for total line count, which `less` calculates dynamically
@@ -59,7 +59,7 @@ less_with_full_path() {
         #        bottom line)
         #     3. Total line count (`%L`), dynamically updated as `less`
         #        processes input
-        command less -R -j1 -P"$real_file_path (lines %lt-%lb/%L)" "$@"
+        command less -j1 -P"$real_file_path (lines %lt-%lb/%L)" "$@"
     fi
 }
 
@@ -67,6 +67,15 @@ less_with_full_path() {
 # This ensures any call to `less` (e.g., `less somefile`, `seq 1 100 | less`)
 # uses the wrapper
 alias less='less_with_full_path'
+
+################################################################################
+# LESS environment variable
+################################################################################
+# Sets default options for `less` in all contexts — including when invoked by
+# other programs (e.g. `man`, `git diff`) that bypass the shell alias set above.
+# - `-R`: Display raw control characters, allowing for syntax highlighting
+# - `-i`: Ignore case in searches, unless pattern contains uppercase
+export LESS='-R -i'
 
 ################################################################################
 # lesskey configuration
