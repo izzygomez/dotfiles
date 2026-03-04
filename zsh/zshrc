@@ -39,7 +39,7 @@ if $__p10k_enabled; then
     # set ZSH_THEME to empty
     export ZSH_THEME=""
 else
-    echo "~/.zshrc: p10k theme not installed or missing configuration, falling back to setting oh-my-zsh theme."
+    echo "zshrc: p10k theme not installed or missing configuration, falling back to setting oh-my-zsh theme."
     # Fall back to an oh-my-zsh theme if p10k isn't available.
     export ZSH_THEME="robbyrussell"
 fi
@@ -81,7 +81,7 @@ if [[ -d $OH_MY_ZSH ]]; then
 
     source $OH_MY_ZSH/oh-my-zsh.sh
 else
-    echo "~/.zshrc: oh-my-zsh not installed at $OH_MY_ZSH, please visit https://ohmyz.sh/ to install."
+    echo "zshrc: oh-my-zsh not installed at $OH_MY_ZSH, please visit https://ohmyz.sh/ to install."
 fi
 
 ################################################################################
@@ -99,13 +99,13 @@ alias code='cd "$HOME/code"'
 if is_command_available emacs; then
     source $dotfiles_dir/zsh/fragments/zshrc_emacs
 else
-    echo "~/.zshrc: emacs is not available, can't set settings."
+    echo "zshrc: emacs is not available, can't set settings."
 fi
 
 if is_command_available less; then
     source $dotfiles_dir/zsh/fragments/zshrc_less
 else
-    echo "~/.zshrc: less is not available, can't set settings."
+    echo "zshrc: less is not available, can't set settings."
 fi
 
 # makes ^R backward search support patterns (i.e. '*' characters)
@@ -114,20 +114,20 @@ bindkey '^R' history-incremental-pattern-search-backward
 if is_command_available git; then
     source $dotfiles_dir/zsh/fragments/zshrc_git
 else
-    echo "~/.zshrc: git is not available, can't set settings."
+    echo "zshrc: git is not available, can't set settings."
 fi
 
 if is_command_available tmux; then
     source $dotfiles_dir/zsh/fragments/zshrc_tmux
 else
-    echo "~/.zshrc: tmux is not available, can't set settings."
+    echo "zshrc: tmux is not available, can't set settings."
 fi
 
 if is_command_available grep; then
     # `grep` niceties: ignore case, colored output
     alias grep='grep --ignore-case --color=auto'
 else
-    echo "~/.zshrc: grep is not available, can't set settings."
+    echo "zshrc: grep is not available, can't set settings."
 fi
 
 if is_command_available eza; then
@@ -145,7 +145,7 @@ if is_command_available eza; then
     alias ls='eza --git --group-directories-first --icons=always'
     export EZA_CONFIG_DIR="$HOME/.config/eza"
 else
-    echo "~/.zshrc: eza is not available, can't set settings."
+    echo "zshrc: eza is not available, can't set settings."
 fi
 
 if is_command_available bat; then
@@ -156,13 +156,13 @@ if is_command_available bat; then
     alias b='bat'
     alias cat='bat'
 else
-    echo "~/.zshrc: bat is not available, can't set settings."
+    echo "zshrc: bat is not available, can't set settings."
 fi
 
 if is_command_available gt; then
     source $dotfiles_dir/zsh/fragments/zshrc_gt
 else
-    echo "~/.zshrc: gt is not available, can't set settings."
+    echo "zshrc: gt is not available, can't set settings."
 fi
 
 # prefer using `delta` for diffing if it's available, with nice messaging to
@@ -172,15 +172,15 @@ fi
 if is_command_available delta; then
     alias d='delta'
     diff() {
-        echo "~/.zshrc: prefer using delta for diffing."
+        echo "zshrc: prefer using delta for diffing."
         echo 'If you need to use diff, use `command diff --color=always` instead.'
         delta "$@"
     }
 elif is_command_available diff; then
-    echo "~/.zshrc: delta is not available, falling back to using diff."
+    echo "zshrc: delta is not available, falling back to using diff."
     diff() { command diff --color=always "$@" | \less; }
 else
-    echo "~/.zshrc: diff is not available, can't set settings."
+    echo "zshrc: diff is not available, can't set settings."
 fi
 
 # zsh history configuration
@@ -244,7 +244,7 @@ is_command_available pyenv || export PATH="$PYENV_ROOT/bin:$PATH"
 if is_command_available pyenv; then
     eval "$(pyenv init -)"
 else
-    echo "~/.zshrc: pyenv is not available, can't set settings."
+    echo "zshrc: pyenv is not available, can't set settings."
 fi
 
 # Load Rust environment if installed
@@ -264,7 +264,7 @@ export NVM_DIR="$HOME/.nvm"
 # This loads nvm bash_completion
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 if ! is_command_available nvm; then
-    echo "~/.zshrc: nvm is not available."
+    echo "zshrc: nvm is not available."
 fi
 
 # Standardize pasting in zsh by making Ctrl-Y/C-y behave the same as pasting
@@ -276,9 +276,9 @@ yank_from_clipboard() {
         LBUFFER+=$(pbpaste)
     elif is_linux; then
         # TODO: impl
-        echo "~/.zshrc: yank_from_clipboard not implemented on linux."
+        echo "zshrc: yank_from_clipboard not implemented on linux."
     else
-        echo "~/.zshrc: not a recognized machine, not setting yank_from_clipboard."
+        echo "zshrc: not a recognized machine, not setting yank_from_clipboard."
     fi
 }
 # declare custom function as a ZLE widget
@@ -332,7 +332,7 @@ export PATH="$HOME/.local/bin:$PATH"
 are_git_crypt_files_unlocked() {
     # non-blocking check for git-crypt availability
     if ! is_command_available git-crypt; then
-        echo "~/.zshrc: git-crypt is not available, won't be able to unlock git-crypt managed files."
+        echo "zshrc: git-crypt is not available, won't be able to unlock git-crypt managed files."
     fi
 
     local git_crypt_files=()
@@ -353,14 +353,14 @@ are_git_crypt_files_unlocked() {
                 locked_files+=("$full_path")
             fi
         else
-            echo "~/.zshrc: git-crypt file not found: $file"
+            echo "zshrc: git-crypt file not found: $file"
         fi
     done
 
     if [[ ${#locked_files[@]} -gt 0 ]]; then
-        echo "~/.zshrc: the following git-crypt files are locked:"
+        echo "zshrc: the following git-crypt files are locked:"
         printf '  %s\n' "${locked_files[@]}"
-        echo "~/.zshrc: run \`git-crypt unlock\` inside $dotfiles_dir to unlock them."
+        echo "zshrc: run \`git-crypt unlock\` inside $dotfiles_dir to unlock them."
         return 1
     fi
 
@@ -385,7 +385,7 @@ elif is_izzys_raspberry_pi; then
     # [1] https://github.com/mobile-shell/mosh/issues/234
     __prompt_emoji='🤖 '
 else
-    echo "~/.zshrc: not a recognized machine, not setting prompt prefix."
+    echo "zshrc: not a recognized machine, not setting prompt prefix."
 fi
 # Apply the emoji using p10k if available, otherwise fall back to PROMPT.
 if [[ -n $__prompt_emoji ]]; then
@@ -408,7 +408,7 @@ if is_izzys_stripe_mbp; then
     if are_git_crypt_files_unlocked; then
         source "$dotfiles_dir/zsh/fragments/zshrc_stripe"
     else
-        echo "~/.zshrc: git-crypt files are locked, can't source zshrc_stripe."
+        echo "zshrc: git-crypt files are locked, can't source zshrc_stripe."
     fi
 fi
 # this is set in zshrc_stripe, which may be encrypted, so we set an empty string
