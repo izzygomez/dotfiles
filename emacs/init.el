@@ -323,10 +323,3 @@
 ;; Enable visual line mode globally, which makes long lines wrap without "\"
 ;; at the end of the line.
 (global-visual-line-mode 1)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Stuff that's automatically added/edited. Probs shouldn't manually edit this,
-;; other than explanatory comments.
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Added after first time I ran M-x list-timers
-(put 'list-timers 'disabled nil)
