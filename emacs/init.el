@@ -54,6 +54,20 @@
 ;; Inspired by https://stackoverflow.com/a/55058934/5802691
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Emacs has a built-in configuration system called "Custom" (M-x customize) [1]
+;; that is automatically updated when the package system updates (i.e. the
+;; `(package-install ...)` invocations below). By default, this goes to the end
+;; of init.el, but given this can drift from machine to machine, it's preferred
+;; to redirect this to a separate file, say ~/.emacs.d/custom.el. [2][3] This is
+;; what I'm doing here. Has to be done before `package-install` invocations.
+;;
+;; [1] https://www.gnu.org/software/emacs/manual/html_node/emacs/Easy-Customization.html
+;; [2] https://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Customizations.html
+;; [3] https://emacs.stackexchange.com/questions/59084/package-selected-packages-what-is-it-useful-for
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
+
 ;; Init the package facility & add MELPA
 ;; https://www.emacswiki.org/emacs/MELPA
 (require 'package)
@@ -314,20 +328,5 @@
 ;; Stuff that's automatically added/edited. Probs shouldn't manually edit this,
 ;; other than explanatory comments.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(diff-hl f markdown-mode multiple-cursors undo-tree xclip
-     zenburn-theme)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 ;; Added after first time I ran M-x list-timers
 (put 'list-timers 'disabled nil)
