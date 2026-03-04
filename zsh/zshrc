@@ -165,6 +165,24 @@ else
     echo "~/.zshrc: gt is not available, can't set settings."
 fi
 
+# prefer using `delta` for diffing if it's available, with nice messaging to
+# stop using `diff`. delta reads its config from `[delta]` in .gitconfig for
+# all invocations, not just as a git pager — so settings like line-numbers,
+# theme, etc. apply to standalone usage too.
+if is_command_available delta; then
+    alias d='delta'
+    diff() {
+        echo "~/.zshrc: prefer using delta for diffing."
+        echo 'If you need to use diff, use `command diff --color=always` instead.'
+        delta "$@"
+    }
+elif is_command_available diff; then
+    echo "~/.zshrc: delta is not available, falling back to using diff."
+    diff() { command diff --color=always "$@" | \less; }
+else
+    echo "~/.zshrc: diff is not available, can't set settings."
+fi
+
 # zsh history configuration
 source $dotfiles_dir/zsh/fragments/zshrc_history
 
