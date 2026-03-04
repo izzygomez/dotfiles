@@ -72,7 +72,7 @@ git pull
 
 Ideally, this dotfiles setup should work out-of-the-box on any machine, regardless of OS & availability of packages. In order to accomplish this, config dotfiles should be split & organized in such a way that settings are only applied for certain machine specs & depending on package availability.
 
-This effort is a 🚧 work in progress 🚧. As an example, see usage of methods in `zsh/checkers.sh` to see how this can be accomplished.
+This effort is a 🚧 work in progress 🚧. As an example, see usage of methods in `zsh/helpers.sh` to see how this can be accomplished.
 
 ### Submodules
 

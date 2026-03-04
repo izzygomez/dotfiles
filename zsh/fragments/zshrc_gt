@@ -3,8 +3,6 @@
 # Sourced by ~/.zshrc. Not intended to be run standalone; may rely on
 # variables & functions defined earlier in the sourcing chain.
 
-source $dotfiles_dir/zsh/checkers.sh
-
 # Wrapper around Graphite's `gt` command. Does a few things:
 # - Checks if git-crypt files are unlocked. Because `graphite/user_config` is
 #   one of those files, we limit the use of `gt` to only when the files are
