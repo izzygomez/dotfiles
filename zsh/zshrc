@@ -1,13 +1,13 @@
 #!/bin/zsh
 
 ################################################################################
-# Source checkers.sh
+# Source helpers.sh
 ################################################################################
 
 # Note: this should be updated if the location of this file changes within the
 # dotfiles repo.
 dotfiles_dir=$(dirname $(dirname $(realpath ~/.zshrc)))
-source $dotfiles_dir/zsh/checkers.sh
+source $dotfiles_dir/zsh/helpers.sh
 
 ################################################################################
 # Powerlevel10k ('p10k') prompt configuration.

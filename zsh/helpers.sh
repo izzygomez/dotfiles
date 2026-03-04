@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-# Checker functions to use in other config files for conditional config-setting.
+# Helper functions to use in other config files for conditional config-setting.
 
 is_mac_os() {
     [[ $(uname) == "Darwin" ]]
