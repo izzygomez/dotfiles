@@ -49,11 +49,17 @@ add-zsh-hook precmd __git_fetch_bg
 # configuration in ~/.gitconfig.
 if ! is_command_available delta; then
     export GIT_PAGER=less
-    export GIT_CONFIG_COUNT=1
-    export GIT_CONFIG_KEY_0="interactive.diffFilter"
-    export GIT_CONFIG_VALUE_0="cat"
+    # see [1] for details on GIT_CONFIG_COUNT, GIT_CONFIG_KEY_, &
+    # GIT_CONFIG_VALUE_ usage. calculating _gc_idx dynamically because
+    # GIT_CONFIG_COUNT may already be set by some other file
+    # (e.g. zshrc_stripe).
+    # [1] https://git-scm.com/docs/git-config#Documentation/git-config.txt-GITCONFIGCOUNT
+    _gc_idx=${GIT_CONFIG_COUNT:-0}
+    export GIT_CONFIG_COUNT=$((_gc_idx + 1))
+    export "GIT_CONFIG_KEY_${_gc_idx}=interactive.diffFilter"
+    export "GIT_CONFIG_VALUE_${_gc_idx}=cat"
+    unset _gc_idx
+
     echo "zshrc_git: delta is not available, falling back to using less."
     echo "Note: this will override the pager & diff filter settings in ~/.gitconfig temporarily for this shell session."
-else
-    unset GIT_PAGER GIT_CONFIG_COUNT GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0
 fi
