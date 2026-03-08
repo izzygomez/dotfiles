@@ -7,7 +7,7 @@
       "complex_modifications": {
         "rules": [
           {
-            "description": "Remap Cmd-L to copy issue URL in Linear.",
+            "description": "Linear: Remap Cmd-L to copy issue URL.",
             "manipulators": [
               {
                 "type": "basic",
@@ -33,7 +33,7 @@
           },
 
           {
-            "description": "Remap Cmd-L to go to search bar & Cmd-K to create links, in Slack.",
+            "description": "Slack: Remap Cmd-L to go to search bar & Cmd-K to create links.",
             "manipulators": [
               {
                 "type": "basic",
@@ -79,7 +79,7 @@
           },
 
           {
-            "description": "Emacs-style Option-f / Option-b for word navigation. Disabled in Emacs, Terminal, & iTerm2.",
+            "description": "Emacs-style Option-f / Option-b for word navigation. Disabled in Emacs (GUI, not terminal) & iTerm2.",
             "manipulators": [
               {
                 "type": "basic",
@@ -88,7 +88,6 @@
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
-                      "^com\\.apple\\.Terminal$",
                       "^com\\.googlecode\\.iterm2$"
                     ]
                   }
@@ -113,7 +112,6 @@
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
-                      "^com\\.apple\\.Terminal$",
                       "^com\\.googlecode\\.iterm2$"
                     ]
                   }
@@ -135,7 +133,7 @@
           },
 
           {
-            "description": "Emacs-style Ctrl-p / Ctrl-n for up / down navigation. Disabled in Emacs, Terminal, & iTerm2.",
+            "description": "Emacs-style Ctrl-p / Ctrl-n for up / down navigation. Disabled in Emacs (GUI, not terminal) & iTerm2.",
             "manipulators": [
               {
                 "type": "basic",
@@ -144,7 +142,6 @@
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
-                      "^com\\.apple\\.Terminal$",
                       "^com\\.googlecode\\.iterm2$"
                     ]
                   }
@@ -168,7 +165,6 @@
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
-                      "^com\\.apple\\.Terminal$",
                       "^com\\.googlecode\\.iterm2$"
                     ]
                   }
@@ -189,7 +185,7 @@
           },
 
           {
-            "description": "Emacs-style copy/cut/paste shortcuts. Option-w (copy), Ctrl-w (cut), Ctrl-y (paste). Disabled in Emacs, Terminal, & iTerm2.",
+            "description": "Emacs-style Ctrl-f / Ctrl-b for forward / backward navigation. Disabled in Emacs (GUI, not terminal) & iTerm2.",
             "manipulators": [
               {
                 "type": "basic",
@@ -198,7 +194,58 @@
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
-                      "^com\\.apple\\.Terminal$",
+                      "^com\\.googlecode\\.iterm2$"
+                    ]
+                  }
+                ],
+                "from": {
+                  "key_code": "f",
+                  "modifiers": {
+                    "mandatory": ["control"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "right_arrow"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "conditions": [
+                  {
+                    "type": "frontmost_application_unless",
+                    "bundle_identifiers": [
+                      "^org\\.gnu\\.Emacs$",
+                      "^com\\.googlecode\\.iterm2$"
+                    ]
+                  }
+                ],
+                "from": {
+                  "key_code": "b",
+                  "modifiers": {
+                    "mandatory": ["control"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "left_arrow"
+                  }
+                ]
+              }
+            ]
+          },
+
+          {
+            "description": "Emacs-style copy/cut/paste shortcuts. Option-w (copy), Ctrl-w (cut), Ctrl-y (paste). Disabled in Emacs (GUI, not terminal) & iTerm2.",
+            "manipulators": [
+              {
+                "type": "basic",
+                "conditions": [
+                  {
+                    "type": "frontmost_application_unless",
+                    "bundle_identifiers": [
+                      "^org\\.gnu\\.Emacs$",
                       "^com\\.googlecode\\.iterm2$"
                     ]
                   }
@@ -223,7 +270,6 @@
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
-                      "^com\\.apple\\.Terminal$",
                       "^com\\.googlecode\\.iterm2$"
                     ]
                   }
@@ -248,7 +294,6 @@
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
-                      "^com\\.apple\\.Terminal$",
                       "^com\\.googlecode\\.iterm2$"
                     ]
                   }

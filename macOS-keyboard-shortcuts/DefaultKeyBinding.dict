@@ -4,8 +4,8 @@
      * Note that these will only work for Cocoa [3] text fields, so they won't
      * be respected by some apps (e.g. Apple Notes, Gmail text fields), so I
      * also have a Karabiner Elements [4] (in `karabiner.json`) system-wide
-     * solution with corresponding rules for rules here. This means this file no
-     * longer is necessary, but keeping around for posterity.
+     * solution with corresponding rules. This file serves as a backup in case
+     * Karabiner is unavailable.
      *
      * For reference: ^ is control, ~ is option.
      *
