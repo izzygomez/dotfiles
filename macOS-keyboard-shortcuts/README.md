@@ -13,7 +13,7 @@ Rules should be implemented in **both** locations to maximize compatibility:
 
 - Karabiner-Elements provides broad system-wide coverage including web browsers & non-Cocoa apps
 - DefaultKeyBinding.dict provides native Cocoa support with proper text editing semantics
-- Smart exclusions prevent conflicts in terminal environments (Emacs, Terminal, iTerm2)
+- Smart exclusions prevent conflicts in certain environments (Emacs GUI, iTerm2)
 
 ## Documentation
 
