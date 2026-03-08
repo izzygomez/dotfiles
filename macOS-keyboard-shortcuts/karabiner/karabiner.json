@@ -79,7 +79,7 @@
           },
 
           {
-            "description": "Emacs-style Option-f / Option-b for word navigation. Disabled in Emacs (GUI, not terminal) & iTerm2.",
+            "description": "Emacs-style Option-f / Option-b for word navigation. Disabled in Emacs (GUI only) & iTerm2.",
             "manipulators": [
               {
                 "type": "basic",
@@ -133,7 +133,7 @@
           },
 
           {
-            "description": "Emacs-style Ctrl-p / Ctrl-n for up / down navigation. Disabled in Emacs (GUI, not terminal) & iTerm2.",
+            "description": "Emacs-style Ctrl-p / Ctrl-n for up / down navigation. Disabled in Emacs (GUI only) & iTerm2.",
             "manipulators": [
               {
                 "type": "basic",
@@ -185,7 +185,7 @@
           },
 
           {
-            "description": "Emacs-style Ctrl-f / Ctrl-b for forward / backward navigation. Disabled in Emacs (GUI, not terminal) & iTerm2.",
+            "description": "Emacs-style Ctrl-f / Ctrl-b for forward / backward navigation. Disabled in Emacs (GUI only) & iTerm2.",
             "manipulators": [
               {
                 "type": "basic",
@@ -237,7 +237,7 @@
           },
 
           {
-            "description": "Emacs-style copy/cut/paste shortcuts. Option-w (copy), Ctrl-w (cut), Ctrl-y (paste). Disabled in Emacs (GUI, not terminal) & iTerm2.",
+            "description": "Emacs-style copy/cut/paste shortcuts. Option-w (copy), Ctrl-w (cut), Ctrl-y (paste). Disabled in Emacs (GUI only) & iTerm2.",
             "manipulators": [
               {
                 "type": "basic",
