@@ -1,0 +1,424 @@
+#!/usr/bin/env bash
+#
+# audit-dotfiles
+#
+# Scans ~ for dotfiles not tracked by this dotfiles repo and shows what
+# might need to be ported in. Also scans config directories like ~/.config.
+#
+# Usage:
+#   ./scripts/audit-dotfiles [--show-diffs]
+#
+# Options:
+#   --show-diffs    Show file contents/diffs for untracked dotfiles
+#
+
+set -eo pipefail
+
+BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+CONFIG_FILE="${BASEDIR}/install.conf.yaml"
+HOME_DIR="${HOME}"
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+NC='\033[0m' # No Color
+
+SHOW_DIFFS=false
+for arg in "$@"; do
+    case $arg in
+        --show-diffs)
+            SHOW_DIFFS=true
+            shift
+            ;;
+    esac
+done
+
+# ============================================================================
+# IGNORE LIST
+# Add dotfiles/dirs here that you want to ignore (relative to ~)
+# Supports exact matches and glob patterns
+# ============================================================================
+IGNORE_LIST=(
+    # Shell history & state
+    ".bash_history"
+    ".zcompdump*"
+    ".zprofile.zwc"
+    ".zsh_history"
+    ".zsh_sessions"
+
+    # Common caches & generated files
+    ".cache"
+    ".DS_Store"
+    ".local"
+    ".Trash"
+
+    # Package managers & language runtimes
+    ".bun"
+    ".bundle"
+    ".cargo"
+    ".conda"
+    ".gem"
+    ".go"
+    ".gradle"
+    ".m2"
+    ".node_repl_history"
+    ".npm"
+    ".nvm"
+    ".pnpm*"
+    ".pyenv"
+    ".python_history"
+    ".rustup"
+    ".yarn"
+
+    # Editors & IDEs (usually too large/machine-specific)
+    ".cursor"
+    ".emacs.d"
+    ".vim"
+    ".viminfo"
+    ".vscode"
+
+    # SSH & GPG (sensitive, machine-specific)
+    ".gnupg"
+    ".password-store"
+    ".ssh"
+
+    # Application data (usually machine-specific)
+    ".aws"
+    ".azure"
+    ".docker"
+    ".gcloud"
+    ".kube"
+    ".terraform.d"
+
+    # macOS specific
+    ".CFUserTextEncoding"
+    ".cups"
+
+    # Misc common ones
+    ".dotbot_marker"
+    ".lesshst"
+    ".selected_editor"
+    ".sudo_as_admin_successful"
+    ".wget-hsts"
+)
+
+# ============================================================================
+# SCAN DIRECTORIES
+# Additional directories to scan for configs (relative to ~)
+# These are "config container" directories where apps store their settings
+# ============================================================================
+SCAN_DIRECTORIES=(
+    ".config"
+    ".tmux"
+)
+
+# Ignore list for items inside SCAN_DIRECTORIES
+SCAN_IGNORE_LIST=(
+    # .config - caches, auth tokens, machine-specific state
+    "configstore"
+    "gcloud"
+    "gh"  # GitHub CLI - contains auth tokens
+    "iterm2"  # Usually machine-specific state
+    "op"  # 1Password CLI
+
+    # .tmux
+    "plugins"  # TPM plugins - installed via git, not tracked
+    "resurrect"  # tmux-resurrect save files
+)
+
+# ============================================================================
+# Helper functions
+# ============================================================================
+
+# Check if a dotfile should be ignored
+should_ignore() {
+    local file="$1"
+    for pattern in "${IGNORE_LIST[@]}"; do
+        # Support glob patterns
+        # shellcheck disable=SC2053
+        if [[ "$file" == $pattern ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+# Check if an item in a scanned directory should be ignored
+should_ignore_in_scan() {
+    local file="$1"
+    for pattern in "${SCAN_IGNORE_LIST[@]}"; do
+        # shellcheck disable=SC2053
+        if [[ "$file" == $pattern ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+# Extract tracked dotfiles from install.conf.yaml
+# Returns just the basename of each tracked dotfile (e.g., ".gitconfig")
+get_tracked_dotfiles() {
+    # Parse the YAML to find all symlink targets starting with ~/
+    grep -E '^\s+~/' "$CONFIG_FILE" 2>/dev/null | \
+        sed -E 's/^\s+//' | \
+        sed -E 's/:.*$//' | \
+        sed 's|^~/||' | \
+        sed 's|/.*||' | \
+        grep '^\.' | \
+        sort -u
+}
+
+# Extract tracked items inside a specific directory from install.conf.yaml
+# Usage: get_tracked_in_dir ".config"
+# Returns basenames of items tracked inside that directory
+get_tracked_in_dir() {
+    local dir="$1"
+    # Look for paths like ~/.config/something or ~/.config/something/deeper
+    grep -E "^\s+~/${dir}/" "$CONFIG_FILE" 2>/dev/null | \
+        sed -E 's/^\s+//' | \
+        sed -E 's/:.*$//' | \
+        sed "s|^~/${dir}/||" | \
+        sed 's|/.*||' | \
+        sort -u
+}
+
+# Check if a dotfile is tracked
+is_tracked() {
+    local file="$1"
+    get_tracked_dotfiles | grep -qx "$file"
+}
+
+# Check if a symlink points to this dotfiles repo
+is_symlink_to_repo() {
+    local full_path="$1"
+    if [[ -L "$full_path" ]]; then
+        local target
+        target=$(readlink "$full_path" 2>/dev/null || echo "")
+        if [[ "$target" == "$BASEDIR"* ]]; then
+            return 0
+        fi
+    fi
+    return 1
+}
+
+# Print a separator
+print_separator() {
+    echo -e "${CYAN}────────────────────────────────────────────────────────────────${NC}"
+}
+
+# Print item info (file/dir/symlink)
+print_item_info() {
+    local name="$1"
+    local full_path="$2"
+
+    if [[ -L "$full_path" ]]; then
+        local target
+        target=$(readlink "$full_path" 2>/dev/null || echo "???")
+        echo -e "${YELLOW}${name}${NC} -> ${target} (symlink)"
+    elif [[ -d "$full_path" ]]; then
+        local count
+        count=$(find "$full_path" -maxdepth 1 2>/dev/null | wc -l | tr -d ' ')
+        echo -e "${BLUE}${name}/${NC} (directory, ~${count} items)"
+    elif [[ -f "$full_path" ]]; then
+        local size lines
+        size=$(wc -c < "$full_path" 2>/dev/null | tr -d ' ')
+        lines=$(wc -l < "$full_path" 2>/dev/null | tr -d ' ')
+        echo -e "${GREEN}${name}${NC} (file, ${lines} lines, ${size} bytes)"
+
+        if $SHOW_DIFFS && [[ "$size" -lt 10000 ]]; then
+            echo -e "${CYAN}  Contents:${NC}"
+            head -20 "$full_path" 2>/dev/null | sed 's/^/    /'
+            if [[ "$lines" -gt 20 ]]; then
+                echo -e "    ${YELLOW}... ($((lines - 20)) more lines)${NC}"
+            fi
+            echo ""
+        fi
+    else
+        echo -e "${name} (unknown type)"
+    fi
+}
+
+# ============================================================================
+# Main logic - Scan home directory
+# ============================================================================
+
+echo -e "${BOLD}${BLUE}🔍 Auditing dotfiles in ${HOME_DIR}${NC}"
+echo ""
+
+# Get all dotfiles in home directory (only immediate children, not recursive)
+home_dotfiles_str=$(ls -1A "$HOME_DIR" 2>/dev/null | grep '^\.' | sort || true)
+if [[ -z "$home_dotfiles_str" ]]; then
+    echo -e "${YELLOW}Warning: Could not enumerate dotfiles in ${HOME_DIR}${NC}"
+    echo "This may be due to permission restrictions."
+    exit 1
+fi
+
+# Get tracked dotfiles from config (for reference)
+tracked_dotfiles_str=$(get_tracked_dotfiles || true)
+
+# Find untracked dotfiles
+untracked=()
+ignored=()
+managed_symlinks=()
+
+while IFS= read -r dotfile; do
+    [[ -z "$dotfile" ]] && continue
+
+    if should_ignore "$dotfile"; then
+        ignored+=("$dotfile")
+        continue
+    fi
+
+    # Check if it's a symlink pointing to this repo (already managed)
+    if is_symlink_to_repo "${HOME_DIR}/${dotfile}"; then
+        managed_symlinks+=("$dotfile")
+        continue
+    fi
+
+    # Check if it's tracked in config
+    if echo "$tracked_dotfiles_str" | grep -qx "$dotfile"; then
+        continue
+    fi
+
+    untracked+=("$dotfile")
+done <<< "$home_dotfiles_str"
+
+# Report managed symlinks (tracked via this repo)
+if [[ ${#managed_symlinks[@]} -gt 0 ]]; then
+    echo -e "${GREEN}✓ Managed by this repo (${#managed_symlinks[@]} symlinks):${NC}"
+    for f in "${managed_symlinks[@]}"; do
+        echo "    $f"
+    done
+    echo ""
+fi
+
+# Report ignored files
+if [[ ${#ignored[@]} -gt 0 ]]; then
+    echo -e "${YELLOW}⊘ Ignored (${#ignored[@]}):${NC}"
+    for f in "${ignored[@]}"; do
+        echo "    $f"
+    done
+    echo ""
+fi
+
+# Report untracked files in home
+if [[ ${#untracked[@]} -gt 0 ]]; then
+    echo -e "${RED}${BOLD}⚠ Untracked dotfiles (${#untracked[@]}):${NC}"
+    print_separator
+
+    for dotfile in "${untracked[@]}"; do
+        print_item_info "$dotfile" "${HOME_DIR}/${dotfile}"
+    done
+
+    print_separator
+    echo ""
+fi
+
+# ============================================================================
+# Scan additional config directories
+# ============================================================================
+
+for scan_dir in "${SCAN_DIRECTORIES[@]}"; do
+    full_scan_path="${HOME_DIR}/${scan_dir}"
+
+    # Skip if directory doesn't exist
+    if [[ ! -d "$full_scan_path" ]]; then
+        continue
+    fi
+
+    echo -e "${BOLD}${BLUE}🔍 Scanning ~/${scan_dir}/${NC}"
+    echo ""
+
+    # Get items in this directory
+    dir_items_str=$(ls -1A "$full_scan_path" 2>/dev/null | sort || true)
+    if [[ -z "$dir_items_str" ]]; then
+        echo -e "${YELLOW}  (empty or unreadable)${NC}"
+        echo ""
+        continue
+    fi
+
+    # Get tracked items for this directory
+    tracked_in_dir_str=$(get_tracked_in_dir "$scan_dir" || true)
+
+    dir_managed=()
+    dir_ignored=()
+    dir_untracked=()
+
+    while IFS= read -r item; do
+        [[ -z "$item" ]] && continue
+
+        item_path="${full_scan_path}/${item}"
+
+        if should_ignore_in_scan "$item"; then
+            dir_ignored+=("$item")
+            continue
+        fi
+
+        # Check if it's a symlink pointing to this repo
+        if is_symlink_to_repo "$item_path"; then
+            dir_managed+=("$item")
+            continue
+        fi
+
+        # Check if it's tracked in config
+        if [[ -n "$tracked_in_dir_str" ]] && echo "$tracked_in_dir_str" | grep -qx "$item"; then
+            dir_managed+=("$item")
+            continue
+        fi
+
+        dir_untracked+=("$item")
+    done <<< "$dir_items_str"
+
+    # Report managed items
+    if [[ ${#dir_managed[@]} -gt 0 ]]; then
+        echo -e "${GREEN}✓ Managed (${#dir_managed[@]}):${NC}"
+        for f in "${dir_managed[@]}"; do
+            echo "    $f"
+        done
+        echo ""
+    fi
+
+    # Report ignored items
+    if [[ ${#dir_ignored[@]} -gt 0 ]]; then
+        echo -e "${YELLOW}⊘ Ignored (${#dir_ignored[@]}):${NC}"
+        for f in "${dir_ignored[@]}"; do
+            echo "    $f"
+        done
+        echo ""
+    fi
+
+    # Report untracked items
+    if [[ ${#dir_untracked[@]} -gt 0 ]]; then
+        echo -e "${RED}${BOLD}⚠ Untracked (${#dir_untracked[@]}):${NC}"
+        print_separator
+
+        for item in "${dir_untracked[@]}"; do
+            print_item_info "$item" "${full_scan_path}/${item}"
+        done
+
+        print_separator
+        echo ""
+    fi
+
+    if [[ ${#dir_managed[@]} -eq 0 ]] && [[ ${#dir_untracked[@]} -eq 0 ]] && [[ ${#dir_ignored[@]} -eq 0 ]]; then
+        echo -e "${GREEN}${BOLD}✨ Nothing to report${NC}"
+        echo ""
+    fi
+done
+
+# ============================================================================
+# Help text
+# ============================================================================
+
+echo -e "${BOLD}To add a dotfile to tracking:${NC}"
+echo "  1. Copy to this repo:  cp ~/<dotfile> ${BASEDIR}/<name>"
+echo "  2. Add to install.conf.yaml"
+echo "  3. Run ./install"
+echo ""
+echo -e "${BOLD}To permanently ignore a dotfile:${NC}"
+echo "  Edit IGNORE_LIST or SCAN_IGNORE_LIST in ${BASEDIR}/scripts/audit-dotfiles"
+echo ""
