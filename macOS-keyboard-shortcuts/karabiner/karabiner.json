@@ -79,7 +79,7 @@
           },
 
           {
-            "description": "Emacs-style Option-f / Option-b for word navigation. Disabled in Emacs (GUI only) & iTerm2.",
+            "description": "Emacs-style word navigation: Option-f for forward, Option-b for backward. Disabled in Emacs (GUI), iTerm2, & Cursor.",
             "manipulators": [
               {
                 "type": "basic",
@@ -88,7 +88,8 @@
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
-                      "^com\\.googlecode\\.iterm2$"
+                      "^com\\.googlecode\\.iterm2$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ]
                   }
                 ],
@@ -112,7 +113,8 @@
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
-                      "^com\\.googlecode\\.iterm2$"
+                      "^com\\.googlecode\\.iterm2$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ]
                   }
                 ],
@@ -133,7 +135,7 @@
           },
 
           {
-            "description": "Emacs-style Ctrl-p / Ctrl-n for up / down navigation. Disabled in Emacs (GUI only) & iTerm2.",
+            "description": "Emacs-style line navigation: Ctrl-p for up, Ctrl-n for down. Disabled in Emacs (GUI), iTerm2, & Cursor.",
             "manipulators": [
               {
                 "type": "basic",
@@ -142,7 +144,8 @@
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
-                      "^com\\.googlecode\\.iterm2$"
+                      "^com\\.googlecode\\.iterm2$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ]
                   }
                 ],
@@ -165,7 +168,8 @@
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
-                      "^com\\.googlecode\\.iterm2$"
+                      "^com\\.googlecode\\.iterm2$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ]
                   }
                 ],
@@ -185,7 +189,7 @@
           },
 
           {
-            "description": "Emacs-style Ctrl-f / Ctrl-b for forward / backward navigation. Disabled in Emacs (GUI only) & iTerm2.",
+            "description": "Emacs-style character navigation: Ctrl-f for forward, Ctrl-b for backward. Disabled in Emacs (GUI), iTerm2, & Cursor.",
             "manipulators": [
               {
                 "type": "basic",
@@ -194,7 +198,8 @@
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
-                      "^com\\.googlecode\\.iterm2$"
+                      "^com\\.googlecode\\.iterm2$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ]
                   }
                 ],
@@ -217,7 +222,8 @@
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
-                      "^com\\.googlecode\\.iterm2$"
+                      "^com\\.googlecode\\.iterm2$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ]
                   }
                 ],
@@ -237,7 +243,7 @@
           },
 
           {
-            "description": "Emacs-style copy/cut/paste shortcuts. Option-w (copy), Ctrl-w (cut), Ctrl-y (paste). Disabled in Emacs (GUI only) & iTerm2.",
+            "description": "Emacs-style text editing: Option-w for copy, Ctrl-w for cut, Ctrl-y for paste. Disabled in Emacs (GUI), iTerm2, & Cursor.",
             "manipulators": [
               {
                 "type": "basic",
@@ -246,7 +252,8 @@
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
-                      "^com\\.googlecode\\.iterm2$"
+                      "^com\\.googlecode\\.iterm2$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ]
                   }
                 ],
@@ -270,7 +277,8 @@
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
-                      "^com\\.googlecode\\.iterm2$"
+                      "^com\\.googlecode\\.iterm2$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ]
                   }
                 ],
@@ -294,7 +302,8 @@
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
-                      "^com\\.googlecode\\.iterm2$"
+                      "^com\\.googlecode\\.iterm2$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ]
                   }
                 ],
