@@ -44,7 +44,7 @@ repos:
   # Per note above, run this to see what files will be formatted:
   # git ls-files | grep -E '\.(sh|bash)$|^(zsh/.*)$' | grep -v -E '^(dotbot|copilot\.el)/|zsh/README\.md$'
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.12.0-2
+    rev: v3.13.0-1
     hooks:
       - id: shfmt
         args: [-w, -s, -i, "4"] # Write changes, simplify code, 4-space indent
