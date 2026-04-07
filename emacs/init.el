@@ -302,13 +302,34 @@
 (add-to-list 'display-buffer-alist
              '("\\*Buffer List\\*" (display-buffer-same-window)))
 
-;; Highlight added/removed lines in commit messages
+;; Highlight added/removed lines in git commit messages, but only in the diff
+;; section after the scissors line, not in the message body where "-" is
+;; commonly used as a list bullet.
+(defun my/commit-diff-matcher (regex limit)
+  "Match REGEX only after the scissors line in COMMIT_EDITMSG."
+  (let ((scissors "^. -+ >8 -+")
+        (scissors-pos nil))
+    (save-excursion
+      (goto-char (point-min))
+      (when (re-search-forward scissors nil t)
+        (setq scissors-pos (match-end 0))))
+    (when (and scissors-pos (or (>= (point) scissors-pos)
+                                (goto-char scissors-pos)))
+      (re-search-forward regex limit t))))
+
+(defun my/commit-diff-added-matcher (limit)
+  (my/commit-diff-matcher "^\\(+.*\\)$" limit))
+
+(defun my/commit-diff-removed-matcher (limit)
+  (my/commit-diff-matcher "^\\(-.*\\)$" limit))
+
 (add-hook 'find-file-hook
           (lambda ()
             (when (string-match-p "COMMIT_EDITMSG\\'" (buffer-name))
-              (font-lock-add-keywords nil
-                                      '(("^\\(+.*\\)$" 1 'diff-added nil t)
-                                        ("^\\(-.*\\)$" 1 'diff-removed nil t)))
+              (font-lock-add-keywords
+               nil
+               '((my/commit-diff-added-matcher 1 'diff-added nil t)
+                 (my/commit-diff-removed-matcher 1 'diff-removed nil t)))
               (font-lock-flush))))
 
 ;; Remap M-<backspace> to backward-delete-word instead of its default which
