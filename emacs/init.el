@@ -344,3 +344,11 @@
 ;; Enable visual line mode globally, which makes long lines wrap without "\"
 ;; at the end of the line.
 (global-visual-line-mode 1)
+
+;; Enable delete-selection-mode, which makes it so that when you type while a
+;; region is selected, it replaces the region with what you type instead of just
+;; inserting at the cursor position.
+(delete-selection-mode 1)
+
+;; Disable prompt every time I am attempting to open a symlinked file.
+(setq vc-follow-symlinks t)
