@@ -67,7 +67,7 @@ fi
     # "Key repeat rate"
     # GUI slider values: 120 (slowest), 90, 60, 30, 12, 5, 2 (fastest)
     # where value is ticks of 1/60th of a second
-    # fortunately for us, we can set it lower than GUI here
+    # we can set it lower than GUI here, if desired
     desired_key_repeat=1
     if [[ "$(defaults read NSGlobalDomain KeyRepeat 2>/dev/null)" != "$desired_key_repeat" ]]; then
         defaults write NSGlobalDomain KeyRepeat -int $desired_key_repeat
@@ -75,8 +75,8 @@ fi
     fi
     # "Delay until repeat", i.e. delay before repeating starts when key is held down
     # GUI slider values: 120 (slowest), 94, 68, 30, 25, 15 (fastest)
-    # fortunately for us, we can set it lower than GUI here
-    desired_initial_key_repeat=10
+    # we can set it lower than GUI here, if desired
+    desired_initial_key_repeat=15
     if [[ "$(defaults read NSGlobalDomain InitialKeyRepeat 2>/dev/null)" != "$desired_initial_key_repeat" ]]; then
         defaults write NSGlobalDomain InitialKeyRepeat -int $desired_initial_key_repeat
         echo "zshrc_macos: updated InitialKeyRepeat to $desired_initial_key_repeat. Log out & back in, or restart, for this to take effect."
