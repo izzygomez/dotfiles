@@ -352,3 +352,16 @@
 
 ;; Disable prompt every time I am attempting to open a symlinked file.
 (setq vc-follow-symlinks t)
+
+;; Disabling this mode so that I don't get extra indent tab/space chars when
+;; pasting content into emacs. Unfortunately, this also disables auto-indenting
+;; when manually typing code, but I don't mind this that much.
+(electric-indent-mode -1)
+
+;;;; Settings to make TAB button insert a consistent number of SPACE chars
+;; always insert SPACE, not TAB characters
+(setq-default indent-tabs-mode nil)
+;; set tab width to 2 SPACE chars
+(setq-default tab-width 2)
+;; make TAB always just insert spaces consistently
+(setq-default tab-always-indent nil)
