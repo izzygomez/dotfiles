@@ -98,6 +98,8 @@ alias code='cd "$HOME/code"'
 
 if is_command_available claude; then
     alias cl='claude'
+    # https://code.claude.com/docs/en/fullscreen
+    export CLAUDE_CODE_NO_FLICKER=1
 else
     echo "zshrc: claude is not available, can't set settings."
 fi
