@@ -17,6 +17,11 @@
 # break certain hooks, e.g. end-of-file-fixer.
 exclude: "^graphite/*"
 
+# https://pre-commit.ci/ configuration
+ci:
+  autofix_prs: true
+  autoupdate_schedule: monthly
+
 repos:
   # Pre-commit's built-in collection
   - repo: https://github.com/pre-commit/pre-commit-hooks
