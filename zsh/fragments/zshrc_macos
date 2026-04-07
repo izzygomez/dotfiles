@@ -62,6 +62,10 @@ fi
 # macOS settings config
 ################################################################################
 
+# TODO: consider moving these settings to a separate file, e.g. `zshrc_macos_settings`,
+# that is only called once in a while. feels like an antipattern for us to check
+# all of these settings every time the shell is started.
+
 # Settings > Keyboard
 (
     # "Key repeat rate"
@@ -82,6 +86,12 @@ fi
         echo "zshrc_macos: updated InitialKeyRepeat to $desired_initial_key_repeat. Log out & back in, or restart, for this to take effect."
     fi
 )
+
+# Disable "Slightly dim display on battery" option found in Settings > Battery > Options
+if [[ "$(pmset -g custom 2>/dev/null | awk '/Battery Power/,0' | awk '/lessbright/{print $2}')" != "0" ]]; then
+    echo "zshrc_macos: disabling \"Slightly dim display on battery\". running sudo, so you'll need to enter your password..."
+    sudo pmset -b lessbright 0
+fi
 
 ################################################################################
 # Homebrew config & package configs
