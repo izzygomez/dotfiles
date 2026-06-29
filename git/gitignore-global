@@ -6,5 +6,6 @@ CLAUDE.md
 .cursor/
 .DS_Store
 node_modules/
+__pycache__/
 .ruff_cache/
 .vscode
