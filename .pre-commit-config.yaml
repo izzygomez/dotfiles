@@ -1,8 +1,9 @@
+################################################################################
 # See pre-commit.com for documentation.
 #
 # Some helpful commands:
 # - `pre-commit install` to install the hooks.
-# - `pre-commit run --all-files --verbose` to run the hooks manually.
+# - `pre-commit run -a/--all-files [--verbose]` to run the hooks manually.
 # - `git commit -n/--no-verify` to skip the hooks.
 # - `pre-commit autoupdate` to update the hooks to the latest version.
 # - `pre-commit clean` to clean out cached files.
@@ -11,19 +12,20 @@
 #   `git ls-files | grep -E '{files}' | grep -v -E '{exclude}'`
 #   where {files} is the regex of files to process, & {exclude} is the regex of
 #   files to exclude.
+################################################################################
+
+# https://pre-commit.ci/ configuration
+ci:
+  autofix_prs: false # this doesn't work well with stacked PRs
+  autoupdate_schedule: monthly
 
 # Exclude `graphite/*` files from all pre-commit hooks. These files,
 # annoyingly, get re-formatted every time we use graphite, so they consistently
 # break certain hooks, e.g. end-of-file-fixer.
-exclude: "^graphite/*"
-
-# https://pre-commit.ci/ configuration
-ci:
-  autofix_prs: false
-  autoupdate_schedule: monthly
+exclude: "^graphite/"
 
 repos:
-  # Pre-commit's built-in collection
+  # pre-commit-hooks — general file checks
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
@@ -39,25 +41,25 @@ repos:
       - id: no-commit-to-branch
       - id: trailing-whitespace
 
-  # Note for "Shell script formatting" & "Shell script linting" below:
+  # Note for the "shfmt" & "shellcheck" hooks below:
   # Using `types: [text]` instead of `types: [shell, zsh]` because the identify
   # library only tags zsh files as type 'zsh' when executable. Our zsh configs
   # (zshrc, zprofile, etc.) are sourced not executed so should not be made
   # executable. Therefore we use explicit `files` & `exclude` patterns.
 
-  # Shell script formatting
+  # shfmt — shell script formatting
   # Per note above, run this to see what files will be formatted:
   # git ls-files | grep -E '\.(sh|bash)$|^(zsh/.*)$' | grep -v -E '^(dotbot|copilot\.el)/|zsh/README\.md$'
   - repo: https://github.com/scop/pre-commit-shfmt
     rev: v3.13.1-1
     hooks:
       - id: shfmt
-        args: [-w, -s, -i, "4"] # Write changes, simplify code, 4-space indent
+        args: [-w, -s, -i, "4"] # write changes, simplify code, 4-space indent
         types: [text]
         files: '\.(sh|bash)$|^(zsh/.*)$'
         exclude: '^(dotbot|copilot\.el)/|zsh/README\.md$'
 
-  # Shell script linting
+  # shellcheck — shell script linting
   # Per note above, run this to see what files will be formatted:
   # git ls-files | grep -E '\.(sh|bash)$' | grep -v -E '^(dotbot|copilot\.el|zsh)/'
   - repo: https://github.com/shellcheck-py/shellcheck-py
@@ -69,10 +71,12 @@ repos:
         files: '\.(sh|bash)$'
         exclude: '^(dotbot|copilot\.el|zsh)/'
 
-  # Prettier
+  # Prettier — multi-language formatting
   - repo: https://github.com/rbubley/mirrors-prettier
     rev: "v3.9.6"
     hooks:
       - id: prettier
+        # Filter to just the types we care about instead of letting Prettier
+        # format everything it supports — this repo mixes many config formats.
         types_or: [javascript, json, yaml, css, markdown]
         exclude: '^(dotbot|copilot\.el)/'
