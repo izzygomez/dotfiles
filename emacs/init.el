@@ -290,6 +290,10 @@
 ;; Turn off menu-bar-mode
 (menu-bar-mode -1)
 
+;; start *scratch* with custom message & in text-mode
+(setq initial-scratch-message "Happy hacking, Izzy 🌐\n\n")
+(setq initial-major-mode 'text-mode)
+
 ;; Pin a hint line for keybindings at the top of *Buffer List* (C-x C-b).
 (add-hook 'Buffer-menu-mode-hook
           (lambda ()
