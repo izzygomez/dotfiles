@@ -390,8 +390,12 @@
 ;; inserting at the cursor position.
 (delete-selection-mode 1)
 
-;; Disable prompt every time I am attempting to open a symlinked file.
+;; Always edit the real file behind a symlink, not the link itself.
+;; vc-follow-symlinks turns redirect prompt off when opening a
+;; version-controlled symlink; find-file-visit-truename makes sure all files are
+;; opened as the symlink-resolved path.
 (setq vc-follow-symlinks t)
+(setq find-file-visit-truename t)
 
 ;; Disabling this mode so that I don't get extra indent tab/space chars when
 ;; pasting content into emacs. Unfortunately, this also disables auto-indenting
