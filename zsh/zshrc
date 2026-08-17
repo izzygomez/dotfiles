@@ -252,6 +252,12 @@ weather() {
 export PYENV_ROOT="$HOME/.pyenv"
 is_command_available pyenv || export PATH="$PYENV_ROOT/bin:$PATH"
 if is_command_available pyenv; then
+    # `pyenv init -` runs `pyenv rehash`, which locks $PYENV_ROOT/shims/.pyenv-shim.
+    # A rehash killed mid-run (e.g. closing a tmux pane) leaves that lock behind, and
+    # every new shell then blocks up to PYENV_REHASH_TIMEOUT (default 60s) waiting on
+    # it. Cap the wait at 2s; pyenv itself deletes locks older than 2min on the next
+    # rehash, so a leftover lock self-heals instead of stalling shells for a minute.
+    export PYENV_REHASH_TIMEOUT=2
     eval "$(pyenv init -)"
 else
     echo "zshrc: pyenv is not available, can't set settings."
