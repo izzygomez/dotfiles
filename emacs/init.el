@@ -290,6 +290,23 @@
 ;; Turn off menu-bar-mode
 (menu-bar-mode -1)
 
+;; Pin a hint line for keybindings at the top of *Buffer List* (C-x C-b).
+(add-hook 'Buffer-menu-mode-hook
+          (lambda ()
+            (setq-local tab-line-format
+                        (substitute-command-keys
+                         (concat
+                          " \\[Buffer-menu-this-window] open  "
+                          "\\[Buffer-menu-other-window] other-window  "
+                          "\\[Buffer-menu-delete] mark-del  "
+                          "\\[Buffer-menu-execute] execute  "
+                          "\\[Buffer-menu-unmark] unmark  "
+                          "\\[Buffer-menu-save] mark-save  "
+                          "\\[revert-buffer] refresh  "
+                          "\\[quit-window] quit")))
+            ;; Match the hint band's colors to the column-title row.
+            (face-remap-add-relative 'tab-line 'header-line)))
+
 ;; Set default python indent to 4 spaces
 (setq python-indent-offset 4)
 ;; from https://stackoverflow.com/a/51966682, don't want this emacs warning
