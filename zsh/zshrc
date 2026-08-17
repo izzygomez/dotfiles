@@ -94,6 +94,8 @@ fi
 
 alias x='exit'
 
+alias sz='source ~/.zshrc'
+
 alias code='cd "$HOME/code"'
 
 if is_command_available claude; then
