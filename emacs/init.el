@@ -227,6 +227,18 @@
                        (if buffer-file-name (abbreviate-file-name buffer-file-name) (buffer-name))
                        'face 'mode-line-buffer-id)))
 
+;; Mouse support in terminal Emacs.
+(defvar my/terminal-scroll-lines 5
+  "Number of lines to scroll per mouse-wheel event in terminal Emacs.")
+(unless (display-graphic-p)
+  (xterm-mouse-mode 1)
+  ;; different Emacs/terminal combos emit the wheel as `wheel-up/down` or as
+  ;; `mouse-4/5`; bind both so scrolling works either way.
+  (global-set-key [wheel-up]   (lambda () (interactive) (ignore-errors (scroll-down my/terminal-scroll-lines))))
+  (global-set-key [wheel-down] (lambda () (interactive) (ignore-errors (scroll-up   my/terminal-scroll-lines))))
+  (global-set-key [mouse-4]    (lambda () (interactive) (ignore-errors (scroll-down my/terminal-scroll-lines))))
+  (global-set-key [mouse-5]    (lambda () (interactive) (ignore-errors (scroll-up   my/terminal-scroll-lines)))))
+
 ;; Have C-v & M-v move cursor to top & bottom of buffer
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Scrolling.html
 (setq scroll-error-top-bottom 'true)
