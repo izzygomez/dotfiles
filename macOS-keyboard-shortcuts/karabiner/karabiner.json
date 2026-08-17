@@ -1,16 +1,13 @@
 {
+  "global": { "show_in_menu_bar": false },
   "profiles": [
     {
-      "name": "Izzy's profile",
-      "selected": true,
-      "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" },
       "complex_modifications": {
         "rules": [
           {
             "description": "Linear: Remap Cmd-L to copy issue URL.",
             "manipulators": [
               {
-                "type": "basic",
                 "conditions": [
                   {
                     "bundle_identifiers": ["^com\\.linear$"],
@@ -27,16 +24,15 @@
                     "lazy": true,
                     "modifiers": ["command", "shift"]
                   }
-                ]
+                ],
+                "type": "basic"
               }
             ]
           },
-
           {
             "description": "Slack: Remap Cmd-L to go to search bar & Cmd-K to create links.",
             "manipulators": [
               {
-                "type": "basic",
                 "conditions": [
                   {
                     "bundle_identifiers": ["^com\\.tinyspeck\\.slackmacgap$"],
@@ -53,10 +49,10 @@
                     "lazy": true,
                     "modifiers": ["command"]
                   }
-                ]
+                ],
+                "type": "basic"
               },
               {
-                "type": "basic",
                 "conditions": [
                   {
                     "bundle_identifiers": ["^com\\.tinyspeck\\.slackmacgap$"],
@@ -73,257 +69,247 @@
                     "lazy": true,
                     "modifiers": ["command", "shift"]
                   }
-                ]
+                ],
+                "type": "basic"
               }
             ]
           },
-
           {
             "description": "Emacs-style word navigation: Option-f for forward, Option-b for backward. Disabled in Emacs (GUI), iTerm2, & Cursor.",
             "manipulators": [
               {
-                "type": "basic",
                 "conditions": [
                   {
-                    "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
                       "^com\\.googlecode\\.iterm2$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
-                    ]
+                    ],
+                    "type": "frontmost_application_unless"
                   }
                 ],
                 "from": {
                   "key_code": "f",
-                  "modifiers": {
-                    "mandatory": ["option"]
-                  }
+                  "modifiers": { "mandatory": ["option"] }
                 },
                 "to": [
                   {
                     "key_code": "right_arrow",
                     "modifiers": ["option"]
                   }
-                ]
+                ],
+                "type": "basic"
               },
               {
-                "type": "basic",
                 "conditions": [
                   {
-                    "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
                       "^com\\.googlecode\\.iterm2$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
-                    ]
+                    ],
+                    "type": "frontmost_application_unless"
                   }
                 ],
                 "from": {
                   "key_code": "b",
-                  "modifiers": {
-                    "mandatory": ["option"]
-                  }
+                  "modifiers": { "mandatory": ["option"] }
                 },
                 "to": [
                   {
                     "key_code": "left_arrow",
                     "modifiers": ["option"]
                   }
-                ]
+                ],
+                "type": "basic"
               }
             ]
           },
-
           {
             "description": "Emacs-style line navigation: Ctrl-p for up, Ctrl-n for down. Disabled in Emacs (GUI), iTerm2, & Cursor.",
             "manipulators": [
               {
-                "type": "basic",
                 "conditions": [
                   {
-                    "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
                       "^com\\.googlecode\\.iterm2$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
-                    ]
+                    ],
+                    "type": "frontmost_application_unless"
                   }
                 ],
                 "from": {
                   "key_code": "p",
-                  "modifiers": {
-                    "mandatory": ["control"]
-                  }
+                  "modifiers": { "mandatory": ["control"] }
                 },
-                "to": [
-                  {
-                    "key_code": "up_arrow"
-                  }
-                ]
+                "to": [{ "key_code": "up_arrow" }],
+                "type": "basic"
               },
               {
-                "type": "basic",
                 "conditions": [
                   {
-                    "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
                       "^com\\.googlecode\\.iterm2$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
-                    ]
+                    ],
+                    "type": "frontmost_application_unless"
                   }
                 ],
                 "from": {
                   "key_code": "n",
-                  "modifiers": {
-                    "mandatory": ["control"]
-                  }
+                  "modifiers": { "mandatory": ["control"] }
                 },
-                "to": [
-                  {
-                    "key_code": "down_arrow"
-                  }
-                ]
+                "to": [{ "key_code": "down_arrow" }],
+                "type": "basic"
               }
             ]
           },
-
           {
             "description": "Emacs-style character navigation: Ctrl-f for forward, Ctrl-b for backward. Disabled in Emacs (GUI), iTerm2, & Cursor.",
             "manipulators": [
               {
-                "type": "basic",
                 "conditions": [
                   {
-                    "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
                       "^com\\.googlecode\\.iterm2$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
-                    ]
+                    ],
+                    "type": "frontmost_application_unless"
                   }
                 ],
                 "from": {
                   "key_code": "f",
-                  "modifiers": {
-                    "mandatory": ["control"]
-                  }
+                  "modifiers": { "mandatory": ["control"] }
                 },
-                "to": [
-                  {
-                    "key_code": "right_arrow"
-                  }
-                ]
+                "to": [{ "key_code": "right_arrow" }],
+                "type": "basic"
               },
               {
-                "type": "basic",
                 "conditions": [
                   {
-                    "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
                       "^com\\.googlecode\\.iterm2$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
-                    ]
+                    ],
+                    "type": "frontmost_application_unless"
                   }
                 ],
                 "from": {
                   "key_code": "b",
-                  "modifiers": {
-                    "mandatory": ["control"]
-                  }
+                  "modifiers": { "mandatory": ["control"] }
                 },
-                "to": [
-                  {
-                    "key_code": "left_arrow"
-                  }
-                ]
+                "to": [{ "key_code": "left_arrow" }],
+                "type": "basic"
               }
             ]
           },
-
           {
             "description": "Emacs-style text editing: Option-w for copy, Ctrl-w for cut, Ctrl-y for paste. Disabled in Emacs (GUI), iTerm2, & Cursor.",
             "manipulators": [
               {
-                "type": "basic",
                 "conditions": [
                   {
-                    "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
                       "^com\\.googlecode\\.iterm2$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
-                    ]
+                    ],
+                    "type": "frontmost_application_unless"
                   }
                 ],
                 "from": {
                   "key_code": "w",
-                  "modifiers": {
-                    "mandatory": ["option"]
-                  }
+                  "modifiers": { "mandatory": ["option"] }
                 },
                 "to": [
                   {
                     "key_code": "c",
                     "modifiers": ["command"]
                   }
-                ]
+                ],
+                "type": "basic"
               },
               {
-                "type": "basic",
                 "conditions": [
                   {
-                    "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
                       "^com\\.googlecode\\.iterm2$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
-                    ]
+                    ],
+                    "type": "frontmost_application_unless"
                   }
                 ],
                 "from": {
                   "key_code": "w",
-                  "modifiers": {
-                    "mandatory": ["control"]
-                  }
+                  "modifiers": { "mandatory": ["control"] }
                 },
                 "to": [
                   {
                     "key_code": "x",
                     "modifiers": ["command"]
                   }
-                ]
+                ],
+                "type": "basic"
               },
               {
-                "type": "basic",
                 "conditions": [
                   {
-                    "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.gnu\\.Emacs$",
                       "^com\\.googlecode\\.iterm2$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
-                    ]
+                    ],
+                    "type": "frontmost_application_unless"
                   }
                 ],
                 "from": {
                   "key_code": "y",
-                  "modifiers": {
-                    "mandatory": ["control"]
-                  }
+                  "modifiers": { "mandatory": ["control"] }
                 },
                 "to": [
                   {
                     "key_code": "v",
                     "modifiers": ["command"]
                   }
-                ]
+                ],
+                "type": "basic"
               }
             ]
           }
         ]
-      }
+      },
+      "devices": [
+        {
+          "description": "Remap keyboard keys on Sam's PC legal keyboard to match my Mac keyboard.",
+          "identifiers": {
+            "is_keyboard": true,
+            "product_id": 2341,
+            "vendor_id": 3526
+          },
+          "simple_modifications": [
+            {
+              "from": { "key_code": "left_command" },
+              "to": [{ "key_code": "left_option" }]
+            },
+            {
+              "from": { "key_code": "left_option" },
+              "to": [{ "key_code": "left_command" }]
+            },
+            {
+              "from": { "key_code": "non_us_pound" },
+              "to": [{ "key_code": "return_or_enter" }]
+            }
+          ]
+        }
+      ],
+      "name": "Izzy's profile",
+      "selected": true,
+      "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
     }
   ]
 }
