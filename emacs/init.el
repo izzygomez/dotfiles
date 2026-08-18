@@ -220,6 +220,13 @@
 (global-display-line-numbers-mode 1)
 (setq column-number-mode t)
 
+;; Show the buffer's full file path in the mode line instead of just the file
+;; name (falls back to the buffer name for non-file buffers).
+(setq-default mode-line-buffer-identification
+              '(:eval (propertize
+                       (if buffer-file-name (abbreviate-file-name buffer-file-name) (buffer-name))
+                       'face 'mode-line-buffer-id)))
+
 ;; Have C-v & M-v move cursor to top & bottom of buffer
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Scrolling.html
 (setq scroll-error-top-bottom 'true)
