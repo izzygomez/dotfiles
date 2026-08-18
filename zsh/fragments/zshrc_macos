@@ -100,9 +100,6 @@ fi
 
 # remove hints
 export HOMEBREW_NO_ENV_HINTS=1
-# pass `--ask` to `brew install/upgrade/reinstall` commands
-# according to docs, this should only work for formulae
-export HOMEBREW_ASK=1
 # display install times at end of command run
 export HOMEBREW_DISPLAY_INSTALL_TIMES=1
 # turn off analytics
