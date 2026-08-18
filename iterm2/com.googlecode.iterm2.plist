@@ -32,6 +32,8 @@
 	<string>https://api.openai.com/v1/responses</string>
 	<key>AllowClipboardAccess</key>
 	<true/>
+	<key>CheckTestRelease</key>
+	<false/>
 	<key>ClickToSelectCommand</key>
 	<false/>
 	<key>Default Bookmark Guid</key>
@@ -51,7 +53,7 @@
 	<key>HideActivityIndicator</key>
 	<false/>
 	<key>HideScrollbar</key>
-	<false/>
+	<true/>
 	<key>HideTab</key>
 	<true/>
 	<key>HideTabNumber</key>
@@ -514,7 +516,7 @@
 	<key>PromptOnQuitEvenIfThereAreNoWindows</key>
 	<false/>
 	<key>QuitWhenAllWindowsClosed</key>
-	<false/>
+	<true/>
 	<key>ShowFullScreenTabBar</key>
 	<true/>
 	<key>ShowNewOutputIndicator</key>
