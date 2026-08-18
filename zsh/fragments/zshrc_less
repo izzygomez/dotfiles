@@ -75,7 +75,8 @@ alias less='less_with_full_path'
 # other programs (e.g. `man`, `git diff`) that bypass the shell alias set above.
 # - `-R`: Display raw control characters, allowing for syntax highlighting
 # - `-i`: Ignore case in searches, unless pattern contains uppercase
-export LESS='-R -i'
+# - `--mouse`: Enable mouse scrolling support.
+export LESS='-R -i --mouse'
 
 ################################################################################
 # lesskey configuration
