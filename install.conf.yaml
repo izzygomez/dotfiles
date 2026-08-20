@@ -81,6 +81,7 @@
     ~/.npmrc: npmrc
     ~/.tidyrc: tidyrc
     ~/.tmux.conf: tmux/tmux.conf
+    ~/.tmux/scripts: tmux/scripts
     ~/.zprofile: zsh/zprofile
     ~/.zshrc: zsh/zshrc
 
