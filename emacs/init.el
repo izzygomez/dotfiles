@@ -227,10 +227,15 @@
                        (if buffer-file-name (abbreviate-file-name buffer-file-name) (buffer-name))
                        'face 'mode-line-buffer-id)))
 
-;; Mouse support in terminal Emacs.
-(defvar my/terminal-scroll-lines 5
-  "Number of lines to scroll per mouse-wheel event in terminal Emacs.")
+;; Settings only for Terminal emacs
 (unless (display-graphic-p)
+  ;; Without this, modified keys like Shift+Space type junk ("2~") in emacs
+  ;; inside  tmux. This makes them behave like normal keypresses again.
+  (setq xterm-screen-extra-capabilities nil)
+
+  ;; Mouse support in terminal Emacs.
+  (defvar my/terminal-scroll-lines 5
+    "Number of lines to scroll per mouse-wheel event in terminal Emacs.")
   (xterm-mouse-mode 1)
   ;; different Emacs/terminal combos emit the wheel as `wheel-up/down` or as
   ;; `mouse-4/5`; bind both so scrolling works either way.
