@@ -33,6 +33,9 @@ export TMUX_POWERLINE_STATUS_RIGHT_LENGTH="90"
 # The separator to use between windows on the status bar.
 export TMUX_POWERLINE_WINDOW_STATUS_SEPARATOR=""
 
+# Base style for the status bar & command prompt.
+export TMUX_POWERLINE_STATUS_STYLE="fg=#af8700,bg=#121212,fill=#121212"
+
 # Uncomment these if you want to enable tmux bindings for muting (hiding) one of the status bars.
 # E.g. this example binding would mute the left status bar when pressing <prefix> followed by Ctrl-[
 #export TMUX_POWERLINE_MUTE_LEFT_KEYBINDING="C-["
