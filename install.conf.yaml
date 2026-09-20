@@ -59,6 +59,10 @@
       create: false # don't force-create dir if it doesn't exist
       force: true
       path: claude/keybindings.json
+    ~/.claude/statusline-command.sh:
+      create: false # don't force-create dir if it doesn't exist
+      force: true
+      path: claude/statusline-command.sh
     ~/.config/eza:
       create: true
       force: true
@@ -87,3 +91,8 @@
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
+    # Copies claude/settings-*.json into ~/.claude/settings.json, which this
+    # repo does not track. See claude/README.md.
+    - command: ./claude/install-claude-settings.sh
+      description: Applying Claude Code settings
+      stdout: true
