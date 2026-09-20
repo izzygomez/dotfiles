@@ -20,7 +20,7 @@ export TMUX_POWERLINE_DIR_USER_SEGMENTS="${XDG_CONFIG_HOME:-$HOME/.config}/tmux-
 export TMUX_POWERLINE_STATUS_VISIBILITY="on"
 # The status bar refresh interval in seconds.
 # Note that events that force-refresh the status bar (such as window renaming) will ignore this.
-export TMUX_POWERLINE_STATUS_INTERVAL="1"
+export TMUX_POWERLINE_STATUS_INTERVAL="5"
 # The location of the window list. Can be {"absolute-centre, centre, left, right"}.
 # Note: only tmux version >= 3.2 supports `absolute-centre` usage
 export TMUX_POWERLINE_STATUS_JUSTIFICATION="centre"
@@ -193,7 +193,8 @@ export TMUX_POWERLINE_SEG_PWD_MAX_LEN="40"
 
 # time.sh {
 # date(1) format for the time. Americans might want to have "%I:%M %p".
-export TMUX_POWERLINE_SEG_TIME_FORMAT="%I:%M:%S %p"
+# No seconds, since a ticking seconds field forces a redraw every second.
+export TMUX_POWERLINE_SEG_TIME_FORMAT="%I:%M %p"
 # }
 
 # tmux_session_info.sh {
