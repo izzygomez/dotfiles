@@ -1,32 +1,49 @@
 {
-  "editor.minimap.enabled": false,
-  "telemetry.telemetryLevel": "off",
-  "git.autofetch": false,
-  "search.followSymlinks": false,
-  "window.title": "${rootPath}${separator}${activeEditorMedium}",
-  "security.workspace.trust.enabled": false,
-  "workbench.quickOpen.closeOnFocusLost": false,
   "crashReporting.enabled": "off",
-  "workbench.enableExperiments": false,
-  "npm.fetchOnlinePackageInfo": false,
-  "files.exclude": {
-    "**/.git": false
-  },
-  "redhat.telemetry.enabled": false,
+  "cursor.cpp.disabledLanguages": [
+    "plaintext",
+    "scminput"
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "editor.inlineSuggest.enabled": true,
+  "editor.minimap.enabled": false,
   "editor.rulers": [
     80
   ],
   "editor.stickyScroll.enabled": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
+  "editor.wordWrap": "on",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
   "files.associations": {
     "*.xml": "html",
     "*.svg": "html"
   },
-  "editor.inlineSuggest.enabled": true,
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
-    "editor.formatOnType": true
+  "files.exclude": {
+    "**/.git": false
+  },
+  "git.autofetch": false,
+  "gitlens.ai.enabled": false,
+  "gitlens.ai.experimental.generateCommitMessage.enabled": false,
+  "gitlens.telemetry.enabled": false,
+  "inlineChat.lineNaturalLanguageHint": false,
+  "npm.fetchOnlinePackageInfo": false,
+  "redhat.telemetry.enabled": false,
+  "search.followSymlinks": false,
+  "security.workspace.trust.enabled": false,
+  "telemetry.telemetryLevel": "off",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "window.title": "${rootPath}${separator}${activeEditorMedium}",
+  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.editor.enablePreview": false,
+  "workbench.enableExperiments": false,
+  "workbench.quickOpen.closeOnFocusLost": false,
+  "yaml.maxItemsComputed": 100000,
+  //// Language-specific blocks go last, after the alphabetized settings above.
+  // Use built-in formatter for JSONC instead of Prettier.
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
   },
   // turn off code suggestions in text files
   // got from: https://stackoverflow.com/a/71056461
@@ -37,24 +54,8 @@
       "strings": false
     }
   },
-  // Use built-in formatter for JSONC instead of Prettier.
-  "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "editor.inlayHints.enabled": "offUnlessPressed",
-  "editor.wordWrap": "on",
-  "gitlens.ai.experimental.generateCommitMessage.enabled": false,
-  "gitlens.ai.enabled": false,
-  "gitlens.telemetry.enabled": false,
-  "inlineChat.lineNaturalLanguageHint": false,
-  "explorer.confirmDragAndDrop": false,
-  "cursor.cpp.disabledLanguages": [
-    "plaintext",
-    "scminput"
-  ],
-  "yaml.maxItemsComputed": 100000,
-  "explorer.confirmDelete": false,
-  "workbench.colorTheme": "Default Dark Modern",
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "workbench.editor.enablePreview": false
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnType": true
+  }
 }
