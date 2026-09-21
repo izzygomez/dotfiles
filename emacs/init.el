@@ -1,4 +1,4 @@
-;; -*- mode: lisp; indent-tabs-mode: nil; -*-
+;; -*- mode: emacs-lisp; indent-tabs-mode: nil; lexical-binding: t; -*-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;                ███████╗███╗   ███╗ █████╗  ██████╗███████╗
@@ -112,7 +112,7 @@
       (let ((pkg (pop queue)))
         (unless (memq pkg keep)
           (push pkg keep)
-          (when-let ((desc (cadr (assoc pkg package-alist))))
+          (when-let* ((desc (cadr (assoc pkg package-alist))))
             (dolist (req (package-desc-reqs desc))
               (push (car req) queue))))))
     keep))
@@ -120,7 +120,7 @@
 (let ((keep (my/package-keep-list)))
   (dolist (entry package-alist)
     (unless (memq (car entry) keep)
-      (when-let ((desc (cadr entry)))
+      (when-let* ((desc (cadr entry)))
         (message "Auto-removing package: %s" (car entry))
         (package-delete desc t)))))
 
