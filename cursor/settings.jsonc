@@ -35,6 +35,9 @@
   },
   "editor.inlayHints.enabled": "offUnlessPressed",
   "editor.wordWrap": "on",
+  "gitlens.ai.experimental.generateCommitMessage.enabled": false,
+  "gitlens.ai.enabled": false,
+  "gitlens.telemetry.enabled": false,
   "inlineChat.lineNaturalLanguageHint": false,
   "explorer.confirmDragAndDrop": false,
   "cursor.cpp.disabledLanguages": [
