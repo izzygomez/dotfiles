@@ -1,6 +1,14 @@
 {
   "editor.minimap.enabled": false,
-  "git.autofetch": true,
+  "telemetry.telemetryLevel": "off",
+  "git.autofetch": false,
+  "search.followSymlinks": false,
+  "window.title": "${rootPath}${separator}${activeEditorMedium}",
+  "security.workspace.trust.enabled": false,
+  "workbench.quickOpen.closeOnFocusLost": false,
+  "crashReporting.enabled": "off",
+  "workbench.enableExperiments": false,
+  "npm.fetchOnlinePackageInfo": false,
   "files.exclude": {
     "**/.git": false
   },
