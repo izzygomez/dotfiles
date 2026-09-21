@@ -1,0 +1,6 @@
+esbenp.prettier-vscode
+graphql.vscode-graphql-syntax
+ms-python.black-formatter
+ms-python.python
+redhat.vscode-yaml
+tuttieee.emacs-mcx

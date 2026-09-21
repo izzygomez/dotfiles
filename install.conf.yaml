@@ -96,3 +96,9 @@
     - command: ./claude/install-claude-settings.sh
       description: Applying Claude Code settings
       stdout: true
+    # Install Cursor extensions
+    # Reports drift between cursor/extensions.txt & what's installed. Run the
+    # script directly to actually install the extensions.
+    - command: ./cursor/install-cursor-extensions.sh
+      description: Checking Cursor extensions
+      stdout: true
