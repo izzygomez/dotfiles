@@ -37,7 +37,7 @@ comm -23 "$tmp_dir/tracked" "$tmp_dir/installed" >"$tmp_dir/missing"
 if [[ -s $tmp_dir/untracked ]]; then
     echo "install-cursor-extensions: installed but not in extensions.txt:"
     sed 's/^/  /' "$tmp_dir/untracked"
-    echo "Add them to the list or uninstall them. Nothing was removed."
+    echo 'Add them to the list or uninstall them (cursor --uninstall-extension <extension-id>). Nothing was removed.'
     echo
 fi
 

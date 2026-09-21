@@ -1,3 +1,4 @@
+eamodio.gitlens
 esbenp.prettier-vscode
 graphql.vscode-graphql-syntax
 ms-python.black-formatter
