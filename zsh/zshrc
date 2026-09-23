@@ -166,7 +166,6 @@ if is_command_available bat; then
     # [1] https://github.com/sharkdp/bat
     alias bat='bat --paging=always'
     alias b='bat'
-    alias cat='bat'
 else
     echo "zshrc: bat is not available, can't set settings."
 fi
