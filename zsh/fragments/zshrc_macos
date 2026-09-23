@@ -7,6 +7,11 @@
 # Misc configuration
 ################################################################################
 
+# Copy stdin with *no* trailing newline chars,
+# e.g. `echo "hello world\n\n\n" | pbcopy`
+# will only copy "hello world"
+pbcopy() { printf %s "$(cat)" | /usr/bin/pbcopy; }
+
 ## Following lines added by gcloud install script: https://cloud.google.com/sdk/docs/install#mac
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/izzyg/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/izzyg/google-cloud-sdk/path.zsh.inc'; fi
