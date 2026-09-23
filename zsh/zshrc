@@ -100,6 +100,8 @@ alias code='cd "$HOME/code"'
 
 if is_command_available claude; then
     alias cl='claude'
+    # helper to open a claude session in ~/code/
+    alias ccl='echo "opening claude code in ~/code..." && cd "$HOME/code" && claude'
     # https://code.claude.com/docs/en/fullscreen
     export CLAUDE_CODE_NO_FLICKER=1
 else
