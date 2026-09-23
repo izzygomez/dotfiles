@@ -34,6 +34,8 @@
 	<true/>
 	<key>CheckTestRelease</key>
 	<false/>
+	<key>ClaudeCodeWorkgroupUpsellSuppressed</key>
+	<true/>
 	<key>ClickToSelectCommand</key>
 	<false/>
 	<key>Default Bookmark Guid</key>
