@@ -326,6 +326,9 @@
 ;; from: https://emacs.stackexchange.com/a/437
 (defun display-startup-echo-area-message () (message nil))
 
+;; Remove message from echo area when starting emacsclient.
+(setq server-client-instructions nil)
+
 ;; Keep search strings highlighted
 ;; https://stackoverflow.com/a/3780053
 (setq lazy-highlight-cleanup nil)
