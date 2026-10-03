@@ -94,7 +94,7 @@ fi
 
 alias x='exit'
 
-alias sz='source ~/.zshrc'
+alias sz='echo "running \"source ~/.zshrc\"" && source ~/.zshrc'
 
 alias code='cd "$HOME/code"'
 
