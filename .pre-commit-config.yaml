@@ -51,7 +51,7 @@ repos:
   # Per note above, run this to see what files will be formatted:
   # git ls-files | grep -E '\.(sh|bash)$|^(zsh/.*)$' | grep -v -E '^(dotbot|copilot\.el)/|zsh/README\.md$'
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.13.1-1
+    rev: v3.14.1-1
     hooks:
       - id: shfmt
         args: [-w, -s, -i, "4"] # write changes, simplify code, 4-space indent
@@ -73,7 +73,7 @@ repos:
 
   # Prettier — multi-language formatting
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: "v3.9.6"
+    rev: "v3.9.9"
     hooks:
       - id: prettier
         # Filter to just the types we care about instead of letting Prettier
