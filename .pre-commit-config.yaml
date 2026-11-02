@@ -73,7 +73,7 @@ repos:
 
   # Prettier — multi-language formatting
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: "v3.9.9"
+    rev: "v3.9.10"
     hooks:
       - id: prettier
         # Filter to just the types we care about instead of letting Prettier
